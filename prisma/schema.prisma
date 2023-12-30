@@ -1,0 +1,106 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model category {
+  cate_id    Int          @id @default(autoincrement())
+  type       String       @db.VarChar(20)
+  name       String       @db.VarChar(40)
+  emogi      String       @db.VarChar(500)
+  challenges challenges[]
+}
+
+model challenges {
+  chal_id         Int               @default(autoincrement())
+  cate_id         Int
+  title           String            @db.VarChar(40)
+  created_at      DateTime          @default(now()) @db.Timestamp(0)
+  update_at       DateTime          @default(now()) @db.Timestamp(0)
+  category        category          @relation(fields: [cate_id], references: [cate_id], onDelete: Cascade, map: "cate_idForeignKey")
+  templates       templates[]
+  user_challenges user_challenges[]
+
+  @@id([chal_id, cate_id])
+  @@index([cate_id], map: "cate_idForeignKey")
+
+  @@unique([chal_id])
+
+}
+
+model error_logs {
+  errorLogId Int    @id @default(autoincrement())
+  level      String @db.VarChar(10)
+  timestamp  String @db.VarChar(45)
+  message    String @db.VarChar(500)
+}
+
+model templates {
+  tem_id       Int        @default(autoincrement())
+  chal_id      Int
+  title        String     @db.VarChar(40)
+  content      String     @db.LongText
+  created_at   DateTime   @default(now()) @db.Timestamp(0)
+  update_at    DateTime   @default(now()) @db.Timestamp(0)
+
+  challenges   challenges @relation(fields: [chal_id], references: [chal_id], onDelete: NoAction, onUpdate: NoAction, map: "chal_idForeignKey4")
+
+  @@id([tem_id, chal_id])
+  @@index([chal_id], map: "chal_idForeignKey3_idx")
+
+    @@unique([chal_id])
+}
+
+model user_challenge_templetes {
+  uctem_id        Int             @default(autoincrement())
+  uchal_id        Int
+  title           String?         @db.VarChar(30)
+  writing         String          @db.LongText
+  complete        Boolean?
+  created_at      DateTime        @default(dbgenerated("(curdate())")) @db.Date
+  update_at       DateTime        @default(dbgenerated("(curdate())")) @db.Date
+  finish_at       DateTime?       @db.Date
+  user_challenges user_challenges @relation(fields: [uchal_id], references: [uchal_id], onDelete: Cascade, map: "uchal_idForeignKey2")
+
+  @@id([uctem_id, uchal_id])
+  @@index([uchal_id], map: "uchal_idForeignKey2")
+}
+
+model user_challenges {
+  uchal_id                 Int                        @default(autoincrement())
+  user_id                  Int
+  chal_id                  Int
+  complete                 Boolean?                   @default(false)
+  start_at                 DateTime                   @default(dbgenerated("(curdate())")) @db.Date
+  finish_at                DateTime?                  @db.Date
+  challenges               challenges                 @relation(fields: [chal_id], references: [chal_id], onDelete: Cascade, map: "chal_idForeignKey2")
+  users                    users                      @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "user_idForeignKey2")
+  user_challenge_templetes user_challenge_templetes[]
+
+  @@id([uchal_id, user_id, chal_id])
+  @@index([chal_id], map: "chal_idForeignKey2")
+  @@index([user_id], map: "user_idForeignKey2")
+
+  @@unique([uchal_id])
+}
+
+model users {
+  user_id         Int               @id @default(autoincrement())
+  role            String            @db.VarChar(20)
+  identifier      String            @unique(map: "identifierUnique") @db.VarChar(40)
+  password        String?           @db.VarChar(255)
+  email           String?           @unique(map: "emailUnique") @db.VarChar(40)
+  nickname        String            @db.VarChar(40)
+  level           Int?
+  mar_email       Int               @default(0) @db.TinyInt
+  phone           String?           @db.VarChar(30)
+  coopon          Int               @default(0) @db.TinyInt
+  created_at      DateTime          @default(now()) @db.Timestamp(0)
+  update_at       DateTime          @default(now()) @db.Timestamp(0)
+  user_challenges user_challenges[]
+}

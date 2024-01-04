@@ -70,11 +70,11 @@ const signup = catchAsync(async (req, res) => {
 
 
     res.status(httpStatus.OK).send(await authService.signUp(
-        email,
-        password,
-        nickname,
         identifier,
-        phone
+        password,
+        email,
+        phone,
+        nickname
     ));
 });
 

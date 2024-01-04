@@ -54,7 +54,7 @@ const changePassword = async (
 
   }
 
-  return userDao.updatePassword(userId, await bcrypt.hash(newPassword, 10))
+  await userDao.updatePassword(userId, await bcrypt.hash(newPassword, 10))
 
 }
 

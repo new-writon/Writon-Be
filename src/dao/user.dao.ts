@@ -84,9 +84,9 @@ const selectIdentifierAndEmail = async <Key extends keyof users>(
 const updatePassword = async <Key extends keyof users>(
   userId: number,
   password: string
-): Promise<Pick<users, Key> | null> => {
+) => {
 
-  return await prisma.users.update({
+  await prisma.users.update({
     where: { user_id: userId },
     data: { password: password }
   }) as Pick<users, Key> | null;
@@ -106,9 +106,9 @@ const updateRandomPassword = async (
   identifier: string,
   email: string,
   password: string
-  ) => {
+) => {
 
-  return prisma.users.updateMany({
+  await prisma.users.updateMany({
     where: {
       identifier: identifier,
       email: email

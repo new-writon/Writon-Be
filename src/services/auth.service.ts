@@ -35,7 +35,7 @@ const localLogin = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, "Password is not correct");
   }
 
-  
+
   const accessToken = jwt.sign(userData!.user_id, userData!.role);
   const refreshToken = jwt.refresh()
 
@@ -82,7 +82,7 @@ const logout = async (
   userId: string
 ) => {
 
-  return redisDao.deleteRedis(userId);
+  await redisDao.deleteRedis(userId);
 
 }
 
@@ -96,7 +96,7 @@ const signUp = async (
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
-  return authDao.localSignUp(
+  await authDao.localSignUp(
     identifier,
     encryptedPassword,
     email,
@@ -147,13 +147,10 @@ const reissueToken = async (
   const authResult = jwt.verify(accessToken.split('Bearer ')[1]);
   const decoded = jwt.decode(accessToken.split('Bearer ')[1]);
 
-  console.log(authResult.id)
   const refreshResult = await jwt.refreshVerify(refreshToken.split('Bearer ')[1], decoded?.id);
 
-  console.log(refreshResult.state)
-
   if (authResult.state === false) {
-   
+
     if (refreshResult?.state === false) {
 
       throw new ApiError(httpStatus.UNAUTHORIZED, "login again");
@@ -164,7 +161,7 @@ const reissueToken = async (
       refreshToken: refreshResult.token
     }
   }
-  
+
   throw new ApiError(httpStatus.METHOD_NOT_ALLOWED, "access token is not expired");
 
 }

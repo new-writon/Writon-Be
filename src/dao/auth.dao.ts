@@ -12,9 +12,9 @@ import prisma from '../client.js';
 const kakaoSignUp = async (
   kakaoEmail: string,
   kakaoNickname: string
-): Promise<users> => {
+) => {
 
-  return await prisma.users.create({
+  await prisma.users.create({
     data: {
       role: "user",
       identifier: kakaoEmail,
@@ -33,9 +33,9 @@ const localSignUp = async (
   phone: string,
   nickname: string
 
-): Promise<users> => {
+) => {
 
-  return await prisma.users.create({
+  await prisma.users.create({
     data: {
       identifier: identifier,
       password: password,

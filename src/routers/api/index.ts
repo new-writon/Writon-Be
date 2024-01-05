@@ -1,7 +1,6 @@
 import express from 'express';
 import challengeRoute from './challenge.route.js';
 import plannerRoute from './planner.route.js';
-import profileRoute from './profile.route.js';
 import writeRoute from './write.route.js';
 import userRoute from './user.route.js'; 
 import authRoute from './auth.route.js'; 
@@ -23,10 +22,10 @@ const defaultRoutes = [
     path: '/user',
     route: userRoute
   },
-  {
-    path: '/profile',
-    route: profileRoute
-  },
+  // {
+  //   path: '/profile',
+  //   route: profileRoute
+  // },
   {
     path: '/planner',
     route: plannerRoute

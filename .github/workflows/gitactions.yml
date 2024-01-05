@@ -34,12 +34,14 @@ jobs:
          
     # 서버에서 Docker 이미지 실행
     - name: EC2 Docker Run
-      uses: appleboy/ssh-action@v2
+      uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
         script: |
+
 
           docker stop blue
           docker rm blue

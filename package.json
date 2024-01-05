@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "start": "tsc && pm2-runtime dist/app.js -i 0",
+    "start": "tsc && pm2-runtime dist/index.js -i 0",
     "build": "tsc && node dist",
     "prepare": "husky install",
     "lint": "./node_modules/.bin/eslint .",

@@ -15,7 +15,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - run: npm ci
+    - run: npm install
+
     # ENV SDK 세팅
     - name: Setting env file
       run: |

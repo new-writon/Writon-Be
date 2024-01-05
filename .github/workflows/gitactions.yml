@@ -42,7 +42,6 @@ jobs:
         port: 22
         script: |
 
-
           docker stop blue
           docker rm blue
           docker rmi ${{ secrets.DOCKER_USERNAME }}/blue:1.0

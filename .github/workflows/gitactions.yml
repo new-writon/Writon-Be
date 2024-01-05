@@ -34,7 +34,7 @@ jobs:
          
     # 서버에서 Docker 이미지 실행
     - name: EC2 Docker Run
-      uses: appleboy/ssh-action@v0.1.6
+      uses: appleboy/ssh-action@v2
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu

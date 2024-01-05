@@ -41,6 +41,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
 
+
           docker stop blue
           docker rm blue
           docker rmi ${{ secrets.DOCKER_USERNAME }}/blue:1.0

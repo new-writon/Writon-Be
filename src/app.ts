@@ -44,6 +44,11 @@ app.all('/*', function (req, res, next) {
 });
 
 
+app.get('/healthcheck', (req, res) => {
+  res.status(200).send();
+});
+
+
 if (config.env === 'production') {
   app.use('/api', authLimiter);
 }

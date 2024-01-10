@@ -3,8 +3,8 @@ import Slack from 'slack-node';
 import { createRequire } from 'module'
 import   TransportStream  from 'winston-transport';
 import { createLogger, transports, format } from 'winston';
-import { DATA_SOURCES } from './auth.js';
-import mysql from 'mysql2/promise';
+import { errorDao } from '../dao/index.js';
+
 
 const require = createRequire(import.meta.url)
 require('dotenv').config();
@@ -32,14 +32,16 @@ class DatabaseTransport extends TransportStream {
 
     // MySQL 데이터베이스에 로그를 삽입합니다.
     try {
-      const { level,  message } = info;
+      const { level,  message, timestamp } = info;
    
-      const connection = await mysql.createConnection(DATA_SOURCES.development);
-      await connection.connect();
-      const escapedMessage = message.replace(/'/g, "''");
-      const logInsert = `INSERT INTO error_logs (level, message) VALUES ('${level}', '${escapedMessage}'); `;
-      await connection.query(logInsert);
-      await connection.end();
+      // const connection = await mysql.createConnection(DATA_SOURCES.development);
+      // await connection.connect();
+      // const escapedMessage = message.replace(/'/g, "''");
+      // const logInsert = `INSERT INTO error_logs (level, message) VALUES ('${level}', '${escapedMessage}'); `;
+      // await connection.query(logInsert);
+      // await connection.end();
+
+      await errorDao.saveError(level, message, String(timestamp));
       console.log('로그가 데이터베이스에 저장되었습니다.');
     } catch (error) {
       console.error('데이터베이스에 로그 저장 중 오류 발생');

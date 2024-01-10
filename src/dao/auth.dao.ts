@@ -11,17 +11,17 @@ import prisma from '../client.js';
  */
 const kakaoSignUp = async (
   kakaoEmail: string,
-  kakaoNickname: string
+  kakaoIdentifier: string,
+  kakaoProfile: string
 ) => {
 
-  await prisma.users.create({
+  return await prisma.users.create({
     data: {
       role: "user",
-      identifier: kakaoEmail,
-      nickname: kakaoNickname,
-      password: null,
-      email: null,
-      phone: null,
+      identifier: String(kakaoIdentifier),
+      email:kakaoEmail,
+      profile: kakaoProfile,
+    
     }
   });
 }

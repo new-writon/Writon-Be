@@ -22,7 +22,7 @@ const userInformationSelect = async <Key extends keyof users>(
   // 2. 첫 번째 반복에서, k가 'user_id'일 때, { ...obj, [k]: true }는 { 'user_id': true }가 됩니다.
   // 3. 두 번째 반복에서, k가 'role'일 때, { 'user_id': true, 'role': true }가 됩니다.
   return prisma.users.findUnique({
-    where: { identifier },
+    where: { identifier: String(identifier) },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
   }) as Promise<Pick<users, Key> | null>;
 }
@@ -41,7 +41,9 @@ const identifierSelect = async <Key extends keyof users>(
 ): Promise<Pick<users, Key> | null> => {
 
   return (await prisma.users.findMany({
-    where: { email: email, nickname: nickname },
+    where: { email: email, 
+   //   nickname: nickname 
+    },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
   }))[0] as Pick<users, Key> | null;
 }

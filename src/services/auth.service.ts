@@ -55,15 +55,15 @@ const kakaoLogin = async (
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
 
-  const userCheck = await userDao.userInformationSelect(userKakaoData.data.kakao_account.email);
+  const userCheck = await userDao.userInformationSelect(userKakaoData.data.id);
 
   if (!userCheck) {
 
-    await authDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.properties.nickname);
+    await authDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.id, userKakaoData.data.properties.profile_image);
 
   }
-  const userData = await userDao.userInformationSelect(userKakaoData.data.kakao_account.email);
 
+  const userData = await userDao.userInformationSelect(userKakaoData.data.id);
 
   const accessToken = jwt.sign(userData!.user_id, userData!.role);
   const refreshToken = jwt.refresh()

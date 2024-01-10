@@ -20,9 +20,9 @@ import { userService } from '../services/index.js'
  */
 const findIdentifier = catchAsync(async (req, res) => {
 
-    const { nickname, email, code } = req.query;
+    const {  email, code } = req.query;
 
-    res.status(httpStatus.OK).send(await userService.findIdentifier(nickname as string, email as string, code as string));
+    res.status(httpStatus.OK).send(await userService.findIdentifier(email as string, code as string));
 });
 
 

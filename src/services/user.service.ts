@@ -18,7 +18,6 @@ const __dirname = dirname(__filename);
 
 
 const findIdentifier = async (
-  nickname: string,
   email: string,
   code: string
 ) => {
@@ -30,12 +29,12 @@ const findIdentifier = async (
     throw new ApiError(httpStatus.FORBIDDEN, "certify failed");
   }
 
-  if (! await userDao.identifierSelect(nickname, email)) {
+  if (! await userDao.identifierSelect(email)) {
 
     throw new ApiError(httpStatus.NOT_FOUND, "not found");
   }
 
-  return userDao.identifierSelect(nickname, email);
+  return userDao.identifierSelect(email);
 };
 
 

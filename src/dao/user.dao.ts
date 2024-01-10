@@ -35,14 +35,12 @@ const userInformationSelect = async <Key extends keyof users>(
  *          2. 실패 시 false 반환
  */
 const identifierSelect = async <Key extends keyof users>(
-  nickname: string,
   email: string,
   keys: Key[] = ['identifier'] as Key[]
 ): Promise<Pick<users, Key> | null> => {
 
   return (await prisma.users.findMany({
     where: { email: email, 
-   //   nickname: nickname 
     },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
   }))[0] as Pick<users, Key> | null;

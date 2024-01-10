@@ -41,7 +41,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
 
-
+          docker run -d -p 3001:3000 --name green ${{ secrets.DOCKER_USERNAME }}/green:1.0
 
       
           sudo touch /etc/nginx/green.flag
@@ -64,7 +64,7 @@ jobs:
           docker rm green 
           docker rmi ${{ secrets.DOCKER_USERNAME }}/green:1.0
           docker pull ${{ secrets.DOCKER_USERNAME }}/green:1.0
-          docker run -d -p 3001:3000 --name green ${{ secrets.DOCKER_USERNAME }}/green:1.0
+
 
           
 

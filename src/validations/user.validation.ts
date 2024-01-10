@@ -14,7 +14,6 @@ const checkEmail = {
   })
 };
 
-
 const checkNicknameAndEmailAndCode = {
   query: Joi.object().keys({
     email: Joi.string().email().required(),

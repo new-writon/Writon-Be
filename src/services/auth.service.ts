@@ -90,8 +90,6 @@ const signUp = async (
   identifier: string,
   password: string,
   email: string,
-  phone: string,
-  nickname: string
 ) => {
 
   const encryptedPassword = await bcrypt.hash(password, 10);
@@ -99,9 +97,7 @@ const signUp = async (
   await authDao.localSignUp(
     identifier,
     encryptedPassword,
-    email,
-    phone,
-    nickname
+    email
   );
 
 

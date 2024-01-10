@@ -66,15 +66,13 @@ const logout = catchAsync(async (req, res) => {
 const signup = catchAsync(async (req, res) => {
 
 
-    const { email, password, nickname, identifier, phone } = req.body;
+    const { email, password, identifier } = req.body;
 
 
     res.status(httpStatus.OK).send(await authService.signUp(
         identifier,
         password,
-        email,
-        phone,
-        nickname
+        email
     ));
 });
 

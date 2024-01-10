@@ -30,8 +30,6 @@ const localSignUp = async (
   identifier: string,
   password: string,
   email: string,
-  phone: string,
-  nickname: string
 
 ) => {
 
@@ -40,8 +38,6 @@ const localSignUp = async (
       identifier: identifier,
       password: password,
       email: email,
-      nickname: nickname,
-      phone: phone,
       role: "user"
     }
   })

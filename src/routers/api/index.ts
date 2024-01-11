@@ -1,6 +1,7 @@
 import express from 'express';
 import userRoute from './user.route.js'; 
 import authRoute from './auth.route.js'; 
+import challengeRecordRoute from './challengeRecord.route.js';
 
 
 const router = express.Router();
@@ -16,7 +17,14 @@ const defaultRoutes = [
     path: '/user',
     route: userRoute
   },
+  
+  {
+    path: '/challenge-record',
+    route: challengeRecordRoute
+  },
 ];
+
+
 
 
 defaultRoutes.forEach((route) => {

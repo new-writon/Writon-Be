@@ -1,7 +1,7 @@
 import express from 'express';
 import userRoute from './user.route.js'; 
 import authRoute from './auth.route.js'; 
-import challengeRecordRoute from './challengeRecord.route.js';
+import recordRoute from './record.route.js';
 
 
 const router = express.Router();
@@ -19,8 +19,8 @@ const defaultRoutes = [
   },
   
   {
-    path: '/challenge-record',
-    route: challengeRecordRoute
+    path: '/challenge/record',
+    route: recordRoute
   },
 ];
 

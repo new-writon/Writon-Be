@@ -1,6 +1,4 @@
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import bcrypt from 'bcrypt';
@@ -9,9 +7,6 @@ import socialLogin from '../utils/socialLogin.js';
 import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
 import jwt from '../utils/jwtModules.js';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 
 
 /**

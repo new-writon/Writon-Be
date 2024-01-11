@@ -1,6 +1,4 @@
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-require('dotenv').config();
+
 import catchAsync from '../utils/catchAsync.js';
 import httpStatus from 'http-status';
 import { userService } from '../services/index.js'

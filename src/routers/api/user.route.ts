@@ -8,11 +8,11 @@ import auth from '../../middlewares/auth.js';
 const router = express.Router();
 
 
-router.get('/idenfitier-find', validate(userValidation.checkNicknameAndEmailAndCode), userController.findIdentifier);
-router.patch('/password-change', validate(userValidation.checkNewPasswordAndOldPassword), auth, userController.changePassword);
-router.get('/check-identifier', validate(userValidation.checkIdentifier), userController.checkIdentifier);
-router.get('/check-email', validate(userValidation.checkEmail), userController.checkEmail);
-router.patch('/generate-temporary-password', validate(userValidation.checkIdentifierAndEmail), userController.generateTemporaryPassword);
+router.get('/idenfitier/find', validate(userValidation.checkNicknameAndEmailAndCode), userController.findIdentifier);
+router.patch('/password/change', validate(userValidation.checkNewPasswordAndOldPassword), auth, userController.changePassword);
+router.get('/identifier/check', validate(userValidation.checkIdentifier), userController.checkIdentifier);
+router.get('/email/check', validate(userValidation.checkEmail), userController.checkEmail);
+router.patch('/temporary-password/generate', validate(userValidation.checkIdentifierAndEmail), userController.generateTemporaryPassword);
 
 
 

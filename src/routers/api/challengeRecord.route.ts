@@ -8,6 +8,8 @@ import validate from '../../middlewares/validate.js';
 const router = express.Router();
 
 
-
+router.get('/present-situation');
+router.get('/calendar');
+router.get('/reminiscence');
 
 export default router;

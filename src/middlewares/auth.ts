@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
-import { TokenError } from '../interfaces/error';
+
 
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +23,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
 
 const handleTokenError = (error: any) => {
 
-    const tokenError = error as TokenError;
+    const tokenError = error;
 
     if (tokenError.name === 'TokenExpiredError') {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');

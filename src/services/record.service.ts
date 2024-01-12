@@ -1,13 +1,13 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao } from '../dao/index.js';
-import { presentSituation }  from '../types/record.type.js';
+import { PresentSituation }  from '../interfaces/record.interface.js';
 
 
 const presentSituation = async (
     affiliationsId: number,
     userId: number
-  ) : Promise<presentSituation>=> {
+  ) : Promise<PresentSituation>=> {
 
     const nickname =  await affiliationDao.selectNickname(affiliationsId, userId);
 

@@ -2,7 +2,6 @@ import { organizationDao } from '../dao/index.js';
 
 
 
-
 const checkOrganization = async (
     organization: string,
     userId: number

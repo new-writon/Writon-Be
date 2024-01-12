@@ -16,21 +16,21 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     req.decoded = decodedValue;
     return next();
   } catch (error) {
-    handleTokenError(error);
+    handleTokenError(error, res);
   }
 };
 
 
-const handleTokenError = (error: any) => {
+const handleTokenError = (error: any, res: Response) => {
+  const tokenError = error;
 
-    const tokenError = error;
+  if (tokenError.name === 'TokenExpiredError') {
 
-    if (tokenError.name === 'TokenExpiredError') {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
-    } else {
-      throw new ApiError(httpStatus.FORBIDDEN, 'Forbidden');
-    }
-
+    return res.status(444).send('Please authenticate');
+  } else {
+    
+    return res.status(445).send('Forbidden');
+  }
 };
 
 export default auth;

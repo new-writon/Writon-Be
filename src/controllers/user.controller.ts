@@ -24,47 +24,6 @@ const findIdentifier = catchAsync(async (req, res) => {
 });
 
 
-/**
- * 비밀번호 변경 함수
- * @param req  유저 아이디, 이메일
- * @param res 
- * @param next 
- * @returns 1. 확인 코드(200)
- *          2. id를 찾을 수 없음 (404)\
- *          3. service 함수 에러 (502)
- *          4. 서버 에러 (500)
- */
-// const changePassword = catchAsync(async (req, res) => {
-
-
-//     const { identifier, userEmail } = req.body;
-//     const userIdSignData = await userService.userInformationSelect(identifier);
-    
-
-//     if (userIdSignData?.user_id == null || userIdSignData?.user_id == undefined) {
-
-//         return new ErrorResponse(404, "Id can't find").sendResponse(res);
-
-//     }
-//     if (userEmail !== userIdSignData.email) {
-//         return new ErrorResponse(405, "이메일이 옳바르지 않습니다.").sendResponse(res);
-
-//     }
-
-//     const randomPassword = randomPasswordFunction();
-//     const encryptedPassword = await bcrypt.hash(randomPassword, 10)
-//     await userService.updatePasswordData(identifier, userEmail, encryptedPassword);
-
-//     randomPasswordsmtpSender(
-//         userEmail,
-//         randomPassword
-//     );
-
-//     return new SuccessResponse(200, "OK").sendResponse(res);
-
-
-
-// });
 
 const changePassword = catchAsync(async (req, res) => {
 

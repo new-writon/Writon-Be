@@ -1,4 +1,4 @@
-import { PrismaClient, users } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 import prisma from '../client.js';
 
 
@@ -10,21 +10,21 @@ import prisma from '../client.js';
  * @returns 1. 유저에 대한 아이디, 권한, 비밀번호
  *          2. 오류 시 false반환
  */
-const userInformationSelect = async <Key extends keyof users>(
+const userInformationSelect = async <Key extends keyof  User>(
   identifier: string,
   keys: Key[] = [
     'user_id',
     'role',
     'password'
   ] as Key[]
-): Promise<Pick<users, Key> | null> => {
+): Promise<Pick< User, Key> | null> => {
   // 1. 초기에는 빈 객체 {}가 주어집니다. ( obj가 빈 객체 역할)
   // 2. 첫 번째 반복에서, k가 'user_id'일 때, { ...obj, [k]: true }는 { 'user_id': true }가 됩니다.
   // 3. 두 번째 반복에서, k가 'role'일 때, { 'user_id': true, 'role': true }가 됩니다.
-  return prisma.users.findUnique({
+  return prisma.user.findUnique({
     where: { identifier: String(identifier) },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
-  }) as Promise<Pick<users, Key> | null>;
+  }) as Promise<Pick< User, Key> | null>;
 }
 
 
@@ -34,62 +34,62 @@ const userInformationSelect = async <Key extends keyof users>(
  * @returns 1. 유저 아이디 반환
  *          2. 실패 시 false 반환
  */
-const identifierSelect = async <Key extends keyof users>(
+const identifierSelect = async <Key extends keyof  User>(
   email: string,
   keys: Key[] = ['identifier'] as Key[]
-): Promise<Pick<users, Key> | null> => {
+): Promise<Pick< User, Key> | null> => {
 
-  return (await prisma.users.findMany({
+  return (await prisma.user.findMany({
     where: { email: email, 
     },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
-  }))[0] as Pick<users, Key> | null;
+  }))[0] as Pick< User, Key> | null;
 }
 
-const selectEmail = async <Key extends keyof users>(
+const selectEmail = async <Key extends keyof  User>(
   email: string,
   keys: Key[] = ['email'] as Key[]
-): Promise<Pick<users, Key> | null> => {
+): Promise<Pick< User, Key> | null> => {
 
-  return prisma.users.findUnique({
+  return prisma.user.findUnique({
     where: { email },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
-  }) as Promise<Pick<users, Key> | null>;
+  }) as Promise<Pick< User, Key> | null>;
 };
 
 
-const selectPassword = async <Key extends keyof users>(
+const selectPassword = async <Key extends keyof  User>(
   userId: number,
   keys: Key[] = ['password'] as Key[]
-): Promise<Pick<users, Key> | null> => {
+): Promise<Pick< User, Key> | null> => {
 
-  return prisma.users.findUnique({
+  return prisma.user.findUnique({
     where: { user_id: userId },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
-  }) as Promise<Pick<users, Key> | null>;
+  }) as Promise<Pick< User, Key> | null>;
 };
 
-const selectIdentifierAndEmail = async <Key extends keyof users>(
+const selectIdentifierAndEmail = async <Key extends keyof User>(
   identifier: string,
   keys: Key[] = ['identifier', 'email'] as Key[]
-): Promise<Pick<users, Key> | null> => {
+): Promise<Pick< User, Key> | null> => {
 
-  return prisma.users.findUnique({
+  return prisma.user.findUnique({
     where: { identifier },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
-  }) as Promise<Pick<users, Key> | null>;
+  }) as Promise<Pick< User, Key> | null>;
 };
 
 
-const updatePassword = async <Key extends keyof users>(
+const updatePassword = async <Key extends keyof  User>(
   userId: number,
   password: string
 ) => {
 
-  await prisma.users.update({
+  await prisma.user.update({
     where: { user_id: userId },
     data: { password: password }
-  }) as Pick<users, Key> | null;
+  }) as Pick< User, Key> | null;
 };
 
 
@@ -108,7 +108,7 @@ const updateRandomPassword = async (
   password: string
 ) => {
 
-  await prisma.users.updateMany({
+  await prisma.user.updateMany({
     where: {
       identifier: identifier,
       email: email

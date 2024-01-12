@@ -1,3 +1,4 @@
+
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl", "debian-openssl-1.1.x"]
@@ -8,162 +9,187 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model challenges {
-  challenge_id   Int      @id @default(autoincrement())
-  user_id        Int
-  name           String   @db.VarChar(40)
-  created_at     DateTime @default(now()) @db.Timestamp(0)
-  update_at      DateTime @default(now()) @db.Timestamp(0)
-  start_at       DateTime @db.Date
-  finish_at      DateTime @db.Date
-  deposit        Int
-  start_time     DateTime @db.Time(0)
-  end_time       DateTime @db.Time(0)
-  deduction_rate Int
 
-  @@index([user_id], map: "challenges_users_ForeignKey")
+
+model User {
+  user_id       Int       @id @default(autoincrement()) @unique
+  role          String    @db.VarChar(20)
+  identifier    String    @db.VarChar(40) @unique
+  password      String?   @db.VarChar(255)
+  email         String    @db.VarChar(40) @unique
+  profile       String?   @db.VarChar(500)
+  created_at    DateTime  @default(now()) @db.Timestamp(6)
+  update_at     DateTime  @default(now()) @db.Timestamp(6)
+  affiliations  Affiliation[]
+  challenges    Challenge[]
+  user_challenges UserChallenge[]
+  comments Comment[]
+  likes         Like[]
 }
 
-model error_logs {
-  error_log_id Int    @id @default(autoincrement())
-  level        String @db.VarChar(10)
-  timestamp    String @db.VarChar(45)
-  message      String @db.VarChar(500)
-}
-
-model user_challenges {
-  user_challenge_id Int      @default(autoincrement())
-  user_id           Int
-  challenge_id      Int
-  complete          Boolean
-  user_deposit      Int
-  created_at        DateTime @default(now()) @db.Timestamp(0)
-  update_at         DateTime @default(now()) @db.Timestamp(0)
-
-  @@id([user_challenge_id, user_id, challenge_id])
-  @@index([challenge_id], map: "user_challenges_challenges_ForeignKey")
-  @@index([user_id], map: "user_challenges_users_ForeignKey")
-}
-
-model users {
-  user_id    Int      @id @default(autoincrement())
-  role       String   @db.VarChar(20)
-  identifier String   @unique(map: "identifierUnique") @db.VarChar(40)
-  password   String?  @db.VarChar(255)
-  email      String   @unique(map: "emailUnique") @db.VarChar(40)
-  profile    String?  @db.VarChar(500)
-  created_at DateTime @default(now()) @db.Timestamp(0)
-  update_at  DateTime @default(now()) @db.Timestamp(0)
-}
-
-model affiliations {
-  affiliations_id Int       @default(autoincrement())
-  organization_id Int
-  user_id         Int
-  hire_date       DateTime? @db.Date
-  job             String?   @db.VarChar(20)
-  job_introduce   String?   @db.VarChar(300)
-  nickname        String    @db.VarChar(40)
-
-  @@id([affiliations_id, organization_id, user_id])
-  @@index([organization_id], map: "affiliations_organizations_ForeignKey")
-  @@index([user_id], map: "affiliations_users_ForeignKey")
-}
-
-model challenge_day {
-  challenge_day_id Int      @id @default(autoincrement())
-  challenge_id     Int
-  day              String   @db.Char(5)
-  created_at       DateTime @default(now()) @db.Timestamp(0)
-  update_at        DateTime @default(now()) @db.Timestamp(0)
-
-  @@index([challenge_id], map: "challenge_day_challenges_ForeignKey")
-}
-
-model challenge_deposit_deduction {
-  challenge_deposit_deduction_id Int      @id @default(autoincrement())
-  challenge_id                   Int
-  count                          Int
-  created_at                     DateTime @default(now()) @db.Timestamp(0)
-  update_at                      DateTime @default(now()) @db.Timestamp(0)
-
-  @@index([challenge_id], map: "challenge_deposit_deduction_challenges_ForeignKey")
-}
-
-model comments {
-  comment_id       Int      @default(autoincrement())
-  comment_group    Int
-  user_templete_id Int
-  user_id          Int
-  content          String   @db.LongText
-  hierarchy        Int
-  order            Int
-  created_at       DateTime @default(now()) @db.Timestamp(0)
-  update_at        DateTime @default(now()) @db.Timestamp(0)
-
-  @@id([comment_id, user_templete_id, user_id])
-  @@index([comment_group], map: "comments_comments_ForeignKey")
-  @@index([user_templete_id], map: "comments_user_templetes_ForeignKey")
-  @@index([user_id], map: "comments_users_ForeignKey")
-}
-
-model likes {
-  like_id          Int @default(autoincrement())
-  user_id          Int
-  user_templete_id Int
-
-  @@id([like_id, user_id, user_templete_id])
-  @@index([user_templete_id], map: "likes_user_templetes_ForeignKey")
-  @@index([user_id], map: "likes_users_ForeignKey")
-}
-
-model organizations {
+model Organization {
   organization_id Int      @id @default(autoincrement())
   name            String   @db.VarChar(30)
-  created_at      DateTime @default(now()) @db.Timestamp(0)
-  update_at       DateTime @default(now()) @db.Timestamp(0)
+  created_at      DateTime @default(now()) @db.Timestamp(6)
+  update_at       DateTime @default(now()) @db.Timestamp(6)
+  affiliations    Affiliation[]
 }
 
-model question_contents {
-  question_content_id Int      @default(autoincrement())
-  question_id         Int
-  user_templete_id    Int
-  content             String   @db.LongText
-  visibility          Boolean
-  created_at          DateTime @default(now()) @db.Timestamp(0)
-  update_at           DateTime @default(now()) @db.Timestamp(0)
+model Affiliation {
+  affiliations_id Int  @default(autoincrement()) @unique
+  organization_id Int
+  user_id         Int
+  hire_date       DateTime?  @db.Date
+  job             String?    @db.VarChar(20)
+  job_introduce   String?    @db.VarChar(300)
+  nickname        String
+  company         String?    @db.VarChar(50)
+  company_public  Boolean
+  created_at      DateTime   @default(now()) @db.Timestamp(6)
+  update_at       DateTime   @default(now()) @db.Timestamp(6)
+  user            User       @relation(fields: [user_id], references: [user_id])
+  organization    Organization @relation(fields: [organization_id], references: [organization_id])
+  challenges      Challenge[]
 
-  @@id([question_content_id, question_id, user_templete_id])
-  @@index([question_id], map: "question_contents_questions_ForeignKey")
-  @@index([user_templete_id], map: "question_contents_user_templates_ForeignKey")
+  @@id([ affiliations_id, organization_id, user_id ])
 }
 
-model question_tags {
-  question_tag_id Int    @id @default(autoincrement())
-  question_id     Int
-  category        String @db.VarChar(10)
-
-  @@index([question_id], map: "question_tags_questions_ForeignKey")
+model ErrorLog {
+  error_log_id Int      @id @default(autoincrement())
+  level        String   @db.VarChar(10)
+  timestamp    String   @db.VarChar(45)
+  message      String   @db.VarChar(500)
 }
 
-model questions {
+model Challenge {
+  challenge_id         Int                   @default(autoincrement()) @unique
+  user_id              Int
+  affiliations_id      Int
+  name                 String                @db.VarChar(40)
+  created_at           DateTime              @default(now()) @db.Timestamp(6)
+  update_at            DateTime              @default(now()) @db.Timestamp(6)
+  start_at             DateTime              @db.Date
+  finish_at            DateTime              @db.Date
+  deposit              Int
+  start_time           DateTime              @db.Time
+  end_time             DateTime              @db.Time
+  deduction_rate       Int
+  challenge_days       ChallengeDay[]
+  challenge_deposit_deductions ChallengeDepositDeduction[]
+  user_challenges      UserChallenge[]
+  questions            Question[]
+ 
+  @@id([ challenge_id, user_id, affiliations_id ])
+  user                 User      @relation(fields: [user_id], references: [user_id])
+  affiliations         Affiliation @relation(fields: [affiliations_id], references: [affiliations_id])
+}
+
+model Question {
   question_id  Int      @id @default(autoincrement())
   challenge_id Int
   question     String   @db.VarChar(255)
   category     String   @db.VarChar(10)
-  created_at   DateTime @default(now()) @db.Timestamp(0)
-  update_at    DateTime @default(now()) @db.Timestamp(0)
-
-  @@index([challenge_id], map: "questions_challenges_ForeignKey")
+  created_at   DateTime @default(now()) @db.Timestamp(6)
+  update_at    DateTime @default(now()) @db.Timestamp(6)
+  question_tags QuestionTag[]
+  question_contents QuestionContent[]
+  challenge     Challenge @relation(fields: [challenge_id], references: [challenge_id])
 }
 
-model user_templetes {
-  user_templete_id  Int       @id @default(autoincrement())
-  user_challenge_id Int
-  cheering_phrase   String?   @db.VarChar(255)
-  created_at        DateTime  @default(now()) @db.Timestamp(0)
-  update_at         DateTime  @default(now()) @db.Timestamp(0)
-  finished_at       DateTime? @db.Timestamp(0)
+model QuestionTag {
+  question_tag_id Int      @id @default(autoincrement())
+  question_id     Int
+  category        String   @db.VarChar(10)
+  question        Question @relation(fields: [question_id], references: [question_id])
 
-  @@index([user_challenge_id], map: "user_templetes_user_challenges_ForeignKey")
+}
+
+model ChallengeDay {
+  challenge_day_id Int      @id @default(autoincrement())
+  challenge_id     Int
+  day              String   @db.Char(5)
+  created_at       DateTime @default(now()) @db.Timestamp(6)
+  update_at        DateTime @default(now()) @db.Timestamp(6)
+  challenge        Challenge @relation(fields: [challenge_id], references: [challenge_id])
+}
+
+model ChallengeDepositDeduction {
+  challenge_deposit_deduction_id Int      @id @default(autoincrement())
+  challenge_id                  Int
+  count                         Int
+  created_at                    DateTime @default(now()) @db.Timestamp(6)
+  update_at                     DateTime @default(now()) @db.Timestamp(6)
+  challenge                     Challenge @relation(fields: [challenge_id], references: [challenge_id])
+}
+
+model UserChallenge {
+  user_challenge_id Int      @id @default(autoincrement())
+  user_id           Int
+  challenge_id      Int
+  complete          Boolean
+  user_deposit      Int
+  created_at        DateTime @default(now()) @db.Timestamp(6)
+  update_at         DateTime @default(now()) @db.Timestamp(6)
+  user              User     @relation(fields: [user_id], references: [user_id])
+  challenge         Challenge @relation(fields: [challenge_id], references: [challenge_id])
+  user_templetes    UserTemplete[]
+
+}
+
+model UserTemplete {
+  user_templete_id Int         @id @default(autoincrement())
+  user_challenge_id Int
+  cheering_phrase  String?     @db.VarChar(255)
+  created_at       DateTime    @default(now()) @db.Timestamp(6)
+  update_at        DateTime    @default(now()) @db.Timestamp(6)
+  finished_at      DateTime?
+  user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id])
+  question_contents QuestionContent[]
+  likes            Like[]
+  comments         Comment[]
+}
+
+model QuestionContent {
+  question_content_id Int         @default(autoincrement())
+  question_id         Int
+  user_templete_id    Int
+  content             String      @db.Text
+  visibility          Boolean
+  created_at          DateTime    @default(now()) @db.Timestamp(6)
+  update_at           DateTime    @default(now()) @db.Timestamp(6)
+  questions            Question    @relation(fields: [question_id], references: [question_id])
+  user_templetes       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id])
+
+  @@id([question_content_id, question_id, user_templete_id])
+}
+
+model Like {
+  like_id          Int         @default(autoincrement()) @unique
+  user_id          Int
+  user_templete_id Int
+  created_at       DateTime    @default(now()) @db.Timestamp(6)
+  update_at        DateTime    @default(now()) @db.Timestamp(6)
+  user             User        @relation(fields: [user_id], references: [user_id])
+  user_templete    UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id])
+
+  @@id([like_id, user_id, user_templete_id])
+}
+
+model Comment {
+  comment_id          Int         @default(autoincrement()) @unique
+  comment_group       Int
+  user_templete_id    Int
+  user_id             Int
+  content             String      @db.Text
+  hierarchy           Int
+  order               Int
+  created_at          DateTime    @default(now()) @db.Timestamp(6)
+  update_at           DateTime    @default(now()) @db.Timestamp(6)
+  user_templete       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id])
+  user                User        @relation(fields: [user_id], references: [user_id])
+  comments            Comment?   @relation("comments", fields: [comment_group], references: [comment_id])
+  comments_son        Comment[]  @relation("comments")
+
+  @@id([comment_id, user_templete_id, user_id])
+ 
 }

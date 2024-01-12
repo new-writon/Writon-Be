@@ -2,7 +2,7 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import bcrypt from 'bcrypt';
-import { userDao, authDao, redisDao } from '../dao/index.js';
+import { userDao, authDao, redisDao, organizationDao} from '../dao/index.js';
 import socialLogin from '../utils/socialLogin.js';
 import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
@@ -18,10 +18,14 @@ import jwt from '../utils/jwtModules.js';
 const localLogin = async (
   identifier: string,
   password: string,
+  organization: string
 ) => {
 
-  const userData = await userDao.userInformationSelect(identifier);
+  const userData= await userDao.userInformationSelect(identifier)
 
+  let affiliatedConfirmation;
+  
+  
   if (!userData) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Identifier is not correct");
   }
@@ -36,10 +40,19 @@ const localLogin = async (
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
+  if(! await organizationDao.selectAffiliation(organization, userData!.user_id)){
+    affiliatedConfirmation = false;
+  }
+  
+  affiliatedConfirmation = true;
+
+
+
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
-    role: userData!.role
+    role: userData!.role,
+    affiliatedConfirmation
   };
 }
 
@@ -64,6 +77,9 @@ const kakaoLogin = async (
   const refreshToken = jwt.refresh()
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
+
+
+
 
   return {
     accessToken: accessToken,

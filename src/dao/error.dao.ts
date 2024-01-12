@@ -1,4 +1,4 @@
-import { PrismaClient, error_logs } from '@prisma/client'
+import { PrismaClient, ErrorLog } from '@prisma/client'
 import prisma from '../client.js';
 
 
@@ -11,7 +11,7 @@ const saveError = async (
     timestamp: string
   ) => {
   
-    await prisma.error_logs.create({
+    await prisma.errorLog.create({
       data: {
         level: level,
         message: message,

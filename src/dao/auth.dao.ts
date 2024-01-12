@@ -1,4 +1,4 @@
-import { PrismaClient, users } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 import prisma from '../client.js';
 
 
@@ -15,7 +15,7 @@ const kakaoSignUp = async (
   kakaoProfile: string
 ) => {
 
-  return await prisma.users.create({
+  return await prisma.user.create({
     data: {
       role: "user",
       identifier: String(kakaoIdentifier),
@@ -33,7 +33,7 @@ const localSignUp = async (
 
 ) => {
 
-  await prisma.users.create({
+  await prisma.user.create({
     data: {
       identifier: identifier,
       password: password,

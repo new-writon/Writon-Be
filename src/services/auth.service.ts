@@ -7,6 +7,7 @@ import socialLogin from '../utils/socialLogin.js';
 import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
 import jwt from '../utils/jwtModules.js';
+import { checkOrganization } from '../utils/organization.js';
 
 
 /**
@@ -23,9 +24,6 @@ const localLogin = async (
 
   const userData= await userDao.userInformationSelect(identifier)
 
-  let affiliatedConfirmation;
-  
-  
   if (!userData) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Identifier is not correct");
   }
@@ -34,31 +32,24 @@ const localLogin = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, "Password is not correct");
   }
 
-
   const accessToken = jwt.sign(userData!.user_id, userData!.role);
   const refreshToken = jwt.refresh()
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
-
-  if(! await organizationDao.selectAffiliation(organization, userData!.user_id)){
-    affiliatedConfirmation = false;
-  }
-  
-  affiliatedConfirmation = true;
-
 
 
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-    affiliatedConfirmation
+    affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
   };
 }
 
 
 const kakaoLogin = async (
   kakaoAccessToken: string,
+  organization: string
 ) => {
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
@@ -79,12 +70,11 @@ const kakaoLogin = async (
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
 
-
-
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
-    role: userData!.role
+    role: userData!.role,
+    affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
   };
 
 }

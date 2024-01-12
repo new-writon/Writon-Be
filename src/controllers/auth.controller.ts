@@ -34,7 +34,7 @@ const localLogin = catchAsync(async (req, res) => {
  */
 const kakaoLogin = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.headers.authentication as string));
+    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.headers.authentication as string, req.body.organization));
 
 });
 

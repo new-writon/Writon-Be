@@ -55,7 +55,8 @@ jobs:
           docker run -d -p 3002:3000 --name blue ${{ secrets.DOCKER_USERNAME }}/blue:1.0
 
           npx prisma generate
-          npx prisma migrate deploy
+          npx prisma migrate dev
+
 
           sleep 15
 

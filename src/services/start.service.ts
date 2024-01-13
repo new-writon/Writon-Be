@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, organizationDao } from '../dao/index.js';
 import { EnrollOrganization } from '../interfaces/start.interface.js';
+import { promises } from 'dns';
 
 
 const enrollOrganization = async (
@@ -14,11 +15,11 @@ const enrollOrganization = async (
     company: string,
     companyPublic: boolean,
 
-) : Promise<EnrollOrganization> => {
+): Promise<void> => {
 
     const organizationId = await organizationDao.selectOrganizationId(organization);
 
-    const affilationData = await affiliationDao.insertAffiliation(
+    await affiliationDao.insertAffiliation(
 
         userId,
         organizationId?.organization_id!,
@@ -30,9 +31,6 @@ const enrollOrganization = async (
         companyPublic
     );
 
-    return {
-        affiliationId: affilationData?.affiliations_id!
-    }
 
 
 

@@ -2,9 +2,9 @@
 import Joi from 'joi';
 
 
-const checkaffiliationsId = {
+const checkChallengeId = {
     params: Joi.object().keys({
-        affiliationsId: Joi.string().required()    
+        challengeId: Joi.number().required()    
 
   })
 };
@@ -19,6 +19,6 @@ const checkOrganization = {
 
 export default {
 
-    checkaffiliationsId,
+    checkChallengeId,
     checkOrganization
 };

@@ -1,22 +1,47 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { affiliationDao, organizationDao } from '../dao/index.js';
+import { affiliationDao, challengeDao, organizationDao } from '../dao/index.js';
 import { PresentSituation, SelectAffiliationsId } from '../interfaces/record.interface.js';
-
+import { calculateOverlapCount, signChallengeComplete } from '../utils/challenge.js';
 
 const presentSituation = async (
-  affiliationsId: number,
+  challengeId: number,
   userId: number
-): Promise<PresentSituation> => {
+) => {
 
-  const nickname = await affiliationDao.selectNickname(affiliationsId, userId);
 
-  // 전체기간 
+  // 닉네임
+  const nickname = await affiliationDao.selectNickname(challengeId, userId);
+  console.log(nickname?.nickname)
+
+
   // 남은 기간
+  const overlapPeriod = await challengeDao.selectOverlapPeriod(challengeId);
+  console.log(overlapPeriod)
+
+
+  // 전체 실천 횟수
+  const overlapCount = await calculateOverlapCount(challengeId);
+  console.log(overlapCount)
+
+
+
   // 성공 챌린지 횟수
+
+
+
   // 남은 보증금
 
-  console.log(nickname?.nickname)
+
+  // 챌린지 완료 여부
+  const challengeComplete = await signChallengeComplete(challengeId);
+  console.log(challengeComplete);
+
+
+
+
+
+
   return {
     nickname: nickname?.nickname!
 
@@ -29,18 +54,20 @@ const presentSituation = async (
 
 
 
-const selectAffiliation = async (
+const selectChallenge = async (
   userId: number,
   organization: string
-): Promise<SelectAffiliationsId | null> => {
+) => {
 
-  const organizationId = await organizationDao.selectOrganizationId(organization);
 
-  const affiliationId = await affiliationDao.selectAffiliationId(userId, organizationId?.organization_id!);
+  const challengeId = await challengeDao.selectChallengeId(organization, userId);
+
+  console.log(challengeId)
 
   return {
-    affiliationId: affiliationId?.affiliations_id!
+    challengeId: challengeId
   }
+
 
 }
 
@@ -51,7 +78,7 @@ const selectAffiliation = async (
 export default {
 
   presentSituation,
-  selectAffiliation
+  selectChallenge
 
 }
 

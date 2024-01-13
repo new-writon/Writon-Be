@@ -107,7 +107,7 @@ model QuestionTag {
 model ChallengeDay {
   challenge_day_id Int      @id @default(autoincrement())
   challenge_id     Int
-  day              String   @db.Char(5)
+  day              DateTime                 @db.Date
   created_at       DateTime @default(now()) @db.Timestamp(6)
   update_at        DateTime @default(now()) @db.Timestamp(6)
   challenge        Challenge @relation(fields: [challenge_id], references: [challenge_id])

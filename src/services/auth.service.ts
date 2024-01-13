@@ -2,12 +2,16 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import bcrypt from 'bcrypt';
-import { userDao, authDao, redisDao, organizationDao} from '../dao/index.js';
+import { userDao, authDao, redisDao } from '../dao/index.js';
 import socialLogin from '../utils/socialLogin.js';
 import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
 import jwt from '../utils/jwtModules.js';
 import { checkOrganization } from '../utils/organization.js';
+import { GenerateAuthCode, Login, ReissueToken} from '../interfaces/auth.interface.js'
+
+
+
 
 
 /**
@@ -20,7 +24,7 @@ const localLogin = async (
   identifier: string,
   password: string,
   organization: string
-) => {
+): Promise<Login> => {
 
   const userData= await userDao.userInformationSelect(identifier)
 
@@ -50,7 +54,7 @@ const localLogin = async (
 const kakaoLogin = async (
   kakaoAccessToken: string,
   organization: string
-) => {
+): Promise<Login> => {
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
 
@@ -81,7 +85,7 @@ const kakaoLogin = async (
 
 const logout = async (
   userId: string
-) => {
+): Promise<void> => {
 
   await redisDao.deleteRedis(userId);
 
@@ -91,7 +95,7 @@ const signUp = async (
   identifier: string,
   password: string,
   email: string,
-) => {
+): Promise<void> => {
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
@@ -107,7 +111,7 @@ const signUp = async (
 
 const generateAuthCode = async (
   email: string
-) => {
+): Promise<number> => {
 
   const verificationCode = random.generateRandom(100000, 999999);
 
@@ -124,7 +128,7 @@ const generateAuthCode = async (
 const verifyAuthCode = async (
   email: string,
   code: string
-) => {
+): Promise<void> => {
 
   const redisCode = await redisDao.getRedis(email);
 
@@ -139,7 +143,7 @@ const verifyAuthCode = async (
 const reissueToken = async (
   accessToken: string,
   refreshToken: string
-) => {
+): Promise<ReissueToken> => {
 
   const authResult = jwt.verify(accessToken.split('Bearer ')[1]);
   const decoded = jwt.decode(accessToken.split('Bearer ')[1]);

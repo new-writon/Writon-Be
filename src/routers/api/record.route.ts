@@ -8,8 +8,10 @@ import auth from '../../middlewares/auth.js';
 const router = express.Router();
 
 
-router.get('/present-situation', auth, validate(recordValidation.checkOrganization), recordController.presentSituation );
+router.get('/present-situation', auth, validate(recordValidation.checkaffiliationsId), recordController.presentSituation );
 router.get('/calendar');
 router.get('/reminiscence');
+router.get('/', auth, validate(recordValidation.checkOrganization), recordController.selectAffiliation);
+
 
 export default router;

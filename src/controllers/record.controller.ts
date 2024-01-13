@@ -12,10 +12,19 @@ const presentSituation = catchAsync(async (req, res) => {
 });
 
 
+const selectAffiliation = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await recordService.selectAffiliation(req.decoded?.id, req.query.organization as string));
+
+});
+
+
+
 
 
 
 export default {
 
-    presentSituation
+    presentSituation,
+    selectAffiliation
 }

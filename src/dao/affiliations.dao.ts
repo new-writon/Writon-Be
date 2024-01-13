@@ -32,7 +32,7 @@ const insertAffiliation = async <Key extends keyof Affiliation>(
 ): Promise<Pick<Affiliation, Key> | null> => {
   return await prisma.affiliation.create({
 
-    data:{
+    data: {
       user_id: userId,
       organization_id: organizationId,
       nickname: nickname,
@@ -43,12 +43,24 @@ const insertAffiliation = async <Key extends keyof Affiliation>(
       company_public: companyPublic
     }
 
-  }) 
+  })
 };
 
 
-
-
+const selectAffiliationId = async <Key extends keyof Affiliation>(
+  userId: number,
+  organizationId: number,
+  keys: Key[] = ['affiliations_id'] as Key[]
+): Promise<Pick<Affiliation, Key> | null> => {
+  
+  return await prisma.affiliation.findFirst({
+    where: {
+      organization_id: organizationId,
+      user_id: userId
+    },
+    select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
+  }) as Pick<Affiliation, Key> | null;
+};
 
 
 
@@ -56,5 +68,6 @@ const insertAffiliation = async <Key extends keyof Affiliation>(
 export default {
 
   selectNickname,
-  insertAffiliation
+  insertAffiliation,
+  selectAffiliationId
 }

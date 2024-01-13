@@ -1,4 +1,8 @@
+interface SelectAffiliationsId {
 
+    affiliationId: number
+
+}
 
 interface PresentSituation {
     nickname: string
@@ -10,6 +14,7 @@ interface PresentSituation {
 
 export {
 
-    PresentSituation
+    PresentSituation,
+    SelectAffiliationsId
 
 } 

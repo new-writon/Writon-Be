@@ -44,6 +44,9 @@ const enrollChallenge = async (
 
     await challengeDao.insertChallenge(userId, challengeData.challenge_id, challengeData.deposit);
 
+    return {
+        challengeId: challengeData.challenge_id
+    }
 }
 
 

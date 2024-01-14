@@ -30,10 +30,10 @@ const signChallengeComplete = async (
     let complete;
 
     if (!challengeComplete) {
-        complete = false
+        complete = true
 
     } else {
-        complete = true
+        complete = false
     }
 
 

@@ -5,3 +5,6 @@ export { default as errorDao } from './error.dao.js';
 export { default as affiliationDao } from './affiliation.dao.js';
 export { default as organizationDao } from './organization.dao.js';
 export { default as challengeDao } from './challenge.dao.js';
+export { default as userChallengeDao } from './userChallenge.dao.js';
+export { default as userTemplateDao } from './userTemplate.dao.js';
+export { default as challengeDayDao } from './challengeDay.dao.js';

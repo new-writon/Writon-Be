@@ -14,9 +14,16 @@ interface SelectDay {
   day: Date
 }
 
+interface SelectFinishAt {
+
+  finished_at: Date
+}
+
+
 
 export {
   SelectPeriod,
   SelectChallengeId,
-  SelectDay
+  SelectDay,
+  SelectFinishAt
 }

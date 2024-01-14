@@ -7,7 +7,7 @@ import { recordService } from '../services/index.js'
 
 const presentSituation = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await recordService.presentSituation(Number(req.params.challengeId), req.decoded!.id));
+    res.status(httpStatus.OK).send(await recordService.presentSituation(req.decoded!.id, Number(req.params.challengeId) ));
 
 });
 

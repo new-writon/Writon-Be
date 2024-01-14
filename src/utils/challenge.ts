@@ -1,4 +1,4 @@
-import { challengeDao } from '../dao/index.js';
+import { challengeDao, challengeDayDao, userTemplateDao } from '../dao/index.js';
 
 
 const calculateOverlapCount = async (
@@ -40,8 +40,31 @@ const signChallengeComplete = async (
 
 }
 
+const calculateChallengeSuccessCount = async(
+    userId: number,
+    challengeId: number
+
+) => {
+
+    const challengeSuccessCountData = await userTemplateDao.selectSuccessChallenge(userId, challengeId);
+    let count = 0
+    for( let i = 0; i < challengeSuccessCountData.length; i++){
+  
+      if(!await challengeDayDao.signChallengeDay(challengeSuccessCountData[i].finished_at!)){
+        continue;
+      }
+      count++
+  
+    
+    }
+
+    return count
+}
+
+
 
 export {
     calculateOverlapCount,
-    signChallengeComplete
+    signChallengeComplete,
+    calculateChallengeSuccessCount
 }

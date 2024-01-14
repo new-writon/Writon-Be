@@ -1,6 +1,6 @@
 import prisma from '../client.js';
 import { PrismaClient, Affiliation, Challenge, } from '@prisma/client'
-import { SelectPeriod, SelectChallengeId, SelectDay } from '../interfaces/challenge.interface.js';
+import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt } from '../interfaces/challenge.interface.js';
 
 
 
@@ -113,6 +113,32 @@ const selectChallenge = async (
 
 }
 
+
+const signPeriodCondition = async (
+    date: Date,
+    challengeId: number
+
+): Promise<Challenge> => {
+
+
+    const signCondition = await prisma.$queryRaw<Challenge[]>`
+       
+            SELECT *
+            FROM Challenge as c
+            WHERE
+            c.challenge_id = ${challengeId}
+            AND 
+            ${date} between c.start_at AND c.finish_at;`
+
+    return signCondition[0]
+
+}
+
+
+
+
+
+
 const insertChallenge = async (
     userId: number,
     challengeId: number,
@@ -149,5 +175,6 @@ export default {
     signChallengeComplete,
     selectPeriodDate,
     selectChallenge,
-    insertChallenge
+    insertChallenge,
+    signPeriodCondition
 }

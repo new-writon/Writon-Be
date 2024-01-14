@@ -19,12 +19,12 @@ const selectWholePeriod = async (
 
 
 const selectOverlapPeriod = async (
-    affiliationId: number
+    challengeId: number
 ): Promise<number> => {
 
     const overlapPeriod = await prisma.$queryRaw<SelectPeriod[]>`SELECT DATEDIFF(c.finish_at, NOW()) AS period
                                                         FROM Challenge AS c 
-                                                        WHERE affiliations_id = ${affiliationId};`;
+                                                        WHERE challenge_id = ${challengeId};`;
 
     return overlapPeriod[0].period;
 }

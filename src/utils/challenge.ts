@@ -36,7 +36,10 @@ const signChallengeComplete = async (
         complete = true
     }
 
-    return complete;
+
+    return {
+        challengeStatus :complete
+    }
 
 }
 

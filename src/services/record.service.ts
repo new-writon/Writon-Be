@@ -31,8 +31,15 @@ const presentSituation = async (
 
 }
 
-// 챌린지 완료 여부
-//const challengeComplete = await signChallengeComplete(challengeId);
+const signChallengeStatus = async (
+  challengeId: number
+) => {
+
+   return await signChallengeComplete(challengeId);
+}
+
+
+
 
 
 const selectChallenge = async (
@@ -57,7 +64,8 @@ const selectChallenge = async (
 export default {
 
   presentSituation,
-  selectChallenge
+  selectChallenge,
+  signChallengeStatus
 
 }
 

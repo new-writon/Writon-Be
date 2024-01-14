@@ -135,10 +135,6 @@ const signPeriodCondition = async (
 }
 
 
-
-
-
-
 const insertChallenge = async (
     userId: number,
     challengeId: number,
@@ -156,11 +152,6 @@ const insertChallenge = async (
 
     })
 }
-
-
-
-
-
 
 
 

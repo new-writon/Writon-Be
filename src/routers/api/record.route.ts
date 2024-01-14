@@ -11,7 +11,8 @@ router.get('/', auth, validate(recordValidation.checkOrganization), recordContro
 router.get('/present-situation/:challengeId', auth, validate(recordValidation.checkChallengeId), recordController.presentSituation);
 router.get('/calendar');
 router.get('/reminiscence');
-
+router.get('/:challengeId/status', validate(recordValidation.checkChallengeId), recordController.signChallengeStatus);
+router.get('/:challengeId/daily-reflection', auth, validate(recordValidation.checkChallengeId), recordController.selectChallenge);
 
 
 export default router;

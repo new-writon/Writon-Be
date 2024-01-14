@@ -20,11 +20,19 @@ const selectChallenge = catchAsync(async (req, res) => {
 
 
 
+const signChallengeStatus = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await recordService.signChallengeStatus(req.params.challengeId));
+
+});
+
+
 
 
 
 export default {
 
     presentSituation,
-    selectChallenge
+    selectChallenge,
+    signChallengeStatus
 }

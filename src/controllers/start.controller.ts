@@ -21,6 +21,18 @@ const enrollOrganization = catchAsync(async (req, res) => {
 });
 
 
+
+const enrollChallenge = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await startService.enrollChallenge(
+        req.decoded?.id,
+        req.body.organization
+    ));
+
+});
+
+
 export default {
-    enrollOrganization
+    enrollOrganization,
+    enrollChallenge
 }

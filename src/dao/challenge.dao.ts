@@ -37,7 +37,7 @@ const selectPeriodDate = async (
                                                                     where ${day} 
                                                                     between c.start_at and c.finish_at;`;
 
-                                                  //                  console.log(periodData)
+    //                  console.log(periodData)
     return periodData[0];
 }
 
@@ -50,7 +50,7 @@ const selectOverlapCount = async (
                                                     order by cd.day;`;
 
 
-//    console.log(overlapCount)
+    //    console.log(overlapCount)
     return overlapCount;
 }
 
@@ -91,6 +91,45 @@ const selectChallengeId = async (
 
 }
 
+const selectChallenge = async (
+    organization: string,
+    userId: number
+
+): Promise<Challenge> => {
+
+    const challengeData = await prisma.$queryRaw<Challenge[]>`select c.* from challenge as c 
+                    where curdate() < c.finish_at 
+                    and c.affiliations_id = (select a.affiliations_id 
+                    from Affiliation as a 
+                    where a.user_id = ${userId} 
+                    and 
+                     a.organization_id = (select o.organization_id 
+                        from Organization as o 
+                        where o.name = ${organization}));`;
+
+
+
+    return challengeData[0]
+
+}
+
+const insertChallenge = async (
+    userId: number,
+    challengeId: number,
+    deposit: number
+) => {
+
+
+    return await prisma.userChallenge.create({
+        data: {
+            complete: false,
+            challenge_id: challengeId,
+            user_id: userId,
+            user_deposit: deposit
+        }
+
+    })
+}
 
 
 
@@ -108,5 +147,7 @@ export default {
     selectChallengeId,
     selectOverlapCount,
     signChallengeComplete,
-    selectPeriodDate
+    selectPeriodDate,
+    selectChallenge,
+    insertChallenge
 }

@@ -1,8 +1,9 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { affiliationDao, organizationDao } from '../dao/index.js';
+import { affiliationDao, organizationDao, challengeDao } from '../dao/index.js';
 import { EnrollOrganization } from '../interfaces/start.interface.js';
-import { promises } from 'dns';
+import prisma from '../client.js';
+
 
 
 const enrollOrganization = async (
@@ -31,13 +32,23 @@ const enrollOrganization = async (
         companyPublic
     );
 
+}
 
 
+const enrollChallenge = async (
+    userId: number,
+    organization: string
+) => {
 
+    const challengeData = await challengeDao.selectChallenge(organization, userId);
+
+    await challengeDao.insertChallenge(userId, challengeData.challenge_id, challengeData.deposit);
 
 }
 
 
+
 export default {
-    enrollOrganization
+    enrollOrganization,
+    enrollChallenge
 }

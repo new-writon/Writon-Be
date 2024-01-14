@@ -62,8 +62,6 @@ const selectChallenge = async (
 
   const challengeId = await challengeDao.selectChallengeId(organization, userId);
 
-  console.log(challengeId)
-
   return {
     challengeId: challengeId
   }

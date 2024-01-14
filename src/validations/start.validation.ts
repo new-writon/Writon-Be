@@ -10,14 +10,20 @@ const checkOrganizationEnroll = {
         jobIntroduce: Joi.string().required(),
         hireDate: Joi.string().required(),
         company: Joi.string().required(),
-        companyPublic: Joi.boolean().required(),    
+        companyPublic: Joi.boolean().required(),
 
-  })
+    })
 };
 
+const checkOrganization = {
+    body: Joi.object().keys({
+        organization: Joi.string().required()
 
+    })
+};
 
 export default {
 
-    checkOrganizationEnroll
+    checkOrganizationEnroll,
+    checkOrganization
 };

@@ -12,7 +12,7 @@ router.get('/present-situation/:challengeId', auth, validate(recordValidation.ch
 router.get('/calendar');
 router.get('/reminiscence');
 router.get('/:challengeId/status', validate(recordValidation.checkChallengeId), recordController.signChallengeStatus);
-router.get('/:challengeId/daily-reflection', auth, validate(recordValidation.checkChallengeId), recordController.selectChallenge);
+router.get('/:challengeId/daily-reflection', auth, validate(recordValidation.checkChallengeId), recordController.signTodayTemplateStatus);
 
 
 export default router;

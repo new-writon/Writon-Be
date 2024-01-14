@@ -27,12 +27,17 @@ const signChallengeStatus = catchAsync(async (req, res) => {
 });
 
 
+const signTodayTemplateStatus = catchAsync(async (req, res) => {
 
+    res.status(httpStatus.OK).send(await recordService.signTodayTemplateStatus(req.decoded?.id, req.params.challengeId));
+
+});
 
 
 export default {
 
     presentSituation,
     selectChallenge,
-    signChallengeStatus
+    signChallengeStatus,
+    signTodayTemplateStatus
 }

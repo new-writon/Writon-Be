@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, challengeDao, challengeDayDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 
-import { calculateChallengeSuccessCount, calculateOverlapCount, signChallengeComplete } from '../utils/challenge.js';
+import { calculateChallengeSuccessCount, calculateOverlapCount, signChallengeComplete, signTodayTemplateStatusCalculation } from '../utils/challenge.js';
 
 const presentSituation = async (
   userId: number,
@@ -39,6 +39,14 @@ const signChallengeStatus = async (
 }
 
 
+const signTodayTemplateStatus = async (
+  userId: number,
+  challengeId: number
+) => {
+
+   return await signTodayTemplateStatusCalculation(userId, challengeId);
+}
+
 
 
 
@@ -65,7 +73,9 @@ export default {
 
   presentSituation,
   selectChallenge,
-  signChallengeStatus
+  signChallengeStatus,
+  signTodayTemplateStatus
+  
 
 }
 

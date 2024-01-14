@@ -38,12 +38,12 @@ const signChallengeComplete = async (
 
 
     return {
-        challengeStatus :complete
+        challengeStatus: complete
     }
 
 }
 
-const calculateChallengeSuccessCount = async(
+const calculateChallengeSuccessCount = async (
     userId: number,
     challengeId: number
 
@@ -51,23 +51,43 @@ const calculateChallengeSuccessCount = async(
 
     const challengeSuccessCountData = await userTemplateDao.selectSuccessChallenge(userId, challengeId);
     let count = 0
-    for( let i = 0; i < challengeSuccessCountData.length; i++){
-  
-      if(!await challengeDayDao.signChallengeDay(challengeSuccessCountData[i].finished_at!)){
-        continue;
-      }
-      count++
-  
-    
+    for (let i = 0; i < challengeSuccessCountData.length; i++) {
+
+        if (!await challengeDayDao.signChallengeDay(challengeSuccessCountData[i].finished_at!)) {
+            continue;
+        }
+        count++
+
+
     }
 
     return count
 }
 
+const signTodayTemplateStatusCalculation = async (
+    userId: number,
+    challengeId: number
+
+) => {
+
+    if (!await userTemplateDao.signTodayTemplate(userId, challengeId)) {
+
+        return {
+            todayTemplateStatus: false
+        }
+
+    }
+
+    return {
+        todayTemplateStatus: true
+
+    }
+}
 
 
 export {
     calculateOverlapCount,
     signChallengeComplete,
-    calculateChallengeSuccessCount
+    calculateChallengeSuccessCount,
+    signTodayTemplateStatusCalculation
 }

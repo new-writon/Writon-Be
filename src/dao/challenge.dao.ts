@@ -76,7 +76,7 @@ const selectChallengeId = async (
 
 ): Promise<number> => {
 
-    const challengeId = await prisma.$queryRaw<SelectChallengeId[]>`select c.challenge_id from challenge as c 
+    const challengeId = await prisma.$queryRaw<SelectChallengeId[]>`select c.challenge_id from Challenge as c 
                     where curdate() < c.finish_at 
                     and c.affiliations_id = (select a.affiliations_id 
                     from Affiliation as a 
@@ -97,7 +97,7 @@ const selectChallenge = async (
 
 ): Promise<Challenge> => {
 
-    const challengeData = await prisma.$queryRaw<Challenge[]>`select c.* from challenge as c 
+    const challengeData = await prisma.$queryRaw<Challenge[]>`select c.* from Challenge as c 
                     where curdate() < c.finish_at 
                     and c.affiliations_id = (select a.affiliations_id 
                     from Affiliation as a 

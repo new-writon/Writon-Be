@@ -26,6 +26,8 @@ const selectOverlapPeriod = async (
                                                         FROM Challenge AS c 
                                                         WHERE challenge_id = ${challengeId};`;
 
+                                                        console.log(overlapPeriod[0].period)
+
     return overlapPeriod[0].period;
 }
 

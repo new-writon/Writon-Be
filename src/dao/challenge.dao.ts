@@ -28,7 +28,7 @@ const selectOverlapPeriod = async (
 
                                                         console.log(overlapPeriod[0].period)
 
-    return overlapPeriod[0].period;
+    return Number(overlapPeriod[0].period);
 }
 
 const selectPeriodDate = async (

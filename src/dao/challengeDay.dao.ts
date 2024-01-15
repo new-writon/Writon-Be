@@ -18,17 +18,33 @@ const signChallengeDay = async (
 }
 
 
-const selectChallengeDay = async <Key extends keyof ChallengeDay>(
-    challengeId: number,
-    keys: Key[] = ['day'] as Key[]
-  ): Promise<Pick<ChallengeDay, Key>[] | null> => {
+// const selectChallengeDay = async <Key extends keyof ChallengeDay>(
+//     challengeId: number,
+//     keys: Key[] = ['day'] as Key[]
+//   ): Promise<Pick<ChallengeDay, Key>[] | null> => {
   
-    return await prisma.challengeDay.findMany({
-      where: { challenge_id: challengeId},
-      select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
-    }) as Pick<ChallengeDay, Key>[] | null;
-  }
+//     return await prisma.challengeDay.findMany({
+//       where: { challenge_id: challengeId},
+//       select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
+//     }) as Pick<ChallengeDay, Key>[] | null;
+//   }
 
+  const selectChallengeDay = async (
+    challengeId: number
+): Promise<ChallengeDay[]> => {
+
+    const challengeDayData = await prisma.$queryRaw<ChallengeDay[]>`
+          SELECT cd.day FROM ChallengeDay as cd 
+          WHERE cd.challenge_id = ${challengeId}
+          AND cd.day BETWEEN (SELECT c.start_at 
+            FROM Challenge as c WHERE challenge_id = ${challengeId})
+            AND CURDATE()
+   
+   
+    ;`;
+
+    return challengeDayData;
+}
 
 
 

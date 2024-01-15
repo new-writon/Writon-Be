@@ -138,7 +138,7 @@ const signPeriodCondition = async (
 
 
 const insertChallenge = async (
-    userId: number,
+    affiliationId: number,
     challengeId: number,
     deposit: number
 ) => {
@@ -146,9 +146,8 @@ const insertChallenge = async (
 
     return await prisma.userChallenge.create({
         data: {
-            complete: false,
             challenge_id: challengeId,
-            user_id: userId,
+            affiliation_id: affiliationId,
             user_deposit: deposit
         }
 

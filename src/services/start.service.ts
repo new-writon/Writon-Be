@@ -42,7 +42,11 @@ const enrollChallenge = async (
 
     const challengeData = await challengeDao.selectChallenge(organization, userId);
 
-    await challengeDao.insertChallenge(userId, challengeData.challenge_id, challengeData.deposit);
+    const userAffiliation = await affiliationDao.selectAffiliation(userId, organization)
+
+
+
+    await challengeDao.insertChallenge(userAffiliation.affiliation_id, challengeData.challenge_id, challengeData.deposit);
 
     return {
         challengeId: challengeData.challenge_id

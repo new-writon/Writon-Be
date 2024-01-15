@@ -3,7 +3,7 @@ import { PrismaClient, Affiliation } from '@prisma/client'
 
 
 const selectNickname = async <Key extends keyof Affiliation>(
-  affiliationsId: number,
+  affiliationId: number,
   userId: number,
   keys: Key[] = [
     'nickname',
@@ -12,7 +12,7 @@ const selectNickname = async <Key extends keyof Affiliation>(
 
   return (await prisma.affiliation.findMany({
     where: {
-      affiliations_id: affiliationsId,
+      affiliation_id: affiliationId,
       user_id: userId
     },
     select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
@@ -50,7 +50,7 @@ const insertAffiliation = async <Key extends keyof Affiliation>(
 const selectAffiliationId = async <Key extends keyof Affiliation>(
   userId: number,
   organizationId: number,
-  keys: Key[] = ['affiliations_id'] as Key[]
+  keys: Key[] = ['affiliation_id'] as Key[]
 ): Promise<Pick<Affiliation, Key> | null> => {
   
   return await prisma.affiliation.findFirst({
@@ -62,12 +62,30 @@ const selectAffiliationId = async <Key extends keyof Affiliation>(
   }) as Pick<Affiliation, Key> | null;
 };
 
+const selectAffiliation = async (
+  userId: number,
+  organization: string
+): Promise<Affiliation> => {
 
+  const affiliationData = await prisma.$queryRaw<Affiliation[]>`
+  SELECT a.* FROM Affiliation as a
+  WHERE a.user_id = ${userId} 
+  AND a.organization_id = (
+    SELECT o.organization_id FROM Organization as o
+    WHERE o.name = ${organization}
+  );`;
+
+
+
+  return affiliationData[0]
+
+}
 
 
 export default {
 
   selectNickname,
   insertAffiliation,
-  selectAffiliationId
+  selectAffiliationId,
+  selectAffiliation
 }

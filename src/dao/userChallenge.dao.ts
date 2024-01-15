@@ -5,7 +5,7 @@ import { SelectPeriod, SelectChallengeId, SelectDay } from '../interfaces/challe
 
 
 
-
+// 문제 생김
 const selectUserChallenge = async (
     userId: number,
     challengeId: number

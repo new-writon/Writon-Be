@@ -12,7 +12,7 @@ datasource db {
 
 
 model User {
-  user_id       Int       @id @default(autoincrement()) @unique
+  user_id       Int       @id @default(autoincrement()) 
   role          String    @db.VarChar(20)
   identifier    String    @db.VarChar(40) @unique
   password      String?   @db.VarChar(255)
@@ -21,8 +21,6 @@ model User {
   created_at    DateTime  @default(now()) @db.Timestamp(6)
   update_at     DateTime  @default(now()) @db.Timestamp(6)
   affiliations  Affiliation[]
-  challenges    Challenge[]
-  user_challenges UserChallenge[]
   comments Comment[]
   likes         Like[]
 }
@@ -35,8 +33,17 @@ model Organization {
   affiliations    Affiliation[]
 }
 
+
+
+model ErrorLog {
+  error_log_id Int      @id @default(autoincrement())
+  level        String   @db.VarChar(10)
+  timestamp    String   @db.VarChar(45)
+  message      String   @db.VarChar(500)
+}
+
 model Affiliation {
-  affiliations_id Int  @default(autoincrement()) @unique
+  affiliation_id Int  @default(autoincrement()) @unique
   organization_id Int
   user_id         Int
   hire_date       DateTime?  @db.Date
@@ -47,41 +54,37 @@ model Affiliation {
   company_public  Boolean
   created_at      DateTime   @default(now()) @db.Timestamp(6)
   update_at       DateTime   @default(now()) @db.Timestamp(6)
-  user            User       @relation(fields: [user_id], references: [user_id])
-  organization    Organization @relation(fields: [organization_id], references: [organization_id])
+
+  @@id([ affiliation_id, organization_id, user_id ])
+
   challenges      Challenge[]
+  user_challenges UserChallenge[]
 
-  @@id([ affiliations_id, organization_id, user_id ])
-}
+  user            User       @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  organization    Organization @relation(fields: [organization_id], references: [organization_id], onDelete: Cascade, onUpdate: Cascade)
 
-model ErrorLog {
-  error_log_id Int      @id @default(autoincrement())
-  level        String   @db.VarChar(10)
-  timestamp    String   @db.VarChar(45)
-  message      String   @db.VarChar(500)
+
 }
 
 model Challenge {
   challenge_id         Int                   @default(autoincrement()) @unique
-  user_id              Int
-  affiliations_id      Int
+  affiliation_id       Int
   name                 String                @db.VarChar(40)
   created_at           DateTime              @default(now()) @db.Timestamp(6)
   update_at            DateTime              @default(now()) @db.Timestamp(6)
   start_at             DateTime              @db.Date
   finish_at            DateTime              @db.Date
   deposit              Int
-  start_time           DateTime              @db.Time
-  end_time             DateTime              @db.Time
   deduction_rate       Int
+
   challenge_days       ChallengeDay[]
   challenge_deposit_deductions ChallengeDepositDeduction[]
   user_challenges      UserChallenge[]
   questions            Question[]
  
-  @@id([ challenge_id, user_id, affiliations_id ])
-  user                 User      @relation(fields: [user_id], references: [user_id])
-  affiliations         Affiliation @relation(fields: [affiliations_id], references: [affiliations_id])
+  affiliation         Affiliation @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([ challenge_id, affiliation_id ])
 }
 
 model Question {
@@ -91,16 +94,19 @@ model Question {
   category     String   @db.VarChar(10)
   created_at   DateTime @default(now()) @db.Timestamp(6)
   update_at    DateTime @default(now()) @db.Timestamp(6)
+
   question_tags QuestionTag[]
   question_contents QuestionContent[]
-  challenge     Challenge @relation(fields: [challenge_id], references: [challenge_id])
+
+  challenge     Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model QuestionTag {
   question_tag_id Int      @id @default(autoincrement())
   question_id     Int
   category        String   @db.VarChar(10)
-  question        Question @relation(fields: [question_id], references: [question_id])
+
+  question        Question @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: Cascade)
 
 }
 
@@ -110,7 +116,8 @@ model ChallengeDay {
   day              DateTime                 @db.Date
   created_at       DateTime @default(now()) @db.Timestamp(6)
   update_at        DateTime @default(now()) @db.Timestamp(6)
-  challenge        Challenge @relation(fields: [challenge_id], references: [challenge_id])
+
+  challenge        Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model ChallengeDepositDeduction {
@@ -119,47 +126,57 @@ model ChallengeDepositDeduction {
   count                         Int
   created_at                    DateTime @default(now()) @db.Timestamp(6)
   update_at                     DateTime @default(now()) @db.Timestamp(6)
-  challenge                     Challenge @relation(fields: [challenge_id], references: [challenge_id])
+
+  challenge                     Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
+
+
+
 model UserChallenge {
-  user_challenge_id Int      @id @default(autoincrement())
-  user_id           Int
+  user_challenge_id Int      @default(autoincrement()) @unique
+  affiliation_id    Int
   challenge_id      Int
-  complete          Boolean
   user_deposit      Int
   created_at        DateTime @default(now()) @db.Timestamp(6)
   update_at         DateTime @default(now()) @db.Timestamp(6)
-  user              User     @relation(fields: [user_id], references: [user_id])
-  challenge         Challenge @relation(fields: [challenge_id], references: [challenge_id])
+
   user_templetes    UserTemplete[]
+
+  affiliation       Affiliation @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
+  challenge         Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([ user_challenge_id, affiliation_id, challenge_id ])
 
 }
 
 model UserTemplete {
-  user_templete_id Int         @id @default(autoincrement())
+  user_templete_id Int         @id @default(autoincrement()) 
   user_challenge_id Int
   cheering_phrase  String?     @db.VarChar(255)
   created_at       DateTime    @default(now()) @db.Timestamp(6)
   update_at        DateTime    @default(now()) @db.Timestamp(6)
   finished_at      DateTime    @db.Date
   complete         Boolean
-  user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id])
+
   question_contents QuestionContent[]
   likes            Like[]
   comments         Comment[]
+
+  user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model QuestionContent {
-  question_content_id Int         @default(autoincrement())
+  question_content_id Int         @default(autoincrement()) @unique
   question_id         Int
   user_templete_id    Int
   content             String      @db.Text
   visibility          Boolean
   created_at          DateTime    @default(now()) @db.Timestamp(6)
   update_at           DateTime    @default(now()) @db.Timestamp(6)
-  questions            Question    @relation(fields: [question_id], references: [question_id])
-  user_templetes       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id])
+
+  questions            Question    @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: Cascade)
+  user_templetes       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([question_content_id, question_id, user_templete_id])
 }
@@ -170,15 +187,16 @@ model Like {
   user_templete_id Int
   created_at       DateTime    @default(now()) @db.Timestamp(6)
   update_at        DateTime    @default(now()) @db.Timestamp(6)
-  user             User        @relation(fields: [user_id], references: [user_id])
-  user_templete    UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id])
+
+  user             User        @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  user_templete    UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([like_id, user_id, user_templete_id])
 }
 
 model Comment {
   comment_id          Int         @default(autoincrement()) @unique
-  comment_group       Int
+  comment_group       Int         
   user_templete_id    Int
   user_id             Int
   content             String      @db.Text
@@ -186,10 +204,13 @@ model Comment {
   order               Int
   created_at          DateTime    @default(now()) @db.Timestamp(6)
   update_at           DateTime    @default(now()) @db.Timestamp(6)
-  user_templete       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id])
-  user                User        @relation(fields: [user_id], references: [user_id])
-  comments            Comment?   @relation("comments", fields: [comment_group], references: [comment_id])
+
+
   comments_son        Comment[]  @relation("comments")
+
+  user_templete       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id], onDelete: Cascade, onUpdate: Cascade)
+  user                User        @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  comments            Comment?   @relation("comments", fields: [comment_group], references: [comment_id], onDelete: Cascade, onUpdate: Cascade) 
 
   @@id([comment_id, user_templete_id, user_id])
  

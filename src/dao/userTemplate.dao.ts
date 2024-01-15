@@ -47,12 +47,34 @@ const signTodayTemplate = async (
 
 }
 
+const selectUserTemplateDay = async (
+    userId: number,
+    challengeId: number,
+    yearAndMonth: Date
+   
+  ): Promise<UserTemplete[]> => {
+
+    const userTemplateData = await prisma.$queryRaw<UserTemplete[]>`
+
+        select ut.* from UserTemplete as ut
+            where date_format(ut.finished_at, '%Y-%m') = ${yearAndMonth}
+            and
+            ut.user_challenge_id = (select uc.user_challenge_id
+            from UserChallenge as uc 
+                where uc.user_id = ${userId}
+                    and uc.challenge_id = ${challengeId})
+                    order by date_format(ut.finished_at, '%Y-%m');`;
+
+
+    return userTemplateData
+  }
 
 
 export default {
 
 
     selectSuccessChallenge,
-    signTodayTemplate
+    signTodayTemplate,
+    selectUserTemplateDay
   
 }

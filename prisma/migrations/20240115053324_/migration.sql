@@ -1,64 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `affiliations` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `challenge_day` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `challenge_deposit_deduction` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `challenges` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `comments` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `error_logs` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `likes` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `organizations` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `question_contents` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `question_tags` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `questions` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `user_challenges` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `user_templetes` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `users` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `affiliations`;
-
--- DropTable
-DROP TABLE `challenge_day`;
-
--- DropTable
-DROP TABLE `challenge_deposit_deduction`;
-
--- DropTable
-DROP TABLE `challenges`;
-
--- DropTable
-DROP TABLE `comments`;
-
--- DropTable
-DROP TABLE `error_logs`;
-
--- DropTable
-DROP TABLE `likes`;
-
--- DropTable
-DROP TABLE `organizations`;
-
--- DropTable
-DROP TABLE `question_contents`;
-
--- DropTable
-DROP TABLE `question_tags`;
-
--- DropTable
-DROP TABLE `questions`;
-
--- DropTable
-DROP TABLE `user_challenges`;
-
--- DropTable
-DROP TABLE `user_templetes`;
-
--- DropTable
-DROP TABLE `users`;
-
 -- CreateTable
 CREATE TABLE `User` (
     `user_id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -158,7 +97,7 @@ CREATE TABLE `QuestionTag` (
 CREATE TABLE `ChallengeDay` (
     `challenge_day_id` INTEGER NOT NULL AUTO_INCREMENT,
     `challenge_id` INTEGER NOT NULL,
-    `day` CHAR(5) NOT NULL,
+    `day` DATE NOT NULL,
     `created_at` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `update_at` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
 
@@ -197,6 +136,7 @@ CREATE TABLE `UserTemplete` (
     `created_at` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `update_at` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `finished_at` DATETIME(3) NULL,
+    `complete` BOOLEAN NOT NULL,
 
     PRIMARY KEY (`user_templete_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

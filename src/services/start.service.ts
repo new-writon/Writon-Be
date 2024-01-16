@@ -1,8 +1,7 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, organizationDao, challengeDao } from '../dao/index.js';
-import { EnrollOrganization } from '../interfaces/start.interface.js';
-import prisma from '../client.js';
+
 
 
 

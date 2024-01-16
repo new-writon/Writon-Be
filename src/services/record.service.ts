@@ -57,19 +57,17 @@ const signTodayTemplateStatus = async (
 
 
 
-const selectChallenge = async (
-  userId: number,
-  organization: string
-) => {
+// const selectChallenge = async (
+//   userId: number,
+//   organization: string
+// ) => {
 
-  const challengeId = await challengeDao.selectChallengeId(organization, userId);
+//   const challengeId = await challengeDao.selectChallengeId(organization, userId);
 
-  return {
-    challengeId: challengeId
-  }
-
-
-}
+//   return {
+//     challengeId: challengeId
+//   }
+// }
 
 const selectCalendarSituation = async (
   userId: number,
@@ -78,13 +76,17 @@ const selectCalendarSituation = async (
   yearAndMonth: Date
 ) => {
 
-  const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
-  const challengeDay = await challengeDayDao.selectChallengeDay(challengeId);
+  const [affiliation, challengeDay] = await Promise.all([
+
+    affiliationDao.selectAffiliation(userId, organization),
+    challengeDayDao.selectChallengeDay(challengeId)
+
+  ])
 
   const userTemplateDay = await userTemplateDao.selectUserTemplateDay(affiliation.affiliation_id, challengeId, yearAndMonth);
 
-  return  sortCallendarDateBadge(challengeDay, userTemplateDay)
+  return sortCallendarDateBadge(challengeDay, userTemplateDay)
 
 }
 
@@ -94,7 +96,7 @@ const selectCalendarSituation = async (
 export default {
 
   presentSituation,
-  selectChallenge,
+  // selectChallenge,
   signChallengeStatus,
   signTodayTemplateStatus,
   selectCalendarSituation

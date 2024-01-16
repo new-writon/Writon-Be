@@ -7,7 +7,7 @@ import auth from '../../middlewares/auth.js';
 
 const router = express.Router();
 
-router.get('/', auth, validate(recordValidation.checkOrganization), recordController.selectChallenge);
+//router.get('/', auth, validate(recordValidation.checkOrganization), recordController.selectChallenge);
 router.get('/present-situation/:organization/:challengeId', auth, validate(recordValidation.checkChallengeIdAndOrganization), recordController.presentSituation);
 router.get('/calendar/:organization/:challengeId/:month', auth, validate(recordValidation.checkChallengeIdAndMonthAndOrganization), recordController.selectCalendarSituation);
 router.get('/reminiscence');

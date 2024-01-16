@@ -2,3 +2,4 @@ export { default as userService } from './user.service.js';;
 export { default as authService } from './auth.service.js';
 export { default as recordService } from './record.service.js';
 export { default as startService } from './start.service.js';
+export { default as writeService } from './write.service.js';

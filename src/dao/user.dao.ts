@@ -28,6 +28,21 @@ const userInformationSelect = async <Key extends keyof  User>(
 }
 
 
+const selectUser = async (
+  userId: number
+):Promise<User>=> {
+
+  const userData = await prisma.$queryRaw<User[]>`
+  
+  SELECT u.* FROM User as u 
+  WHERE u.user_id = ${userId};`
+
+
+  return userData[0]
+}
+
+
+
 /**
  * 유저 아이디 조회 함수
  * @param userEmail 유저 이메일
@@ -129,5 +144,6 @@ export default {
   updatePassword,
   selectEmail,
   selectIdentifierAndEmail,
-  updateRandomPassword
+  updateRandomPassword,
+  selectUser
 }

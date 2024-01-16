@@ -6,14 +6,11 @@ import { SelectTemplateContent } from '../interfaces/userChallenge.interface.js'
 
 
 
-// 문제 생김
+
 const selectUserChallenge = async (
   affiliationId: number,
   challengeId: number
 ): Promise<number> => {
-
-  console.log(challengeId);
-  console.log(affiliationId);
 
   const overlapDeposit = await prisma.$queryRaw<UserChallenge[]>`
                 SELECT uc.user_deposit  FROM UserChallenge as uc

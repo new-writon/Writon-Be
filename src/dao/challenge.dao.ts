@@ -50,7 +50,6 @@ const selectOverlapCount = async (
                                                     order by cd.day;`;
 
 
-    //    console.log(overlapCount)
     return overlapCount;
 }
 

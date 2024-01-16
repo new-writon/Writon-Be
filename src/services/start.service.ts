@@ -37,20 +37,19 @@ const enrollOrganization = async (
 
 const enrollChallenge = async (
     userId: number,
-    organization: string
+    organization: string,
+    challengeId: number
 ) => {
 
-    const challengeData = await challengeDao.selectChallenge(organization, userId);
+    const [ challengeData, userAffiliation ] = await Promise.all([
 
-    const userAffiliation = await affiliationDao.selectAffiliation(userId, organization)
+        challengeDao.selectChallenge(challengeId),
+        affiliationDao.selectAffiliation(userId, organization)
 
-
+    ]);
 
     await challengeDao.insertChallenge(userAffiliation.affiliation_id, challengeData.challenge_id, challengeData.deposit);
 
-    return {
-        challengeId: challengeData.challenge_id
-    }
 }
 
 

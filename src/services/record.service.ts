@@ -7,17 +7,20 @@ import { sortCallendarDateBadge } from '../utils/record.js';
 
 const presentSituation = async (
   userId: number,
+  organization: string,
   challengeId: number
 
 ) => {
 
+  const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
   const [nickname, overlapPeriod, challengeOverlapCount, challengeSuccessCount, overlapDeposit] = await Promise.all([
 
-    affiliationDao.selectNickname(challengeId, userId),
+    affiliationDao.selectNickname(affiliation.affiliation_id),
     challengeDao.selectOverlapPeriod(challengeId),
     calculateOverlapCount(challengeId),
-    calculateChallengeSuccessCount(userId, challengeId),
-    userChallengeDao.selectUserChallenge(userId, challengeId)
+    calculateChallengeSuccessCount(affiliation.affiliation_id, challengeId),
+    userChallengeDao.selectUserChallenge(affiliation.affiliation_id, challengeId)
 
   ])
 
@@ -42,10 +45,13 @@ const signChallengeStatus = async (
 
 const signTodayTemplateStatus = async (
   userId: number,
+  organization: string,
   challengeId: number
 ) => {
 
-  return await signTodayTemplateStatusCalculation(userId, challengeId);
+  const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+  return await signTodayTemplateStatusCalculation(affiliation.affiliation_id, challengeId);
 }
 
 
@@ -68,12 +74,15 @@ const selectChallenge = async (
 const selectCalendarSituation = async (
   userId: number,
   challengeId: number,
+  organization: string,
   yearAndMonth: Date
 ) => {
 
+  const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
   const challengeDay = await challengeDayDao.selectChallengeDay(challengeId);
 
-  const userTemplateDay = await userTemplateDao.selectUserTemplateDay(userId, challengeId, yearAndMonth);
+  const userTemplateDay = await userTemplateDao.selectUserTemplateDay(affiliation.affiliation_id, challengeId, yearAndMonth);
 
   return  sortCallendarDateBadge(challengeDay, userTemplateDay)
 

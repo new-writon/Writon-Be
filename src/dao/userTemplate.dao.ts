@@ -6,7 +6,7 @@ import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt } from '../i
 
 
 const selectSuccessChallenge = async (
-    userId: number,
+    affiliationId: number,
     challengeId: number
 ): Promise<UserTemplete[]> => {
 
@@ -17,7 +17,7 @@ const selectSuccessChallenge = async (
             and
             ut.user_challenge_id = (select uc.user_challenge_id
             from UserChallenge as uc 
-                where uc.user_id = ${userId}
+                where uc.affiliation_id = ${affiliationId}
                     and uc.challenge_id = ${challengeId});`;
 
     return successChallenge
@@ -26,7 +26,7 @@ const selectSuccessChallenge = async (
 
 
 const signTodayTemplate = async (
-    userId: number,
+    affiliationId: number,
     challengeId: number
 ): Promise<UserTemplete> => {
 
@@ -37,7 +37,7 @@ const signTodayTemplate = async (
             and
             ut.user_challenge_id = (select uc.user_challenge_id
             from UserChallenge as uc 
-                where uc.user_id = ${userId}
+                where uc.affiliation_id = ${affiliationId}
                     and uc.challenge_id = ${challengeId});`;
 
 
@@ -48,7 +48,7 @@ const signTodayTemplate = async (
 }
 
 const selectUserTemplateDay = async (
-    userId: number,
+    affiliationId: number,
     challengeId: number,
     yearAndMonth: Date
    
@@ -61,7 +61,7 @@ const selectUserTemplateDay = async (
             and
             ut.user_challenge_id = (select uc.user_challenge_id
             from UserChallenge as uc 
-                where uc.user_id = ${userId}
+                where uc.affiliation_id = ${affiliationId}
                     and uc.challenge_id = ${challengeId})
                     order by date_format(ut.finished_at, '%Y-%m');`;
 

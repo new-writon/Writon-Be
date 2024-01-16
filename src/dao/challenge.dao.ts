@@ -26,8 +26,6 @@ const selectOverlapPeriod = async (
                                                         FROM Challenge AS c 
                                                         WHERE challenge_id = ${challengeId};`;
 
-                                                        console.log(overlapPeriod[0].period)
-
     return Number(overlapPeriod[0].period);
 }
 
@@ -78,13 +76,12 @@ const selectChallengeId = async (
 
 ): Promise<number> => {
 
-    const challengeId = await prisma.$queryRaw<SelectChallengeId[]>`select c.challenge_id from Challenge as c 
-                    where curdate() < c.finish_at 
-                    and c.affiliations_id = (select a.affiliations_id 
+    const challengeId = await prisma.$queryRaw<SelectChallengeId[]>`
+                    select c.challenge_id from Challenge as c 
+                    where curdate() <= c.finish_at 
+                    and c.affiliation_id = (select a.affiliation_id 
                     from Affiliation as a 
-                    where a.user_id = ${userId} 
-                    and 
-                     a.organization_id = (select o.organization_id 
+                    where a.organization_id = (select o.organization_id 
                         from Organization as o 
                         where o.name = ${organization}));`;
 
@@ -94,20 +91,14 @@ const selectChallengeId = async (
 }
 
 const selectChallenge = async (
-    organization: string,
-    userId: number
+    challengeId: number
 
 ): Promise<Challenge> => {
 
-    const challengeData = await prisma.$queryRaw<Challenge[]>`select c.* from Challenge as c 
-                    where curdate() < c.finish_at 
-                    and c.affiliations_id = (select a.affiliations_id 
-                    from Affiliation as a 
-                    where a.user_id = ${userId} 
-                    and 
-                     a.organization_id = (select o.organization_id 
-                        from Organization as o 
-                        where o.name = ${organization}));`;
+    const challengeData = await prisma.$queryRaw<Challenge[]>`
+                    select c.* from Challenge as c 
+                    where curdate() <= c.finish_at 
+                    and c.challenge_id = ${challengeId};`;
 
 
 

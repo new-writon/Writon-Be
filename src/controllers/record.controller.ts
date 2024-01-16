@@ -7,7 +7,7 @@ import { recordService } from '../services/index.js'
 
 const presentSituation = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await recordService.presentSituation(req.decoded!.id, req.params.challengeId));
+    res.status(httpStatus.OK).send(await recordService.presentSituation(req.decoded!.id, req.params.organization, req.params.challengeId));
 
 });
 
@@ -29,14 +29,14 @@ const signChallengeStatus = catchAsync(async (req, res) => {
 
 const signTodayTemplateStatus = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await recordService.signTodayTemplateStatus(req.decoded?.id, req.params.challengeId));
+    res.status(httpStatus.OK).send(await recordService.signTodayTemplateStatus(req.decoded?.id, req.params.organization, req.params.challengeId));
 
 });
 
 
 const selectCalendarSituation  = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await recordService.selectCalendarSituation(req.decoded?.id, req.params.challengeId, req.params.month));
+    res.status(httpStatus.OK).send(await recordService.selectCalendarSituation(req.decoded?.id, req.params.challengeId, req.params.organization, req.params.month));
 
 });
 

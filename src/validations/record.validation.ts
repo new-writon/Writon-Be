@@ -2,9 +2,19 @@
 import Joi from 'joi';
 
 
+const checkChallengeIdAndOrganization = {
+    params: Joi.object().keys({
+        challengeId: Joi.number().required(),
+        organization: Joi.string().required()
+
+    
+
+  })
+};
+
 const checkChallengeId = {
     params: Joi.object().keys({
-        challengeId: Joi.number().required()    
+        challengeId: Joi.number().required(),
 
   })
 };
@@ -16,10 +26,11 @@ const checkOrganization = {
   })
 };
 
-const checkChallengeIdAndMonth = {
+const checkChallengeIdAndMonthAndOrganization = {
     params: Joi.object().keys({
         challengeId: Joi.number().required(),
-        month: Joi.string().required()    
+        month: Joi.string().required(),
+        organization: Joi.string().required()    
 
   })
 };
@@ -27,7 +38,8 @@ const checkChallengeIdAndMonth = {
 
 export default {
 
-    checkChallengeId,
+    checkChallengeIdAndOrganization,
     checkOrganization,
-    checkChallengeIdAndMonth
+    checkChallengeIdAndMonthAndOrganization,
+    checkChallengeId
 };

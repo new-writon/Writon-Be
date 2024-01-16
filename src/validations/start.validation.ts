@@ -15,9 +15,10 @@ const checkOrganizationEnroll = {
     })
 };
 
-const checkOrganization = {
+const checkOrganizationAndChallengeId = {
     body: Joi.object().keys({
-        organization: Joi.string().required()
+        organization: Joi.string().required(),
+        challengeId: Joi.number().required()
 
     })
 };
@@ -25,5 +26,5 @@ const checkOrganization = {
 export default {
 
     checkOrganizationEnroll,
-    checkOrganization
+    checkOrganizationAndChallengeId
 };

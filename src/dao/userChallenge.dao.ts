@@ -7,18 +7,22 @@ import { SelectPeriod, SelectChallengeId, SelectDay } from '../interfaces/challe
 
 // 문제 생김
 const selectUserChallenge = async (
-    userId: number,
-    challengeId: number
+  affiliationId: number,
+  challengeId: number
 ): Promise<number> => {
 
-    const overlapDeposit = await prisma.$queryRaw<UserChallenge[]>`SELECT uc.user_deposit  FROM UserChallenge as uc
-    
-                                                                    WHERE user_id = ${userId} 
-                                                                    AND challenge_id = ${challengeId};`;
+  console.log(challengeId);
+  console.log(affiliationId);
+
+  const overlapDeposit = await prisma.$queryRaw<UserChallenge[]>`
+                SELECT uc.user_deposit  FROM UserChallenge as uc
+                WHERE uc.affiliation_id = ${affiliationId}      
+                AND uc.challenge_id = ${challengeId};
+                `;
 
 
 
-    return overlapDeposit[0].user_deposit;
+  return overlapDeposit[0].user_deposit;
 
 
 }

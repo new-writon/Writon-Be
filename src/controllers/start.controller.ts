@@ -26,7 +26,8 @@ const enrollChallenge = catchAsync(async (req, res) => {
 
     res.status(httpStatus.OK).send(await startService.enrollChallenge(
         req.decoded?.id,
-        req.body.organization
+        req.body.organization,
+        req.body.challengeId
     ));
 
 });

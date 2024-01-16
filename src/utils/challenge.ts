@@ -44,12 +44,12 @@ const signChallengeComplete = async (
 }
 
 const calculateChallengeSuccessCount = async (
-    userId: number,
+    affiliationId: number,
     challengeId: number
 
 ) => {
 
-    const challengeSuccessCountData = await userTemplateDao.selectSuccessChallenge(userId, challengeId);
+    const challengeSuccessCountData = await userTemplateDao.selectSuccessChallenge(affiliationId, challengeId);
     let count = 0
     for (let i = 0; i < challengeSuccessCountData.length; i++) {
 
@@ -65,19 +65,17 @@ const calculateChallengeSuccessCount = async (
 }
 
 const signTodayTemplateStatusCalculation = async (
-    userId: number,
+    affiliationId: number,
     challengeId: number
 
 ) => {
 
-    if (!await userTemplateDao.signTodayTemplate(userId, challengeId)) {
+    if (!await userTemplateDao.signTodayTemplate(affiliationId, challengeId)) {
 
         return {
             todayTemplateStatus: false
         }
-
     }
-
     return {
         todayTemplateStatus: true
 

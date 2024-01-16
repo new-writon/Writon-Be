@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, challengeDao, challengeDayDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 
-import { calculateChallengeSuccessCount, calculateOverlapCount, signChallengeComplete, signTodayTemplateStatusCalculation } from '../utils/challenge.js';
+import { calculateChallengeSuccessCount, calculateOverlapCount, signChallengeComplete, signTodayTemplateStatusCalculation, sortUserTemplate } from '../utils/challenge.js';
 import { sortCallendarDateBadge } from '../utils/record.js';
 
 const presentSituation = async (
@@ -54,21 +54,6 @@ const signTodayTemplateStatus = async (
   return await signTodayTemplateStatusCalculation(affiliation.affiliation_id, challengeId);
 }
 
-
-
-
-// const selectChallenge = async (
-//   userId: number,
-//   organization: string
-// ) => {
-
-//   const challengeId = await challengeDao.selectChallengeId(organization, userId);
-
-//   return {
-//     challengeId: challengeId
-//   }
-// }
-
 const selectCalendarSituation = async (
   userId: number,
   challengeId: number,
@@ -93,13 +78,35 @@ const selectCalendarSituation = async (
 
 
 
+const selectMyTemplate = async (
+  userId: number,
+  challengeId: number,
+  organization: string,
+  yearAndMonth: Date
+) => {
+
+  const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+  const myTemplateData = sortUserTemplate(
+    await userChallengeDao.selectTemplateContent(affiliation.affiliation_id, challengeId, yearAndMonth)
+  );
+
+  console.log(myTemplateData)
+
+
+  return myTemplateData;
+
+}
+
+
 export default {
 
   presentSituation,
   // selectChallenge,
   signChallengeStatus,
   signTodayTemplateStatus,
-  selectCalendarSituation
+  selectCalendarSituation,
+  selectMyTemplate
 
 
 }

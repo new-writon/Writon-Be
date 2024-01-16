@@ -1,4 +1,5 @@
 import { challengeDao, challengeDayDao, userTemplateDao } from '../dao/index.js';
+import { SelectTemplateContent } from '../interfaces/userChallenge.interface.js';
 
 
 const calculateOverlapCount = async (
@@ -83,9 +84,30 @@ const signTodayTemplateStatusCalculation = async (
 }
 
 
+const  sortUserTemplate = (
+    userTemplates: SelectTemplateContent[]
+    ) => {
+    const sortedUserTemplate = [];
+  
+    const uniqueUserTemplateIds = Array.from(new Set(userTemplates.map((q) => q.user_templete_id)));
+  
+    for (const userTemplateId of uniqueUserTemplateIds) {
+      const filteredQuestions = userTemplates.filter((q) => q.user_templete_id === userTemplateId);
+      sortedUserTemplate.push(filteredQuestions);
+    }
+  
+    return sortedUserTemplate;
+  }
+  
+
+
+
+
+
 export {
     calculateOverlapCount,
     signChallengeComplete,
     calculateChallengeSuccessCount,
-    signTodayTemplateStatusCalculation
+    signTodayTemplateStatusCalculation,
+    sortUserTemplate
 }

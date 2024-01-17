@@ -3,6 +3,7 @@ import prisma from '../client.js';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import questionDao from '../dao/question.dao.js';
+import { WriteTemplete } from '../interfaces/challenge.interface.js';
 
 
 const selectBasicQuestion = async (
@@ -23,10 +24,23 @@ const selectSpecialQuestion = async (
 }
 
 
+const insertTemplateContent = async (
+    userId: number,
+    challengeId: number,
+    organization: string,
+    date: string,
+    templateContent: Array<WriteTemplete>
+) => {
+
+    return await questionDao.selectSpecialQuestion(challengeId);
+    
+}
+
 
 export default {
     selectBasicQuestion,
-    selectSpecialQuestion
+    selectSpecialQuestion,
+    insertTemplateContent
 }
 
 

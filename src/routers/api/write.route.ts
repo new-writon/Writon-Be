@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.get('/:challengeId/basic-question', auth, validate(writeValidation.checkChallengeId), writeController.selectBasicQuestion);
 router.get('/:challengeId/special-question', auth, validate(writeValidation.checkChallengeId), writeController.selectSpecialQuestion);
+router.post('/', auth, validate(writeValidation.checkWrite), writeController.insertTemplateContent);
 
 export default router;
 

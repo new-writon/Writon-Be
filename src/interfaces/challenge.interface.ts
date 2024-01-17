@@ -19,11 +19,18 @@ interface SelectFinishAt {
   finished_at: Date
 }
 
+interface WriteTemplete {
+
+  question_id: number,
+  content: string
+}
+
 
 
 export {
   SelectPeriod,
   SelectChallengeId,
   SelectDay,
-  SelectFinishAt
+  SelectFinishAt,
+  WriteTemplete
 }

@@ -11,14 +11,14 @@ const sign = (userId: number, userRole: string) => {
   };
   return 'Bearer ' +jwt.sign(payload, secret, {
     algorithm: 'HS256',
-    expiresIn: '30m',
+    expiresIn: '30d',
   });
 }
 
 const refresh = () => {
   return 'Bearer ' +jwt.sign({}, secret, {
     algorithm: 'HS256',
-    expiresIn: '60s',
+    expiresIn: '60d',
   });
 }
 const decode = (token: string) => {

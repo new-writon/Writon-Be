@@ -1,3 +1,5 @@
+import { bool } from "aws-sdk/clients/signer";
+
 interface SelectPeriod {
   period: number;
 //  challenge_id: number
@@ -22,15 +24,23 @@ interface SelectFinishAt {
 interface WriteTemplete {
 
   question_id: number,
-  content: string
+  content: string,
+  visibility: bool
 }
 
+interface InsertUserTemplateContent {
 
+  question_id: number,
+  content: string,
+  visibility: bool,
+  user_templete_id: number
+}
 
 export {
   SelectPeriod,
   SelectChallengeId,
   SelectDay,
   SelectFinishAt,
-  WriteTemplete
+  WriteTemplete,
+  InsertUserTemplateContent
 }

@@ -1,8 +1,28 @@
 import prisma from '../client.js';
 import { PrismaClient, Affiliation, Challenge, UserTemplete, } from '@prisma/client'
 import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt } from '../interfaces/challenge.interface.js';
+import { bool } from 'aws-sdk/clients/signer.js';
 
 
+
+const insertUserTemplate = async (
+    userChallnegeId: number,
+    date: Date,
+    complete: bool
+) => {
+
+    return await prisma.userTemplete.create({
+        data: {
+
+            user_challenge_id:userChallnegeId,
+            finished_at:date,
+            complete: complete
+     
+        }
+
+    })
+
+}
 
 
 const selectSuccessChallenge = async (
@@ -41,8 +61,6 @@ const signTodayTemplate = async (
                     and uc.challenge_id = ${challengeId});`;
 
 
-                    console.log(todayTemplate)
-
     return todayTemplate[0]
 
 }
@@ -75,6 +93,7 @@ export default {
 
     selectSuccessChallenge,
     signTodayTemplate,
-    selectUserTemplateDay
+    selectUserTemplateDay,
+    insertUserTemplate
   
 }

@@ -1,4 +1,5 @@
 import { challengeDao, challengeDayDao, userTemplateDao } from '../dao/index.js';
+import { WriteTemplete } from '../interfaces/challenge.interface.js';
 import { SelectTemplateContent } from '../interfaces/userChallenge.interface.js';
 
 
@@ -54,7 +55,7 @@ const calculateChallengeSuccessCount = async (
     let count = 0
     for (let i = 0; i < challengeSuccessCountData.length; i++) {
 
-        if (!await challengeDayDao.signChallengeDay(challengeSuccessCountData[i].finished_at!)) {
+        if (!await challengeDayDao.signChallengeDay(challengeId, challengeSuccessCountData[i].finished_at!)) {
             continue;
         }
         count++
@@ -84,24 +85,56 @@ const signTodayTemplateStatusCalculation = async (
 }
 
 
-const  sortUserTemplate = (
+const sortUserTemplate = (
     userTemplates: SelectTemplateContent[]
-    ) => {
+) => {
     const sortedUserTemplate = [];
-  
+
     const uniqueUserTemplateIds = Array.from(new Set(userTemplates.map((q) => q.user_templete_id)));
-  
+
     for (const userTemplateId of uniqueUserTemplateIds) {
-      const filteredQuestions = userTemplates.filter((q) => q.user_templete_id === userTemplateId);
-      sortedUserTemplate.push(filteredQuestions);
+        const filteredQuestions = userTemplates.filter((q) => q.user_templete_id === userTemplateId);
+        sortedUserTemplate.push(filteredQuestions);
     }
-  
+
     return sortedUserTemplate;
-  }
-  
+}
 
 
 
+const signUserChallengeComplete = async (
+    challengeId: number,
+    date: string
+) => {
+   
+    let complete = true;
+    if (new Date(date).setHours(0, 0, 0, 0).toLocaleString() !== new Date().setHours(0, 0, 0, 0).toLocaleString()) {
+
+        complete = false;
+
+    }
+    if (!await challengeDayDao.signChallengeDay(challengeId, new Date(date))) {
+
+        complete = false;
+
+    }
+
+    return complete;
+
+}
+
+
+const changeUserTemplateType = (
+    writeTempletes: WriteTemplete[], userTempleteId: number
+) => {
+    return writeTempletes.map(writeTemplete => ({
+        question_id: writeTemplete.question_id,
+        content: writeTemplete.content,
+        visibility: writeTemplete.visibility,
+        user_templete_id: userTempleteId,
+
+    }));
+}
 
 
 export {
@@ -109,5 +142,7 @@ export {
     signChallengeComplete,
     calculateChallengeSuccessCount,
     signTodayTemplateStatusCalculation,
-    sortUserTemplate
+    sortUserTemplate,
+    signUserChallengeComplete,
+    changeUserTemplateType
 }

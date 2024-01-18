@@ -21,7 +21,7 @@ const presentSituation = async (
     challengeDao.selectOverlapPeriod(challengeId),
     calculateOverlapCount(challengeId),
     calculateChallengeSuccessCount(affiliation.affiliation_id, challengeId),
-    userChallengeDao.selectUserChallenge(affiliation.affiliation_id, challengeId),
+    userChallengeDao.selectUserChallengeDeposit(affiliation.affiliation_id, challengeId),
     challengeDao.selectChallenge(challengeId)
 
   ]);
@@ -93,8 +93,6 @@ const selectMyTemplate = async (
   const myTemplateData = sortUserTemplate(
     await userChallengeDao.selectTemplateContent(affiliation.affiliation_id, challengeId, yearAndMonth)
   );
-
-  console.log(myTemplateData)
 
 
   return myTemplateData;

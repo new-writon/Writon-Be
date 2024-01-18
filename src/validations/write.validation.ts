@@ -14,7 +14,7 @@ const checkWrite = {
         challengeId: Joi.number().required(),
         organization: Joi.string().required(),
         date: Joi.string().required(),
-        templateContent: Joi.array().required()
+       templateContent: Joi.array().required()
     })
 };
 

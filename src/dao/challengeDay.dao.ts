@@ -7,15 +7,21 @@ import { ChallengeDay  } from '@prisma/client'
 
 
 const signChallengeDay = async (
+    challengeId: number,
     date: Date
 ): Promise<ChallengeDay> => {
 
     const challengeDayData = await prisma.$queryRaw<ChallengeDay[]>`SELECT  cd.*  
                                                                 FROM ChallengeDay as cd
-                                                                WHERE cd.day = ${date};`;
+                                                                WHERE cd.day = ${date}
+                                                                AND cd.challenge_id = ${challengeId}
+                                                                
+                                                                ;`;
 
     return challengeDayData[0];
 }
+
+
 
   const selectChallengeDay = async (
     challengeId: number

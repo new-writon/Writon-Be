@@ -7,7 +7,7 @@ import { SelectTemplateContent } from '../interfaces/userChallenge.interface.js'
 
 
 
-const selectUserChallenge = async (
+const selectUserChallengeDeposit = async (
   affiliationId: number,
   challengeId: number
 ): Promise<number> => {
@@ -24,6 +24,32 @@ const selectUserChallenge = async (
 
 
 }
+
+
+
+const selectUserChallenge = async (
+  userId: number,
+  organization: string,
+  challengeId: number
+): Promise<UserChallenge> => {
+
+  const userChallengeData = await prisma.$queryRaw<UserChallenge[]>`
+                SELECT uc.*  FROM UserChallenge as uc
+                WHERE uc.affiliation_id = ( SELECT a.affiliation_id FROM Affiliation as a
+                  WHERE a.user_id = ${userId} 
+                  AND a.organization_id = (
+                    SELECT o.organization_id FROM Organization as o
+                    WHERE o.name = ${organization} ) 
+                    )
+                  AND uc.challenge_id = ${challengeId};
+                `;
+
+  return userChallengeData[0];
+
+
+}
+
+
 
 
 const selectTemplateContent = async (
@@ -54,7 +80,8 @@ const selectTemplateContent = async (
 
 
 export default {
-  selectUserChallenge,
-  selectTemplateContent
+  selectUserChallengeDeposit ,
+  selectTemplateContent,
+  selectUserChallenge
 
 }

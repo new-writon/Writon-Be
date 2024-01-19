@@ -48,18 +48,9 @@ const insertTemplateContent = async (
 
     const changedTemplate = changeUserTemplateType(templateContent, userTemplateData.user_templete_id);
 
-    await questionContentDao.insertUserTemplateContent(changedTemplate)
+    await questionContentDao.insertUserTemplateContent(changedTemplate);
 
-
-
-
-
-
-
-
-
-    return;
-
+  
 }
 
 

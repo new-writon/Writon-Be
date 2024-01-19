@@ -27,18 +27,18 @@ const selectDateTemplate = catchAsync(async (req, res) => {
 
 const selectMyParticipantInformation = catchAsync(async (req, res) => {
 
-  
+    res.status(httpStatus.OK).send(await communityService.selectMyParticipantInformation(req.decoded?.id, req.params.challengeId));
 
-   // res.status(httpStatus.OK).send(await authService.localLogin(identifier, password, organization));
 });
 
 
 
-const writeParticipantInformation = catchAsync(async (req, res) => {
+const writeCheeringPhrase = catchAsync(async (req, res) => {
 
+    const {  organization, challengeId, content } = req.body;
 
+    res.status(httpStatus.OK).send(await communityService.writeCheeringPhrase(req.decoded?.id, organization, challengeId, content));
 
-   // res.status(httpStatus.OK).send(await authService.localLogin(identifier, password, organization));
 });
 
 
@@ -49,7 +49,7 @@ export default {
     selectParticipantInformation,
     selectDateTemplate,
     selectMyParticipantInformation,
-    writeParticipantInformation
+    writeCheeringPhrase
 
 }
 

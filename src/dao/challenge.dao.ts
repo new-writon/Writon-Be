@@ -1,6 +1,6 @@
 import prisma from '../client.js';
-import { PrismaClient, Affiliation, Challenge, } from '@prisma/client'
-import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt } from '../interfaces/challenge.interface.js';
+import { PrismaClient, Affiliation, Challenge, UserChallenge, } from '@prisma/client'
+import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt, ChallengeParticipantCount } from '../interfaces/challenge.interface.js';
 import { ParticipantData } from '../interfaces/community.interface.js';
 
 
@@ -170,10 +170,52 @@ const selectParticipantInformation = async (
 
 
 
+const selectMyParticipantInformation = async (
+    userId: number,
+    challengeId: number
+): Promise<ParticipantData[]> => {
+    const myParticipantInformationData = await prisma.$queryRaw<ParticipantData[]>`
+
+    SELECT u.profile, a.job, a.job_introduce, a.nickname, a.company_public, a.company, uc.cheering_phrase, uc.cheering_phrase_date
+    FROM UserChallenge as uc
+    INNER JOIN Affiliation as a ON a.affiliation_id = uc.affiliation_id
+    INNER JOIN User as u ON u.user_id = a.user_id AND u.user_id = ${userId}
+    WHERE uc.challenge_id = ${challengeId}
+    OR uc.cheering_phrase_date IS NULL
+
+    ;`;
 
 
+    return myParticipantInformationData
+}
 
 
+const updateCheeringPhrase = async (
+    affiliationId: number,
+    challengeId: number,
+    content: string
+) => {
+
+    return await prisma.$queryRaw`
+
+    UPDATE UserChallenge as uc SET cheering_phrase = ${content}, cheering_phrase_date = CURDATE() 
+    WHERE uc.affiliation_id = ${affiliationId} AND uc.challenge_id = ${challengeId}
+;`;
+  
+}
+
+const challengeParticipantCount = async (
+    challengeId: number,
+): Promise<number>=> {
+
+    const participantCount = await prisma.$queryRaw<ChallengeParticipantCount[]>`
+
+        SELECT count(*) as count FROM UserChallenge as uc 
+        WHERE uc.challenge_id = ${challengeId};`;
+
+    return participantCount[0].count
+  
+}
 
 export default {
 
@@ -186,5 +228,8 @@ export default {
     selectChallenge,
     insertChallenge,
     signPeriodCondition,
-    selectParticipantInformation 
+    selectParticipantInformation,
+    selectMyParticipantInformation,
+    updateCheeringPhrase,
+    challengeParticipantCount
 }

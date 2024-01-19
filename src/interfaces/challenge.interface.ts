@@ -36,11 +36,17 @@ interface InsertUserTemplateContent {
   user_templete_id: number
 }
 
+
+interface ChallengeParticipantCount {
+  count: number
+}
+
 export {
   SelectPeriod,
   SelectChallengeId,
   SelectDay,
   SelectFinishAt,
   WriteTemplete,
-  InsertUserTemplateContent
+  InsertUserTemplateContent,
+  ChallengeParticipantCount
 }

@@ -4,6 +4,7 @@ import authRoute from './auth.route.js';
 import recordRoute from './record.route.js';
 import startRoute from './start.route.js';
 import writeRoute from './write.route.js';
+import communityRoute from './community.route.js';
 
 const router = express.Router();
 
@@ -30,6 +31,10 @@ const defaultRoutes = [
   {
     path: '/challenge/write',
     route: writeRoute
+  },
+  {
+    path: '/community',
+    route: communityRoute
   },
 
 

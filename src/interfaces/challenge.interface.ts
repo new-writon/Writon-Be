@@ -41,6 +41,11 @@ interface ChallengeParticipantCount {
   count: number
 }
 
+interface SelectUserCompleteCount {
+  count: number
+}
+
+
 export {
   SelectPeriod,
   SelectChallengeId,
@@ -48,5 +53,6 @@ export {
   SelectFinishAt,
   WriteTemplete,
   InsertUserTemplateContent,
-  ChallengeParticipantCount
+  ChallengeParticipantCount,
+  SelectUserCompleteCount
 }

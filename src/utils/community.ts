@@ -1,5 +1,6 @@
 
-import { ParticipantData } from '../interfaces/community.interface.js';
+import {  ParticipantData } from '../interfaces/community.interface.js';
+import { SelectDateTemplateContent } from '../interfaces/userChallenge.interface.js';
 import { isSameDate } from './record.js'
 
 
@@ -24,11 +25,23 @@ const sortParticipantInformation = (data: ParticipantData[]): ParticipantData[] 
     });
 }
 
+const sortCompanyPublic = (data: SelectDateTemplateContent[]): SelectDateTemplateContent[] => {
 
+    return data.map((user) => {
+
+        if (user.company_public === 0) {
+            user.company = null;
+        }
+
+        return user;
+    });
+}
 
 
 export {
-    sortParticipantInformation
+    sortParticipantInformation,
+    sortCompanyPublic,
+
 }
 
 

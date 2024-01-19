@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/:challengeId/participant-information', auth, validate(recordValidation.checkChallengeId), communityController.selectParticipantInformation);
 router.get('/:challengeId/my-participant-information', auth, validate(recordValidation.checkChallengeId), communityController.selectMyParticipantInformation);
-router.get('/:challengeId/template', auth, validate(startValidation.checkOrganizationEnroll), communityController.selectDateTemplate);
+router.get('/:challengeId/template/:date', auth, validate(communityValidation.checkChallengeIdAndDate), communityController.selectDateTemplate);
 router.post('/cheering-phrase', auth, validate(communityValidation.checkChallengeIdAndOrganizationAndContent), communityController.writeCheeringPhrase);
 
 

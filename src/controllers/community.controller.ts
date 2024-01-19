@@ -10,17 +10,13 @@ import communityService from '../services/community.service.js';
 
 const selectParticipantInformation = catchAsync(async (req, res) => {
 
-  
-
     res.status(httpStatus.OK).send(await communityService.selectParticipantInformation(req.decoded?.id, req.params.challengeId));
 });
 
 
 const selectDateTemplate = catchAsync(async (req, res) => {
 
-   
-
- //   res.status(httpStatus.OK).send(await authService.localLogin(identifier, password, organization));
+    res.status(httpStatus.OK).send(await communityService.selectDateTemplate(req.params.challengeId, req.params.date));
 });
 
 

@@ -2,8 +2,9 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import challengeDao from '../dao/challenge.dao.js';
-import { sortParticipantInformation } from '../utils/community.js';
-import { affiliationDao } from '../dao/index.js';
+import { sortCompanyPublic, sortParticipantInformation } from '../utils/community.js';
+import { affiliationDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
+import { sortDateUserTemplate, sortUserTemplate } from '../utils/challenge.js';
 
 
 
@@ -38,10 +39,24 @@ const selectMyParticipantInformation = async (
 
 
 const selectDateTemplate = async (
-    challengeId: number
+    challengeId: number,
+    date: string
 ) => {
 
-    return
+
+    const [challengeCompleteCount, challengeDateTemplateData] = await Promise.all([
+        userTemplateDao.selectUserCompleteCount(challengeId, date),
+        userChallengeDao.selectDateTemplateContent(challengeId, date)
+    ])
+
+    const templateData = sortDateUserTemplate(
+        sortCompanyPublic(challengeDateTemplateData)
+    );
+
+    return {
+        challengeCompleteCount: Number(challengeCompleteCount),
+        templateData: templateData
+    }
 }
 
 

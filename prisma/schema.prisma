@@ -22,7 +22,7 @@ model User {
   update_at     DateTime  @default(now()) @db.Timestamp(6)
   affiliations  Affiliation[]
   comments Comment[]
-  likes         Like[]
+  likes         Likes[]
 }
 
 model Organization {
@@ -161,7 +161,7 @@ model UserTemplete {
   complete         Boolean?
 
   question_contents QuestionContent[]
-  likes            Like[]
+  likes            Likes[]
   comments         Comment[]
 
   user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id], onDelete: Cascade, onUpdate: Cascade)
@@ -182,7 +182,7 @@ model QuestionContent {
   @@id([question_content_id, question_id, user_templete_id])
 }
 
-model Like {
+model Likes {
   like_id          Int         @default(autoincrement()) @unique
   user_id          Int
   user_templete_id Int

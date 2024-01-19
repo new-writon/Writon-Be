@@ -138,6 +138,8 @@ model UserChallenge {
   affiliation_id    Int
   challenge_id      Int
   user_deposit      Int
+  cheering_phrase  String?     @db.VarChar(255)
+  cheering_phrase_date  DateTime?    @db.Date
   created_at        DateTime @default(now()) @db.Timestamp(6)
   update_at         DateTime @default(now()) @db.Timestamp(6)
 
@@ -153,11 +155,10 @@ model UserChallenge {
 model UserTemplete {
   user_templete_id Int         @id @default(autoincrement()) 
   user_challenge_id Int
-  cheering_phrase  String?     @db.VarChar(255)
   created_at       DateTime    @default(now()) @db.Timestamp(6)
   update_at        DateTime    @default(now()) @db.Timestamp(6)
   finished_at      DateTime?    @db.Date
-  complete         Boolean
+  complete         Boolean?
 
   question_contents QuestionContent[]
   likes            Like[]

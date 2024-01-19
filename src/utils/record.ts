@@ -69,6 +69,7 @@ const isSameDate = (
 
 export {
 
-    sortCallendarDateBadge
+    sortCallendarDateBadge,
+    isSameDate
 
 }

@@ -1,6 +1,7 @@
 import prisma from '../client.js';
 import { PrismaClient, Affiliation, Challenge, } from '@prisma/client'
 import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt } from '../interfaces/challenge.interface.js';
+import { ParticipantData } from '../interfaces/community.interface.js';
 
 
 
@@ -147,6 +148,32 @@ const insertChallenge = async (
 
 
 
+const selectParticipantInformation = async (
+    userId: number,
+    challengeId: number
+): Promise<ParticipantData[]> => {
+    const participantInformationData = await prisma.$queryRaw<ParticipantData[]>`
+
+    SELECT u.profile, a.job, a.job_introduce, a.nickname, a.company_public, a.company, uc.cheering_phrase, uc.cheering_phrase_date
+    FROM UserChallenge as uc
+    INNER JOIN Affiliation as a ON a.affiliation_id = uc.affiliation_id
+    INNER JOIN User as u ON u.user_id = a.user_id AND u.user_id != ${userId}
+    WHERE uc.challenge_id = ${challengeId}
+    OR uc.cheering_phrase_date IS NULL
+
+    ;`;
+
+
+    return participantInformationData
+}
+
+
+
+
+
+
+
+
 
 export default {
 
@@ -158,5 +185,6 @@ export default {
     selectPeriodDate,
     selectChallenge,
     insertChallenge,
-    signPeriodCondition
+    signPeriodCondition,
+    selectParticipantInformation 
 }

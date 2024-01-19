@@ -18,11 +18,12 @@ const performTransactionInsertTemplateContent = async (
     let transactionResult: bool;
 
     try {
-        await prisma.$connect();
+   
         await prisma.$queryRaw`START TRANSACTION`;
 
 
         const userTemplateData = await userTemplateDao.insertUserTemplate(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete);
+
         const changedTemplate = changeUserTemplateType(templateContent, userTemplateData.user_templete_id);
 
         await questionContentDao.insertUserTemplateContent(changedTemplate);
@@ -33,9 +34,7 @@ const performTransactionInsertTemplateContent = async (
         await prisma.$queryRaw`ROLLBACK`;
         transactionResult = false;
         console.error(error);
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
     return transactionResult;
 }
 

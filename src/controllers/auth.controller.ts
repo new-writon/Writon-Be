@@ -40,7 +40,6 @@ const kakaoLogin = catchAsync(async (req, res) => {
 
 });
 
-
 /**
  * 
  * @param req  header로 accessToken을 받아옴

@@ -46,6 +46,16 @@ interface SelectUserCompleteCount {
 }
 
 
+interface SelectOverlapCount {
+  count: number
+}
+
+
+interface SelectSuccessChallengeCount {
+  count: number
+}
+
+
 export {
   SelectPeriod,
   SelectChallengeId,
@@ -54,5 +64,7 @@ export {
   WriteTemplete,
   InsertUserTemplateContent,
   ChallengeParticipantCount,
-  SelectUserCompleteCount
+  SelectUserCompleteCount,
+  SelectOverlapCount,
+  SelectSuccessChallengeCount
 }

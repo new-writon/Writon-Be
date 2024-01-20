@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, challengeDao, challengeDayDao, userChallengeDao, userDao, userTemplateDao } from '../dao/index.js';
 
-import { calculateChallengeSuccessCount, calculateOverlapCount, signChallengeComplete, signTodayTemplateStatusCalculation, sortUserTemplate } from '../utils/challenge.js';
+import {  signChallengeComplete, signTodayTemplateStatusCalculation, sortUserTemplate } from '../utils/challenge.js';
 import { sortCallendarDateBadge } from '../utils/record.js';
 
 const presentSituation = async (
@@ -19,13 +19,15 @@ const presentSituation = async (
     affiliationDao.selectNickname(affiliation.affiliation_id),
     userDao.selectUser(userId),
     challengeDao.selectOverlapPeriod(challengeId),
-    calculateOverlapCount(challengeId),
-    calculateChallengeSuccessCount(affiliation.affiliation_id, challengeId),
+    challengeDao.selectOverlapCount(challengeId),
+    userTemplateDao.selectSuccessChallengeCount(affiliation.affiliation_id, challengeId),
     userChallengeDao.selectUserChallengeDeposit(affiliation.affiliation_id, challengeId),
     challengeDao.selectChallenge(challengeId)
 
   ]);
 
+  console.log(challengeOverlapCount)
+  console.log(challengeSuccessCount)
   return {
     nickname: nickname?.nickname!,
     userProfile: userData.profile,

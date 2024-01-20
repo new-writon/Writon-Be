@@ -1,6 +1,6 @@
 import prisma from '../client.js';
 import { PrismaClient, Affiliation, Challenge, UserChallenge, } from '@prisma/client'
-import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt, ChallengeParticipantCount } from '../interfaces/challenge.interface.js';
+import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt, ChallengeParticipantCount, SelectOverlapCount } from '../interfaces/challenge.interface.js';
 import { ParticipantData } from '../interfaces/community.interface.js';
 
 
@@ -44,14 +44,15 @@ const selectPeriodDate = async (
 
 const selectOverlapCount = async (
     challengeId: number
-): Promise<SelectDay[]> => {
+): Promise<number> => {
 
-    const overlapCount = await prisma.$queryRaw<SelectDay[]>`select cd.day from ChallengeDay as cd 
-                                                    where cd.challenge_id = ${challengeId} 
-                                                    order by cd.day;`;
+    const overlapCount = await prisma.$queryRaw<SelectOverlapCount[]>`
+                    select count(*) as count from ChallengeDay as cd 
+                    where cd.challenge_id = ${challengeId} 
+                    ;`;
 
 
-    return overlapCount;
+    return Number(overlapCount[0].count);
 }
 
 

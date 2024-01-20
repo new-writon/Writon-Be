@@ -1,6 +1,6 @@
 import prisma from '../client.js';
 import { PrismaClient, Affiliation, Challenge, UserTemplete, } from '@prisma/client'
-import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt, SelectUserCompleteCount } from '../interfaces/challenge.interface.js';
+import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt, SelectUserCompleteCount, SelectSuccessChallengeCount } from '../interfaces/challenge.interface.js';
 import { bool } from 'aws-sdk/clients/signer.js';
 
 
@@ -25,22 +25,22 @@ const insertUserTemplate = async (
 }
 
 
-const selectSuccessChallenge = async (
+const selectSuccessChallengeCount = async (
     affiliationId: number,
     challengeId: number
-): Promise<UserTemplete[]> => {
+): Promise<number> => {
 
-    const successChallenge = await prisma.$queryRaw<UserTemplete[]>`
+    const successChallenge = await prisma.$queryRaw<SelectSuccessChallengeCount[]>`
 
-        select ut.* from UserTemplete as ut
-            where ut.complete = true 
+        select count(*) as count from UserTemplete as ut
+            where ut.complete = 1
             and
             ut.user_challenge_id = (select uc.user_challenge_id
             from UserChallenge as uc 
                 where uc.affiliation_id = ${affiliationId}
                     and uc.challenge_id = ${challengeId});`;
 
-    return successChallenge
+    return Number(successChallenge[0].count)
 
 }
 
@@ -114,7 +114,7 @@ const selectUserTemplateDay = async (
 export default {
 
 
-    selectSuccessChallenge,
+    selectSuccessChallengeCount,
     signTodayTemplate,
     selectUserTemplateDay,
     insertUserTemplate,

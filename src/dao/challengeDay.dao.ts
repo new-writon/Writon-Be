@@ -41,9 +41,24 @@ const signChallengeDay = async (
 }
 
 
+const selectChallengeDate = async (
+    challengeId: number
+) => {
+
+    return await prisma.$queryRaw<ChallengeDay[]>`
+    
+       SELECT cd.* FROM ChallengeDay AS cd
+       WHERE cd.challenge_id = ${challengeId}
+       ORDER BY cd.day
+    `
+}
+
+
+
 
 export default {
 
     signChallengeDay,
-    selectChallengeDay
+    selectChallengeDay,
+    selectChallengeDate
 }

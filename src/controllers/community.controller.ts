@@ -38,6 +38,12 @@ const writeCheeringPhrase = catchAsync(async (req, res) => {
 });
 
 
+const selectChallengeDate = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await communityService.selectChallengeDate(req.params.challengeId));
+
+});
+
 
 
 export default {
@@ -45,7 +51,8 @@ export default {
     selectParticipantInformation,
     selectDateTemplate,
     selectMyParticipantInformation,
-    writeCheeringPhrase
+    writeCheeringPhrase,
+    selectChallengeDate
 
 }
 

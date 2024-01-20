@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import challengeDao from '../dao/challenge.dao.js';
 import { sortCompanyPublic, sortParticipantInformation } from '../utils/community.js';
-import { affiliationDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
+import { affiliationDao, challengeDayDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 import { sortDateUserTemplate, sortUserTemplate } from '../utils/challenge.js';
 
 
@@ -75,6 +75,17 @@ const writeCheeringPhrase = async (
 }
 
 
+const selectChallengeDate = async (
+    challengeId: number,
+  
+) => {
+
+    const challengeDateData = await challengeDayDao.selectChallengeDate(challengeId)
+
+    return challengeDateData.map(data => data.day);
+
+
+}
 
 
 export default {
@@ -82,7 +93,8 @@ export default {
     selectParticipantInformation,
     selectDateTemplate,
     selectMyParticipantInformation,
-    writeCheeringPhrase
+    writeCheeringPhrase,
+    selectChallengeDate
 
 }
 

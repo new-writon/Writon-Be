@@ -45,18 +45,18 @@ const insertTemplateContent = async (
 
     ]);
 
-    // const userTemplateData = await userTemplateDao.insertUserTemplate(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete);
+    const userTemplateData = await userTemplateDao.insertUserTemplate(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete);
 
-    // const changedTemplate = changeUserTemplateType(templateContent, userTemplateData.user_templete_id);
+    const changedTemplate = changeUserTemplateType(templateContent, userTemplateData.user_templete_id);
 
-    // await questionContentDao.insertUserTemplateContent(changedTemplate);
+    await questionContentDao.insertUserTemplateContent(changedTemplate);
 
 
-    if(!await performTransactionInsertTemplateContent(userChallengeData, userTemplateComplete, templateContent, date)){
+    // if(!await performTransactionInsertTemplateContent(userChallengeData, userTemplateComplete, templateContent, date)){
 
-        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "template restore fail");
+    //     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "template restore fail");
         
-    }
+    // }
 
   
 }

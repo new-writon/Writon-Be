@@ -56,23 +56,26 @@ const kakaoLogin = async (
   organization: string
 ): Promise<Login> => {
 
+  console.log(1)
+
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
-
+  console.log(2)
   const userCheck = await userDao.userInformationSelect(userKakaoData.data.id);
-
+  console.log(3)
   if (!userCheck) {
 
     await authDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.id, userKakaoData.data.properties.profile_image);
 
   }
-
+  console.log(4)
   const userData = await userDao.userInformationSelect(userKakaoData.data.id);
-
+  console.log(5)
   const accessToken = jwt.sign(userData!.user_id, userData!.role);
+  console.log(6)
   const refreshToken = jwt.refresh()
-
+  console.log(7)
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
-
+  console.log(8)
 
   return {
     accessToken: accessToken,

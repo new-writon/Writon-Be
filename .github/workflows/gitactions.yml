@@ -54,16 +54,12 @@ jobs:
           docker pull ${{ secrets.DOCKER_USERNAME }}/blue:1.0
           docker run -d -p 3002:3000 --name blue ${{ secrets.DOCKER_USERNAME }}/blue:1.0
 
-          npx prisma generate
-          npx prisma migrate dev
-
-
-          sleep 15
+          sleep 10
 
           sudo touch /etc/nginx/blue.flag
           sudo rm /etc/nginx/green.flag
 
-          sleep 15
+          sleep 10
 
           docker stop green 
           docker rm green 

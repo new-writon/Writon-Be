@@ -11,8 +11,8 @@ const selectComment = async (
 
     return await prisma.$queryRaw`
     
-       SELECT  a.job, a.company, a.company_public, u.profile, c.comment_id, 
-       c.comment_group, c.user_templete_id, c.content, c.comment_id, c.created_at,
+       SELECT  a.job, a.company, a.company_public, u.profile, c.comment_id, a.nickname,
+       c.comment_group, c.user_templete_id, c.content, c.comment_id, DATEDIFF(c.created_at, CURDATE()) AS daysAgo,
        CASE WHEN u.user_id = ${userId} THEN true ELSE false END AS myCommentSign
        FROM Comment AS c
        INNER JOIN Affiliation AS a ON a.affiliation_id = c.affiliation_id

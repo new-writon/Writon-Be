@@ -47,6 +47,8 @@ const selectDateTemplate = async (
 
     const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
+    console.log(affiliation)
+
 
     const [challengeCompleteCount, challengeDateTemplateData] = await Promise.all([
         userTemplateDao.selectUserCompleteCount(challengeId, date),

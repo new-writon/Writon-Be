@@ -23,8 +23,8 @@ interface SelectDateTemplateContent {
     nickname: string,
     profile: string,
     myCommentSign: number
-    likeCount: number,
-    commentCount: number
+    likeCount: string,
+    commentCount: string
 }
 
 

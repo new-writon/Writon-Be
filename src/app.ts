@@ -23,7 +23,7 @@ if (config.env !== 'test') {
   app.use(morgan.errorHandler);     // 실패 로그 커스텀
 }
 
-app.set('trust proxy', 1);
+//app.set('trust proxy', 1);
 
 app.use(helmet());
 

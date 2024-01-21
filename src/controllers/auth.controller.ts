@@ -36,9 +36,7 @@ const kakaoLogin = catchAsync(async (req, res) => {
 
     console.log(req.header("Authentication") as string)
 
-    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.header("Authentication") as string,
- //    req.body.organization
-     ));
+    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.header("Authentication") as string, req.body.organization));
 
 });
 

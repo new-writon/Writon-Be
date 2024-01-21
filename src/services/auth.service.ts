@@ -53,9 +53,8 @@ const localLogin = async (
 
 const kakaoLogin = async (
   kakaoAccessToken: string,
- // organization: string
-)=> 
-//: Promise<Login> 
+  organization: string
+): Promise<Login> => 
 
 {
 
@@ -83,8 +82,8 @@ const kakaoLogin = async (
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
-    role: userData!.role
-  //  affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
+    role: userData!.role,
+     affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
   };
 
 }

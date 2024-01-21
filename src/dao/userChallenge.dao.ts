@@ -82,8 +82,10 @@ const selectDateTemplateContent = async (
   date: string
 ) => {
 
+  console.log(affiliationId)
 
-  
+
+
   const userTemplateData = await prisma.$queryRaw<SelectDateTemplateContent[]>`
         SELECT
         qc.question_id,

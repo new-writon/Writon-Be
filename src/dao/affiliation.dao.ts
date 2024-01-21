@@ -73,9 +73,25 @@ const selectAffiliation = async (
     WHERE o.name = ${organization}
   );`;
 
-
-
   return affiliationData[0]
+
+}
+
+
+const selectOrganizationAndChallengeId = async (
+  userId: number,
+) => {
+
+  return await prisma.$queryRaw`
+
+
+  SELECT o.name, uc.challenge_id FROM Affiliation AS a
+  INNER JOIN Organization AS o ON o.organization_id = a.organization_id
+  INNER JOIN UserChallenge AS uc ON uc.affiliation_id = a.affiliation_id
+  WHERE a.user_id = ${userId}
+  
+
+  `;
 
 }
 
@@ -85,5 +101,6 @@ export default {
   selectNickname,
   insertAffiliation,
   selectAffiliationId,
-  selectAffiliation
+  selectAffiliation,
+  selectOrganizationAndChallengeId
 }

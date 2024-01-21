@@ -9,6 +9,7 @@ import auth from '../../middlewares/auth.js';
 const router = express.Router();
 
 router.post('/', auth, validate(startValidation.checkOrganizationAndChallengeId), startController.enrollChallenge);
+router.get('/', auth, startController.selectOrganizationChallengeId);
 router.post('/enroll', auth, validate(startValidation.checkOrganizationEnroll), startController.enrollOrganization);
 
 

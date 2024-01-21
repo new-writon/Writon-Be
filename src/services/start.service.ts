@@ -52,8 +52,20 @@ const enrollChallenge = async (
 }
 
 
+const selectOrganizationChallengeId = async(
+    userId: number
+) => {
+
+    return await affiliationDao.selectOrganizationAndChallengeId(userId)
+
+}
+
+
+
+
 
 export default {
     enrollOrganization,
-    enrollChallenge
+    enrollChallenge,
+    selectOrganizationChallengeId 
 }

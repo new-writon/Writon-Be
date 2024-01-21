@@ -97,8 +97,8 @@ const selectDateTemplateContent = async (
         a.nickname,
         u.profile,
         CASE WHEN l.affiliation_id = ${affiliationId} THEN true ELSE false END AS myCommentSign,
-        COALESCE(COUNT(DISTINCT l.user_templete_id), 0) AS likeCount,
-        COALESCE(COUNT(DISTINCT cm.user_templete_id), 0) AS commentCount
+        COALESCE(CAST(COUNT(DISTINCT l.user_templete_id) AS CHAR), '0') AS likeCount,
+        COALESCE(CAST(COUNT(DISTINCT cm.user_templete_id) AS CHAR), '0') AS commentCount
       FROM
         UserChallenge AS uc
         INNER JOIN UserTemplete AS ut ON uc.user_challenge_id = ut.user_challenge_id AND ut.finished_at = ${date}

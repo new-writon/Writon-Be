@@ -16,7 +16,9 @@ const selectParticipantInformation = catchAsync(async (req, res) => {
 
 const selectDateTemplate = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await communityService.selectDateTemplate(req.params.challengeId, req.params.date));
+    const {challengeId, date, organization} = req.params;
+
+    res.status(httpStatus.OK).send(await communityService.selectDateTemplate(req.decoded?.id, challengeId, date, organization));
 });
 
 

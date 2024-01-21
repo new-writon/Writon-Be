@@ -26,8 +26,6 @@ const presentSituation = async (
 
   ]);
 
-  console.log(challengeOverlapCount)
-  console.log(challengeSuccessCount)
   return {
     nickname: nickname?.nickname!,
     userProfile: userData.profile,

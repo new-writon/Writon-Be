@@ -39,14 +39,18 @@ const selectMyParticipantInformation = async (
 
 
 const selectDateTemplate = async (
+    userId: number,
     challengeId: number,
-    date: string
+    date: string,
+    organization: string
 ) => {
+
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
 
     const [challengeCompleteCount, challengeDateTemplateData] = await Promise.all([
         userTemplateDao.selectUserCompleteCount(challengeId, date),
-        userChallengeDao.selectDateTemplateContent(challengeId, date)
+        userChallengeDao.selectDateTemplateContent(affiliation.affiliation_id, challengeId, date)
     ])
 
     const templateData = sortDateUserTemplate(

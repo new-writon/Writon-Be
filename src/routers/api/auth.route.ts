@@ -9,7 +9,7 @@ import auth from '../../middlewares/auth.js';
 const router = express.Router();
 
 router.post('/login/local', validate(authValidation.checkLocalLogin), authController.localLogin);
-router.post('/login/kakao', validate(authValidation.checkKakaoLogin), authController.kakaoLogin);
+router.post('/login/message', validate(authValidation.checkKakaoLogin), authController.kakaoLogin);
 router.delete('/logout', auth, authController.logout);
 router.post('/token-reissue', authController.reissueToken);
 router.post('/signup', validate(authValidation.checkSignUp), authController.signup);

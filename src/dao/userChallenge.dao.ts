@@ -80,13 +80,9 @@ const selectDateTemplateContent = async (
   affiliationId: number,
   challengeId: number,
   date: string
-) => {
+): Promise<SelectDateTemplateContent[]> => {
 
-  console.log(affiliationId)
-
-
-
-  const userTemplateData = await prisma.$queryRaw<SelectDateTemplateContent[]>`
+  return await prisma.$queryRaw`
         SELECT
         qc.question_id,
         qc.user_templete_id,
@@ -101,8 +97,8 @@ const selectDateTemplateContent = async (
         a.nickname,
         u.profile,
         CASE WHEN l.affiliation_id = ${affiliationId} THEN true ELSE false END AS myCommentSign,
-        COALESCE(SUM(CASE WHEN l.user_templete_id IS NOT NULL THEN 1 ELSE 0 END), 0) AS likeCount,
-        COALESCE(SUM(CASE WHEN cm.user_templete_id IS NOT NULL THEN 1 ELSE 0 END), 0) AS commentCount
+        COALESCE(COUNT(DISTINCT l.user_templete_id), 0) AS likeCount,
+        COALESCE(COUNT(DISTINCT cm.user_templete_id), 0) AS commentCount
       FROM
         UserChallenge AS uc
         INNER JOIN UserTemplete AS ut ON uc.user_challenge_id = ut.user_challenge_id AND ut.finished_at = ${date}
@@ -132,7 +128,7 @@ const selectDateTemplateContent = async (
 
   ;`;
 
-  return userTemplateData
+
 
 }
 

@@ -22,6 +22,7 @@ interface SelectDateTemplateContent {
     company_public: number,
     nickname: string,
     profile: string,
+    myCommentSign: number
     likeCount: number,
     commentCount: number
 }

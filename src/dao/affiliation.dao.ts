@@ -65,8 +65,6 @@ const selectAffiliation = async (
   organization: string
 ): Promise<Affiliation> => {
 
-  console.log(userId)
-  console.log(organization)
   const affiliationData = await prisma.$queryRaw<Affiliation[]>`
   SELECT a.* FROM Affiliation as a
   WHERE a.user_id = ${userId} 
@@ -74,7 +72,7 @@ const selectAffiliation = async (
     SELECT o.organization_id FROM Organization as o
     WHERE o.name = ${organization}
   );`;
-  console.log(affiliationData)
+
   return affiliationData[0]
 
 }

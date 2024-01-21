@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import challengeDao from '../dao/challenge.dao.js';
 import { sortCompanyPublic, sortParticipantInformation } from '../utils/community.js';
-import { affiliationDao, challengeDayDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
+import { affiliationDao, challengeDayDao, commentDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 import { sortDateUserTemplate, sortUserTemplate } from '../utils/challenge.js';
 
 
@@ -87,6 +87,19 @@ const selectChallengeDate = async (
 
 }
 
+const selectComment = async (
+    userId: number,
+    userTemplateId: number,
+  
+) => {
+
+    console.log(await commentDao.selectComment(userId, userTemplateId))
+
+    return 
+}
+
+
+
 
 export default {
 
@@ -94,7 +107,8 @@ export default {
     selectDateTemplate,
     selectMyParticipantInformation,
     writeCheeringPhrase,
-    selectChallengeDate
+    selectChallengeDate,
+    selectComment
 
 }
 

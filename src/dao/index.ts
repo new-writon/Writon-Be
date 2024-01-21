@@ -10,3 +10,4 @@ export { default as userTemplateDao } from './userTemplate.dao.js';
 export { default as challengeDayDao } from './challengeDay.dao.js';
 export { default as questionContentDao } from './questionContent.dao.js';
 export { default as questionDao } from './question.dao.js';
+export { default as commentDao } from './comment.dao.js';

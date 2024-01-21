@@ -46,13 +46,21 @@ const selectChallengeDate = catchAsync(async (req, res) => {
 
 
 
+const selectComment = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await communityService.selectComment(req.decoded?.id, req.params.userTemplateId));
+
+});
+
+
 export default {
 
     selectParticipantInformation,
     selectDateTemplate,
     selectMyParticipantInformation,
     writeCheeringPhrase,
-    selectChallengeDate
+    selectChallengeDate,
+    selectComment
 
 }
 

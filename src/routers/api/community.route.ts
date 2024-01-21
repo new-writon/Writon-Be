@@ -12,6 +12,7 @@ router.get('/:challengeId/my-participant-information', auth, validate(recordVali
 router.get('/:challengeId/template/:date', auth, validate(communityValidation.checkChallengeIdAndDate), communityController.selectDateTemplate);
 router.post('/cheering-phrase', auth, validate(communityValidation.checkChallengeIdAndOrganizationAndContent), communityController.writeCheeringPhrase);
 router.get('/:challengeId/date', auth, validate(recordValidation.checkChallengeId), communityController.selectChallengeDate);
+router.get('/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectComment);
 
 
 export default router;

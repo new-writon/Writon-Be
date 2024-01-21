@@ -52,11 +52,13 @@ const selectDateTemplate = async (
         userChallengeDao.selectDateTemplateContent(affiliation.affiliation_id, challengeId, date)
     ])
 
+    console.log(challengeDateTemplateData)
+
 
     const templateData = sortDateUserTemplate(
         sortCompanyPublic(challengeDateTemplateData)
     );
-
+    console.log(1)
     return {
         challengeCompleteCount: Number(challengeCompleteCount),
         templateData: templateData

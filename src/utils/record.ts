@@ -18,7 +18,6 @@ const sortCallendarDateBadge = (
             date: challengeDay.day
         };
 
-        console.log(hasMatchingDate)
 
         if (hasMatchingDate) {
             const matchingUserTemplateDays = userTemplateDays!.filter(userTemplateDays =>

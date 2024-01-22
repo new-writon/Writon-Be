@@ -110,8 +110,11 @@ const addLike = async (
 
     await likeDao.insertLike(affiliation.affiliation_id, userTemplateId);
 
+    return {
 
-    return 
+        count: Number(await likeDao.selectLikeCount(userTemplateId))
+
+    }
 }
 
 
@@ -126,7 +129,11 @@ const cancelLike = async (
 
     await likeDao.deleteLike(affiliation.affiliation_id, userTemplateId);
 
-    return 
+    return {
+
+        count: Number(await likeDao.selectLikeCount(userTemplateId))
+
+    }
 }
 
 

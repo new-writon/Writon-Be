@@ -89,6 +89,7 @@ const selectOrganizationAndChallengeId = async (
   INNER JOIN Organization AS o ON o.organization_id = a.organization_id
   INNER JOIN UserChallenge AS uc ON uc.affiliation_id = a.affiliation_id
   WHERE a.user_id = ${userId}
+  ORDER BY uc.created_at desc;
   
 
   `;

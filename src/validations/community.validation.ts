@@ -25,14 +25,28 @@ const checkUserTemplateId = {
   params: Joi.object().keys({
     userTemplateId: Joi.number().required(),
 
+  })
+}
+
+const checkUserTemplateIdAndOrganization = {
+  body: Joi.object().keys({
+    userTemplateId: Joi.number().required(),
+    organization: Joi.string().required()
 
   })
 }
+
+
+
+
+
+
 
 export default {
 
   checkChallengeIdAndOrganizationAndContent,
   checkChallengeIdAndDateAndOrganization,
-  checkUserTemplateId
+  checkUserTemplateId,
+  checkUserTemplateIdAndOrganization
 
 };

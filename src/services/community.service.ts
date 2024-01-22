@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import challengeDao from '../dao/challenge.dao.js';
 import { sortCompanyPublic, sortParticipantInformation } from '../utils/community.js';
-import { affiliationDao, challengeDayDao, commentDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
+import { affiliationDao, challengeDayDao, commentDao, likeDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 import { sortDateUserTemplate, sortUserTemplate } from '../utils/challenge.js';
 
 
@@ -100,7 +100,42 @@ const selectComment = async (
 }
 
 
+const addLike = async (
+    userId: number,
+    userTemplateId: number,
+    organization: string
+) => {
 
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    await likeDao.insertLike(affiliation.affiliation_id, userTemplateId);
+
+
+    return 
+}
+
+
+const cancelLike = async (
+    userId: number,
+    userTemplateId: number,
+    organization: string
+  
+) => {
+
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    await likeDao.deleteLike(affiliation.affiliation_id, userTemplateId);
+
+    return 
+}
+
+
+const selectUserTemplateLike = async (
+    userTemplateId: number
+) => {
+
+    return
+}
 
 export default {
 
@@ -109,7 +144,10 @@ export default {
     selectMyParticipantInformation,
     writeCheeringPhrase,
     selectChallengeDate,
-    selectComment
+    selectComment,
+    addLike,
+    cancelLike,
+    selectUserTemplateLike
 
 }
 

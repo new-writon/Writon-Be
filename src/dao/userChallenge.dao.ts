@@ -99,7 +99,7 @@ const selectDateTemplateContent = async (
     l.affiliation_id,
     CAST(COUNT(DISTINCT l.like_id) AS CHAR) AS likeCount,
     CAST(COUNT(DISTINCT cm.comment_id) AS CHAR) AS commentCount,
-    CASE WHEN MAX(CAST(l.affiliation_id AS SIGNED) = ${affiliationId}) THEN '1' ELSE '0' END AS myCommentSign
+    CASE WHEN MAX(CAST(l.affiliation_id AS SIGNED) = ${affiliationId}) THEN '1' ELSE '0' END AS myLikeSign
 
 FROM
   UserChallenge AS uc

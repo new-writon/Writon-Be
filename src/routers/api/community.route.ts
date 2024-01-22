@@ -14,5 +14,8 @@ router.post('/cheering-phrase', auth, validate(communityValidation.checkChalleng
 router.get('/:challengeId/date', auth, validate(recordValidation.checkChallengeId), communityController.selectChallengeDate);
 router.get('/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectComment);
 
+router.post('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.addLike);
+router.delete('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
+router.get('/like/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUserTemplateLike);
 
 export default router;

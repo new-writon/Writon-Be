@@ -54,6 +54,25 @@ const selectComment = catchAsync(async (req, res) => {
 
 });
 
+const addLike = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await communityService.addLike(req.decoded?.id, req.body.userTemplateId, req.body.organization));
+
+});
+
+const cancelLike = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await communityService.cancelLike(req.decoded?.id, req.body.userTemplateId, req.body.organization));
+
+});
+
+const selectUserTemplateLike = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await communityService.selectUserTemplateLike(req.params.userTemplateId));
+
+});
+
+
 
 export default {
 
@@ -62,7 +81,10 @@ export default {
     selectMyParticipantInformation,
     writeCheeringPhrase,
     selectChallengeDate,
-    selectComment
+    selectComment,
+    addLike,
+    cancelLike,
+    selectUserTemplateLike
 
 }
 

@@ -39,11 +39,11 @@ const selectLikeCount = async(
 
     const likeCount = await prisma.$queryRaw<SelectLikeCount[]>
     `
-    SELECT count(*) as count 
+    SELECT count(*) as likeCount
     FROM Likes AS l
     WHERE l.user_templete_id = ${userTemplateId}
     `
-    return likeCount[0].count
+    return likeCount[0].likeCount
     
 }
 

@@ -56,7 +56,7 @@ interface SelectSuccessChallengeCount {
 }
 
 interface SelectLikeCount {
-  count: number
+  likeCount: number
 }
 
 export {

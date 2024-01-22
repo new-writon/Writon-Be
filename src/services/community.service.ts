@@ -112,7 +112,7 @@ const addLike = async (
 
     return {
 
-        count: Number(await likeDao.selectLikeCount(userTemplateId))
+        likeCount: Number(await likeDao.selectLikeCount(userTemplateId))
 
     }
 }
@@ -131,7 +131,7 @@ const cancelLike = async (
 
     return {
 
-        count: Number(await likeDao.selectLikeCount(userTemplateId))
+        likeCount: Number(await likeDao.selectLikeCount(userTemplateId))
 
     }
 }
@@ -143,7 +143,7 @@ const selectUserTemplateLikeCount = async (
 
     return {
 
-        count: Number(await likeDao.selectLikeCount(userTemplateId))
+        likeCount: Number(await likeDao.selectLikeCount(userTemplateId))
 
     }
     

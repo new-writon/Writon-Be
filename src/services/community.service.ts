@@ -130,11 +130,17 @@ const cancelLike = async (
 }
 
 
-const selectUserTemplateLike = async (
+const selectUserTemplateLikeCount = async (
     userTemplateId: number
 ) => {
 
-    return
+    return {
+
+        count: Number(await likeDao.selectLikeCount(userTemplateId))
+
+    }
+    
+    
 }
 
 export default {
@@ -147,7 +153,7 @@ export default {
     selectComment,
     addLike,
     cancelLike,
-    selectUserTemplateLike
+    selectUserTemplateLikeCount
 
 }
 

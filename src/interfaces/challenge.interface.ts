@@ -55,6 +55,9 @@ interface SelectSuccessChallengeCount {
   count: number
 }
 
+interface SelectLikeCount {
+  count: number
+}
 
 export {
   SelectPeriod,
@@ -66,5 +69,6 @@ export {
   ChallengeParticipantCount,
   SelectUserCompleteCount,
   SelectOverlapCount,
-  SelectSuccessChallengeCount
+  SelectSuccessChallengeCount,
+  SelectLikeCount
 }

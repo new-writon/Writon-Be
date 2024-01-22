@@ -16,6 +16,6 @@ router.get('/:userTemplateId', auth, validate(communityValidation.checkUserTempl
 
 router.post('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.addLike);
 router.delete('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
-router.get('/like/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUserTemplateLike);
+router.get('/like/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUserTemplateLikeCount);
 
 export default router;

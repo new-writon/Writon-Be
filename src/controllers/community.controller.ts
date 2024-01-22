@@ -66,9 +66,9 @@ const cancelLike = catchAsync(async (req, res) => {
 
 });
 
-const selectUserTemplateLike = catchAsync(async (req, res) => {
+const selectUserTemplateLikeCount = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await communityService.selectUserTemplateLike(req.params.userTemplateId));
+    res.status(httpStatus.OK).send(await communityService.selectUserTemplateLikeCount(req.params.userTemplateId));
 
 });
 
@@ -84,7 +84,7 @@ export default {
     selectComment,
     addLike,
     cancelLike,
-    selectUserTemplateLike
+    selectUserTemplateLikeCount
 
 }
 

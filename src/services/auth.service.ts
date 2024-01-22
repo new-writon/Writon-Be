@@ -42,11 +42,17 @@ const localLogin = async (
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
 
+  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
+
+  if(organization === "null"){
+    affiliatedConfirmation = null
+  }
+
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-    affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
+    affiliatedConfirmation: affiliatedConfirmation
   };
 }
 
@@ -55,8 +61,6 @@ const kakaoLogin = async (
   kakaoAccessToken: string,
   organization: string
 ): Promise<Login> => {
-
-
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
 
@@ -76,12 +80,19 @@ const kakaoLogin = async (
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
+  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
+
+  if(organization === "null"){
+    affiliatedConfirmation = null
+  }
+
+
 
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-    affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
+    affiliatedConfirmation: affiliatedConfirmation
   };
 
 }

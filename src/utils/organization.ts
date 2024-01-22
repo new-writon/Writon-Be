@@ -5,7 +5,7 @@ import { organizationDao } from '../dao/index.js';
 const checkOrganization = async (
     organization: string,
     userId: number
-): Promise<boolean> => {
+): Promise<boolean | null> => {
     let affiliatedConfirmation;
 
     const checkAffiliation = await organizationDao.selectAffiliation(organization, userId);

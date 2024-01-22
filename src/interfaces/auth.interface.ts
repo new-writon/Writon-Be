@@ -3,7 +3,7 @@ interface Login {
     accessToken: string;
     refreshToken: string;
     role: string;
-    affiliatedConfirmation: boolean;
+    affiliatedConfirmation: boolean | null;
 }
 
 interface GenerateAuthCode {

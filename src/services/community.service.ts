@@ -96,9 +96,7 @@ const selectComment = async (
   
 ) => {
 
-    console.log(await commentDao.selectComment(userId, userTemplateId))
-
-    return 
+    return sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId))
 }
 
 

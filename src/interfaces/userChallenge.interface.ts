@@ -9,6 +9,13 @@ interface SelectTemplateContent {
 }
 
 
+interface IncludeCompany {
+    company_public: number,
+    company: string | null
+}
+
+
+
 interface SelectDateTemplateContent {
     question_id: number,
     user_templete_id: number,
@@ -30,5 +37,6 @@ interface SelectDateTemplateContent {
 
 export {
     SelectTemplateContent,
-    SelectDateTemplateContent
+    SelectDateTemplateContent,
+    IncludeCompany
 }

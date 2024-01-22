@@ -8,7 +8,7 @@ import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
 import jwt from '../utils/jwtModules.js';
 import { checkOrganization } from '../utils/organization.js';
-import { GenerateAuthCode, Login, ReissueToken} from '../interfaces/auth.interface.js'
+import { GenerateAuthCode, Login, ReissueToken } from '../interfaces/auth.interface.js'
 
 
 
@@ -26,7 +26,7 @@ const localLogin = async (
   organization: string
 ): Promise<Login> => {
 
-  const userData= await userDao.userInformationSelect(identifier)
+  const userData = await userDao.userInformationSelect(identifier)
 
   if (!userData) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Identifier is not correct");
@@ -54,36 +54,34 @@ const localLogin = async (
 const kakaoLogin = async (
   kakaoAccessToken: string,
   organization: string
-): Promise<Login> => 
+): Promise<Login> => {
 
-{
 
-  console.log(1)
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
-  console.log(2)
+
   const userCheck = await userDao.userInformationSelect(userKakaoData.data.id);
-  console.log(3)
+
   if (!userCheck) {
 
     await authDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.id, userKakaoData.data.properties.profile_image);
 
   }
-  console.log(4)
+
   const userData = await userDao.userInformationSelect(userKakaoData.data.id);
-  console.log(5)
+
   const accessToken = jwt.sign(userData!.user_id, userData!.role);
-  console.log(6)
+
   const refreshToken = jwt.refresh()
-  console.log(7)
+
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
-  console.log(8)
+
 
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-     affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
+    affiliatedConfirmation: await checkOrganization(organization, userData!.user_id)
   };
 
 }

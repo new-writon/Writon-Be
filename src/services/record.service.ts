@@ -2,7 +2,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, challengeDao, challengeDayDao, userChallengeDao, userDao, userTemplateDao } from '../dao/index.js';
 
-import {  signChallengeComplete, signTodayTemplateStatusCalculation, sortUserTemplate } from '../utils/challenge.js';
+import { signChallengeComplete, signTodayTemplateStatusCalculation, sortUserTemplate } from '../utils/challenge.js';
 import { sortCallendarDateBadge } from '../utils/record.js';
 
 const presentSituation = async (
@@ -100,6 +100,24 @@ const selectMyTemplate = async (
 }
 
 
+const signChallengeDay = async (
+  challengeId: number,
+  date: Date
+) => {
+
+  const challengeDay = await challengeDayDao.signChallengeDay(challengeId, date);
+
+  if (!challengeDay) {
+
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Today is not the day of the challenge");
+
+  }
+
+  return;
+}
+
+
+
 export default {
 
   presentSituation,
@@ -107,7 +125,8 @@ export default {
   signChallengeStatus,
   signTodayTemplateStatus,
   selectCalendarSituation,
-  selectMyTemplate
+  selectMyTemplate,
+  signChallengeDay
 
 
 }

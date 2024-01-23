@@ -35,11 +35,18 @@ const checkChallengeIdAndMonthAndOrganization = {
   })
 };
 
+const checkChallengeIdAndDate = {
+    params: Joi.object().keys({
+        challengeId: Joi.number().required(),
+        date: Joi.string().required()
 
+  })
+};
 export default {
 
     checkChallengeIdAndOrganization,
     checkOrganization,
     checkChallengeIdAndMonthAndOrganization,
-    checkChallengeId
+    checkChallengeId,
+    checkChallengeIdAndDate
 };

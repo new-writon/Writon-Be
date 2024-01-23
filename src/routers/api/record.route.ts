@@ -13,7 +13,7 @@ router.get('/calendar/:organization/:challengeId/:month', auth, validate(recordV
 router.get('/reminiscence/:organization/:challengeId/:month', auth, validate(recordValidation.checkChallengeIdAndMonthAndOrganization), recordController.selectMyTemplate);
 router.get('/:challengeId/status',validate(recordValidation.checkChallengeId), recordController.signChallengeStatus);
 router.get('/:organization/:challengeId/daily-reflection', auth, validate(recordValidation.checkChallengeIdAndOrganization), recordController.signTodayTemplateStatus);
-
+router.get('/:challengeId/:date', auth, validate(recordValidation.checkChallengeIdAndDate), recordController.signChallengeDay);
 
 
 export default router;

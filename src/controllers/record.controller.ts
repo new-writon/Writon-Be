@@ -46,6 +46,12 @@ const selectMyTemplate  = catchAsync(async (req, res) => {
 
 });
 
+const signChallengeDay  = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await recordService.signChallengeDay(req.params.challengeId, req.params.date));
+
+});
+
 
 export default {
 
@@ -54,5 +60,6 @@ export default {
     signChallengeStatus,
     signTodayTemplateStatus,
     selectCalendarSituation,
-    selectMyTemplate
+    selectMyTemplate,
+    signChallengeDay
 }

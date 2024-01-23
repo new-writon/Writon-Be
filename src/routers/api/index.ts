@@ -5,6 +5,7 @@ import recordRoute from './record.route.js';
 import startRoute from './start.route.js';
 import writeRoute from './write.route.js';
 import communityRoute from './community.route.js';
+import adminRoute from './admin.route.js';
 
 const router = express.Router();
 
@@ -35,6 +36,10 @@ const defaultRoutes = [
   {
     path: '/community',
     route: communityRoute
+  },
+  {
+    path: '/admin',
+    route: adminRoute
   },
 
 

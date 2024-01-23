@@ -16,7 +16,7 @@ const selectParticipantInformation = catchAsync(async (req, res) => {
 
 const selectDateTemplate = catchAsync(async (req, res) => {
 
-    const {challengeId, date, organization} = req.params;
+    const { challengeId, date, organization } = req.params;
 
     res.status(httpStatus.OK).send(await communityService.selectDateTemplate(req.decoded?.id, challengeId, date, organization));
 });
@@ -33,7 +33,7 @@ const selectMyParticipantInformation = catchAsync(async (req, res) => {
 
 const writeCheeringPhrase = catchAsync(async (req, res) => {
 
-    const {  organization, challengeId, content } = req.body;
+    const { organization, challengeId, content } = req.body;
 
     res.status(httpStatus.OK).send(await communityService.writeCheeringPhrase(req.decoded?.id, organization, challengeId, content));
 
@@ -74,6 +74,36 @@ const selectUserTemplateLikeCount = catchAsync(async (req, res) => {
 
 
 
+const addComment = catchAsync(async (req, res) => {
+
+    const { organization, userTemplateId, content, commentGroup } = req.body;
+
+    res.status(httpStatus.OK).send(await communityService.addComment(req.decoded?.id, organization, userTemplateId, content, commentGroup));
+
+});
+
+
+const updateComment = catchAsync(async (req, res) => {
+
+    const { organization, content, commentId } = req.body;
+
+    res.status(httpStatus.OK).send(await communityService.updateComment(req.decoded?.id, organization, content, commentId));
+
+});
+
+
+
+const deleteComment = catchAsync(async (req, res) => {
+
+    const { organization, commentId } = req.body;
+
+    res.status(httpStatus.OK).send(await communityService.deleteComment(req.decoded?.id, organization, commentId));
+
+});
+
+
+
+
 export default {
 
     selectParticipantInformation,
@@ -84,7 +114,10 @@ export default {
     selectComment,
     addLike,
     cancelLike,
-    selectUserTemplateLikeCount
+    selectUserTemplateLikeCount,
+    addComment,
+    updateComment,
+    deleteComment
 
 }
 

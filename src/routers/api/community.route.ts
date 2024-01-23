@@ -16,6 +16,12 @@ router.get('/:userTemplateId', auth, validate(communityValidation.checkUserTempl
 
 router.post('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.addLike);
 router.delete('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
-router.get('/like/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUserTemplateLikeCount);
+router.get('/like/:userTemplateId/comment', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUserTemplateLikeCount);
+
+
+router.post('/comment', auth, validate(communityValidation.checkOraganizationAndUserTamplateIdAndContentAndCommentGroup), communityController.addComment);
+router.patch('/comment', auth, validate(communityValidation.checkOraganizationAndContentAndCommentId), communityController.updateComment)
+router.delete('/comment', auth, validate(communityValidation.checkOraganizationAndCommentId), communityController.deleteComment);
+
 
 export default router;

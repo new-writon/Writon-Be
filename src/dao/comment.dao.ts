@@ -36,10 +36,66 @@ const selectComment = async (
 
 }
 
+const insertComment = async (
+    affiliationId: number,
+    content: string,
+    userTemplateId: number,
+    commentGroup: number
+  ) => {
+  
+    return await prisma.comment.create({
 
+        data:{
+            affiliation_id: affiliationId,
+            content: content,
+            user_templete_id: userTemplateId,
+            comment_group: commentGroup
+        }
+
+    });
+  }
+
+  const updateComment = async (
+    affiliationId: number,
+    content: string,
+    commentId: number
+  ) => {
+  
+    return await prisma.comment.update({
+
+        where:{
+            affiliation_id: affiliationId,
+            comment_id: commentId
+
+        },
+        data:{
+        
+            content: content,
+        }
+    });
+  }
+
+
+  const deleteComment = async (
+    affiliationId: number,
+    commentId: number
+
+  ) => {
+  
+    return await prisma.comment.delete({
+
+        where :{
+            affiliation_id: affiliationId,
+            comment_id: commentId
+        }
+    });
+  }
 
 
 export default {
-    selectComment
+    selectComment,
+    insertComment,
+    deleteComment,
+    updateComment
 
 }

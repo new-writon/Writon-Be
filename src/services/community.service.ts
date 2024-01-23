@@ -146,9 +146,58 @@ const selectUserTemplateLikeCount = async (
         likeCount: Number(await likeDao.selectLikeCount(userTemplateId))
 
     }
-    
-    
 }
+
+
+const addComment = async (
+    userId: number,
+    organization: string,
+    userTemplateId: number,
+    content: string,
+    commentGroup: number
+) => {
+
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    await commentDao.insertComment(affiliation.affiliation_id, content, userTemplateId, commentGroup);
+
+    return  sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId))
+
+}
+
+
+const updateComment = async (
+    userId: number,
+    organization: string,
+    content: string,
+    commentId: number,
+) => {
+
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    const updateCommentData = await commentDao.updateComment(affiliation.affiliation_id, content, commentId);
+
+    return sortCompanyPublic(await commentDao.selectComment(userId, updateCommentData.user_templete_id))
+}
+
+
+const deleteComment = async (
+    userId: number,
+    organization: string,
+    commentId: number,
+) => {
+
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    const deleteCommentData = await commentDao.deleteComment(affiliation.affiliation_id, commentId);
+
+    console.log(deleteCommentData)
+
+
+    return sortCompanyPublic(await commentDao.selectComment(userId, deleteCommentData.user_templete_id))
+}
+
+
 
 export default {
 
@@ -160,7 +209,10 @@ export default {
     selectComment,
     addLike,
     cancelLike,
-    selectUserTemplateLikeCount
+    selectUserTemplateLikeCount,
+    addComment,
+    updateComment,
+    deleteComment
 
 }
 

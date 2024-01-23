@@ -37,7 +37,33 @@ const checkUserTemplateIdAndOrganization = {
 }
 
 
+const checkOraganizationAndUserTamplateIdAndContentAndCommentGroup = {
+  body: Joi.object().keys({
+    content: Joi.string().required(),
+    userTemplateId: Joi.number().required(),
+    organization: Joi.string().required(),
+    commentGroup: Joi.number().required()
 
+  })
+}
+
+const checkOraganizationAndCommentId = {
+  body: Joi.object().keys({
+    organization: Joi.string().required(),
+    commentId: Joi.number().required()
+
+  })
+}
+
+
+const checkOraganizationAndContentAndCommentId = {
+  body: Joi.object().keys({
+    organization: Joi.string().required(),
+    content: Joi.string().required(),
+    commentId: Joi.number().required()
+
+  })
+}
 
 
 
@@ -47,6 +73,9 @@ export default {
   checkChallengeIdAndOrganizationAndContent,
   checkChallengeIdAndDateAndOrganization,
   checkUserTemplateId,
-  checkUserTemplateIdAndOrganization
+  checkUserTemplateIdAndOrganization,
+  checkOraganizationAndUserTamplateIdAndContentAndCommentGroup,
+  checkOraganizationAndContentAndCommentId,
+  checkOraganizationAndCommentId
 
 };

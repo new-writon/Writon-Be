@@ -42,6 +42,12 @@ const selectOrganizationChallengeId = catchAsync(async (req, res) => {
 
 
 
+const checkNickname = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await startService.checkNickname(req.params.organization, req.query.nickname as string));
+
+});
+
 
 
 
@@ -50,5 +56,6 @@ const selectOrganizationChallengeId = catchAsync(async (req, res) => {
 export default {
     enrollOrganization,
     enrollChallenge,
-    selectOrganizationChallengeId
+    selectOrganizationChallengeId,
+    checkNickname
 }

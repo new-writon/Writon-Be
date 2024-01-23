@@ -23,8 +23,21 @@ const checkOrganizationAndChallengeId = {
     })
 };
 
+
+const checkOrganizationAndNickname = {
+    params: Joi.object().keys({
+        organization: Joi.string().required(),
+    
+    }),
+    query: Joi.object().keys({
+        nickname: Joi.string().required(),
+    
+    })
+};
+
 export default {
 
     checkOrganizationEnroll,
-    checkOrganizationAndChallengeId
+    checkOrganizationAndChallengeId,
+    checkOrganizationAndNickname
 };

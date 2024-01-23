@@ -40,7 +40,7 @@ const enrollChallenge = async (
     challengeId: number
 ) => {
 
-    const [ challengeData, userAffiliation ] = await Promise.all([
+    const [challengeData, userAffiliation] = await Promise.all([
 
         challengeDao.selectChallenge(challengeId),
         affiliationDao.selectAffiliation(userId, organization)
@@ -52,7 +52,7 @@ const enrollChallenge = async (
 }
 
 
-const selectOrganizationChallengeId = async(
+const selectOrganizationChallengeId = async (
     userId: number
 ) => {
 
@@ -61,11 +61,27 @@ const selectOrganizationChallengeId = async(
 }
 
 
+const checkNickname = async (
+    organization: string,
+    nickname: string
+) => {
+
+    const nicknameData = await affiliationDao.checkNickname(organization, nickname);
+
+    if (!nicknameData[0]) {
+
+        return;
+    }
+
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, "can't use nickname");
+
+}
 
 
 
 export default {
     enrollOrganization,
     enrollChallenge,
-    selectOrganizationChallengeId 
+    selectOrganizationChallengeId,
+    checkNickname
 }

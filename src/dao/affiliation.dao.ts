@@ -78,6 +78,7 @@ const selectAffiliation = async (
 }
 
 
+
 const selectOrganizationAndChallengeId = async (
   userId: number,
 ) => {
@@ -90,11 +91,32 @@ const selectOrganizationAndChallengeId = async (
   INNER JOIN UserChallenge AS uc ON uc.affiliation_id = a.affiliation_id
   WHERE a.user_id = ${userId}
   ORDER BY uc.created_at desc;
-  
-
   `;
 
 }
+
+
+const checkNickname = async <Key extends keyof Affiliation>(
+  organization: string,
+  nickname: string
+): Promise<Affiliation[]> => {
+
+  return await prisma.$queryRaw<Affiliation[]>`
+
+  SELECT a.* FROM Affiliation as a
+  WHERE 
+    a.organization_id = (
+    SELECT o.organization_id FROM Organization as o
+    WHERE o.name = ${organization}
+  )
+  AND a.nickname = ${nickname};
+  
+  `;
+
+
+
+}
+
 
 
 export default {
@@ -103,5 +125,6 @@ export default {
   insertAffiliation,
   selectAffiliationId,
   selectAffiliation,
-  selectOrganizationAndChallengeId
+  selectOrganizationAndChallengeId,
+  checkNickname
 }

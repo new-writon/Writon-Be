@@ -190,10 +190,7 @@ const deleteComment = async (
     const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
     const deleteCommentData = await commentDao.deleteComment(affiliation.affiliation_id, commentId);
-
-    console.log(deleteCommentData)
-
-
+    
     return sortCompanyPublic(await commentDao.selectComment(userId, deleteCommentData.user_templete_id))
 }
 

@@ -218,6 +218,20 @@ const challengeParticipantCount = async (
   
 }
 
+const selectChallengeInformation = async (
+    challenge: string,
+): Promise<Challenge>=> {
+
+    const challengeInformation = await prisma.$queryRaw<Challenge[]>`
+
+        SELECT c.* FROM Challenge as c 
+        WHERE c.name  = ${challenge};`;
+
+    return challengeInformation[0]
+  
+}
+
+
 export default {
 
     selectWholePeriod,
@@ -232,5 +246,6 @@ export default {
     selectParticipantInformation,
     selectMyParticipantInformation,
     updateCheeringPhrase,
-    challengeParticipantCount
+    challengeParticipantCount,
+    selectChallengeInformation
 }

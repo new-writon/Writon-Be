@@ -5,7 +5,29 @@ import { smtpTransport } from "../config/email.js";
 require('dotenv').config();
 
 
+const sendInvitationEmail = async  (
+  organizaiton: string,
+  challengeId: number,
+  email: string
+  
+  ) => {
+   
+    const mailOptions = {
+      from: "teamwritoner" + "@gmail.com",
+      to: email,
+      subject: '[Writon] 요청하신 서비스 이메일 인증 번호를 안내해드립니다.',
+      html: `
+      <p>초대장 입니다.</p>
 
+      <a href="https://www.naver.com/${organizaiton}/${challengeId}">링크 텍스트</a>
+      `
+    };
+
+    smtpTransport.sendMail(mailOptions);
+
+    smtpTransport.close();
+
+}
 
 
 
@@ -60,7 +82,10 @@ const randomPasswordsmtpSender = async (email: string, randomPassword: string) =
 
 export default {
   randomPasswordsmtpSender,
-  sendCodeEmail
+  sendCodeEmail,
+  sendInvitationEmail
 }
+
+
 
 

@@ -1,6 +1,6 @@
 import express from 'express';
-import  {authController} from '../../controllers/index.js';
-import { authValidation } from '../../validations/index.js';
+import  {adminController, authController} from '../../controllers/index.js';
+import { adminValidation, authValidation } from '../../validations/index.js';
 import validate from '../../middlewares/validate.js';
 import auth from '../../middlewares/auth.js';
 
@@ -8,7 +8,7 @@ import auth from '../../middlewares/auth.js';
 
 const router = express.Router();
 
-router.post('/login/local', validate(authValidation.checkLocalLogin), authController.localLogin);
+router.post('/invitation', validate(adminValidation.checkOrganizationAndChallengeAndEmail), adminController.sendInvitation);
 
 
 

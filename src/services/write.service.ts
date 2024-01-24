@@ -10,6 +10,7 @@ import { changeUserTemplateType, signUserChallengeComplete } from '../utils/chal
 import userTemplateDao from '../dao/userTemplate.dao.js';
 import questionContentDao from '../dao/questionContent.dao.js';
 import { performTransactionInsertTemplateContent } from '../utils/transaction.js';
+import transactionDao from '../dao/transaction.dao.js';
 
 
 const selectBasicQuestion = async (
@@ -45,19 +46,14 @@ const insertTemplateContent = async (
 
     ]);
 
-    const userTemplateData = await userTemplateDao.insertUserTemplate(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete);
+    // const userTemplateData = await userTemplateDao.insertUserTemplate(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete);
 
-    const changedTemplate = changeUserTemplateType(templateContent, userTemplateData.user_templete_id);
+    // const changedTemplate = changeUserTemplateType(templateContent, userTemplateData.user_templete_id);
 
-    await questionContentDao.insertUserTemplateContent(changedTemplate);
+    // await questionContentDao.insertUserTemplateContent(changedTemplate);
 
 
-    // if(!await performTransactionInsertTemplateContent(userChallengeData, userTemplateComplete, templateContent, date)){
-
-    //     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "template restore fail");
-        
-    // }
-
+    await transactionDao.insertUserTemplateContent(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete, templateContent);
   
 }
 

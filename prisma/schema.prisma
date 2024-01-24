@@ -76,7 +76,7 @@ model Challenge {
   start_at             DateTime              @db.Date
   finish_at            DateTime              @db.Date
   deposit              Int
-  deduction_rate       Int
+
 
   challenge_days       ChallengeDay[]
   challenge_deposit_deductions ChallengeDepositDeduction[]
@@ -125,6 +125,7 @@ model ChallengeDepositDeduction {
   challenge_deposit_deduction_id Int      @id @default(autoincrement())
   challenge_id                  Int
   count                         Int
+  deduction_rate                Int
   created_at                    DateTime @default(now()) @db.Timestamp(6)
   update_at                     DateTime @default(now()) @db.Timestamp(6)
 

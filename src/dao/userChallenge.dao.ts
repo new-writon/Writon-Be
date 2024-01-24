@@ -60,7 +60,8 @@ const selectTemplateContent = async (
 
   const userTemplateData = await prisma.$queryRaw<SelectTemplateContent[]>`
 
-     SELECT  qc.question_id, qc.user_templete_id, qc.question_content_id, qc.content, ut.finished_at, q.category, q.question  FROM  UserChallenge as uc
+     SELECT  qc.question_id, qc.user_templete_id, qc.question_content_id, qc.content, ut.finished_at, q.category, q.question  
+     FROM  UserChallenge as uc
       INNER JOIN UserTemplete as ut ON uc.user_challenge_id = ut.user_challenge_id
       INNER JOIN QuestionContent as qc ON ut.user_templete_id = qc.user_templete_id
       INNER JOIN Question as q ON q.question_id = qc.question_id

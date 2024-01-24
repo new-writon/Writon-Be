@@ -18,8 +18,8 @@ model User {
   password      String?   @db.VarChar(255)
   email         String    @db.VarChar(40) @unique
   profile       String?   @db.VarChar(500)
-  created_at    DateTime  @default(now()) @db.Timestamp(6)
-  update_at     DateTime  @default(now()) @db.Timestamp(6)
+  created_at    DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at     DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   affiliations  Affiliation[]
 
 }
@@ -27,8 +27,8 @@ model User {
 model Organization {
   organization_id Int      @id @default(autoincrement())
   name            String   @db.VarChar(30)
-  created_at      DateTime @default(now()) @db.Timestamp(6)
-  update_at       DateTime @default(now()) @db.Timestamp(6)
+  created_at      DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  update_at       DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   affiliations    Affiliation[]
 }
 
@@ -51,8 +51,8 @@ model Affiliation {
   nickname        String
   company         String?    @db.VarChar(50)
   company_public  Boolean
-  created_at      DateTime   @default(now()) @db.Timestamp(6)
-  update_at       DateTime   @default(now()) @db.Timestamp(6)
+  created_at      DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at       DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   @@id([ affiliation_id, organization_id, user_id ])
 
@@ -71,8 +71,8 @@ model Challenge {
   challenge_id         Int                   @default(autoincrement()) @unique
   affiliation_id       Int
   name                 String                @db.VarChar(40)
-  created_at           DateTime              @default(now()) @db.Timestamp(6)
-  update_at            DateTime              @default(now()) @db.Timestamp(6)
+  created_at           DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at            DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   start_at             DateTime              @db.Date
   finish_at            DateTime              @db.Date
   deposit              Int
@@ -93,8 +93,8 @@ model Question {
   challenge_id Int
   question     String   @db.VarChar(255)
   category     String   @db.VarChar(10)
-  created_at   DateTime @default(now()) @db.Timestamp(6)
-  update_at    DateTime @default(now()) @db.Timestamp(6)
+  created_at   DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at    DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   question_tags QuestionTag[]
   question_contents QuestionContent[]
@@ -115,8 +115,8 @@ model ChallengeDay {
   challenge_day_id Int      @id @default(autoincrement())
   challenge_id     Int
   day              DateTime                 @db.Date
-  created_at       DateTime @default(now()) @db.Timestamp(6)
-  update_at        DateTime @default(now()) @db.Timestamp(6)
+  created_at       DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at        DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   challenge        Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
 }
@@ -126,8 +126,8 @@ model ChallengeDepositDeduction {
   challenge_id                  Int
   count                         Int
   deduction_rate                Int
-  created_at                    DateTime @default(now()) @db.Timestamp(6)
-  update_at                     DateTime @default(now()) @db.Timestamp(6)
+  created_at                    DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at                     DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   challenge                     Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
 }
@@ -142,8 +142,8 @@ model UserChallenge {
   user_deposit      Int
   cheering_phrase  String?     @db.VarChar(255)
   cheering_phrase_date  DateTime?    @db.Date
-  created_at        DateTime @default(now()) @db.Timestamp(6)
-  update_at         DateTime @default(now()) @db.Timestamp(6)
+  created_at        DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at         DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   user_templetes    UserTemplete[]
 
@@ -157,8 +157,8 @@ model UserChallenge {
 model UserTemplete {
   user_templete_id Int         @id @default(autoincrement()) 
   user_challenge_id Int
-  created_at       DateTime    @default(now()) @db.Timestamp(6)
-  update_at        DateTime    @default(now()) @db.Timestamp(6)
+  created_at       DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at        DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   finished_at      DateTime?    @db.Date
   complete         Boolean?
 
@@ -175,8 +175,8 @@ model QuestionContent {
   user_templete_id    Int
   content             String      @db.Text
   visibility          Boolean
-  created_at          DateTime    @default(now()) @db.Timestamp(6)
-  update_at           DateTime    @default(now()) @db.Timestamp(6)
+  created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at           DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   questions            Question    @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: Cascade)
   user_templetes       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id], onDelete: Cascade, onUpdate: Cascade)
@@ -188,8 +188,8 @@ model Likes {
   like_id          Int         @default(autoincrement()) @unique
   affiliation_id   Int
   user_templete_id Int
-  created_at       DateTime    @default(now()) @db.Timestamp(6)
-  update_at        DateTime    @default(now()) @db.Timestamp(6)
+  created_at       DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at        DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   affiliation      Affiliation        @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
   user_templete    UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id], onDelete: Cascade, onUpdate: Cascade)
@@ -203,8 +203,8 @@ model Comment {
   user_templete_id    Int
   affiliation_id      Int
   content             String      @db.Text
-  created_at          DateTime    @default(now()) @db.Timestamp(6)
-  update_at           DateTime    @default(now()) @db.Timestamp(6)
+  created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at           DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
 
   comments_son        Comment[]  @relation("comments")

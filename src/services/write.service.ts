@@ -39,19 +39,11 @@ const insertTemplateContent = async (
     templateContent: Array<WriteTemplete>
 ) => {
 
-
     const [userChallengeData, userTemplateComplete] = await Promise.all([
         userChallengeDao.selectUserChallenge(userId, organization, challengeId),
         signUserChallengeComplete(challengeId, date)
 
     ]);
-
-    // const userTemplateData = await userTemplateDao.insertUserTemplate(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete);
-
-    // const changedTemplate = changeUserTemplateType(templateContent, userTemplateData.user_templete_id);
-
-    // await questionContentDao.insertUserTemplateContent(changedTemplate);
-
 
     await transactionDao.insertUserTemplateContent(userChallengeData.user_challenge_id, new Date(date), userTemplateComplete, templateContent);
   

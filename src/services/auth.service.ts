@@ -2,7 +2,7 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import bcrypt from 'bcrypt';
-import { userDao, authDao, redisDao } from '../dao/index.js';
+import { userDao,  redisDao } from '../dao/index.js';
 import socialLogin from '../utils/socialLogin.js';
 import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
@@ -68,7 +68,7 @@ const kakaoLogin = async (
 
   if (!userCheck) {
 
-    await authDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.id, userKakaoData.data.properties.profile_image);
+    await userDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.id, userKakaoData.data.properties.profile_image);
 
   }
 
@@ -113,7 +113,7 @@ const signUp = async (
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
-  await authDao.localSignUp(
+  await userDao.localSignUp(
     identifier,
     encryptedPassword,
     email

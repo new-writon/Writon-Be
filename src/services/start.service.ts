@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { affiliationDao, organizationDao, challengeDao } from '../dao/index.js';
+import { affiliationDao, organizationDao, challengeDao, userChallengeDao } from '../dao/index.js';
 
 
 
@@ -47,7 +47,7 @@ const enrollChallenge = async (
 
     ]);
 
-    await challengeDao.insertChallenge(userAffiliation.affiliation_id, challengeData.challenge_id, challengeData.deposit);
+    await userChallengeDao.insertChallenge(userAffiliation.affiliation_id, challengeData.challenge_id, challengeData.deposit);
 
 }
 

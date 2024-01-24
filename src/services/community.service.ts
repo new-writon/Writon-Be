@@ -15,8 +15,8 @@ const selectParticipantInformation = async (
 
     const [participantData, challengeParticipantCount, challengeOverlapPeriod] = await Promise.all([
 
-        challengeDao.selectParticipantInformation(userId, challengeId),
-        challengeDao.challengeParticipantCount(challengeId),
+        userChallengeDao.selectParticipantInformation(userId, challengeId),
+        userChallengeDao.challengeParticipantCount(challengeId),
         challengeDao.selectOverlapPeriod(challengeId)
     ])
 
@@ -32,7 +32,7 @@ const selectMyParticipantInformation = async (
     challengeId: number
 ) => {
 
-    const myParticipantData = await challengeDao.selectMyParticipantInformation(userId, challengeId);
+    const myParticipantData = await userChallengeDao.selectMyParticipantInformation(userId, challengeId);
 
     return (sortParticipantInformation(myParticipantData))[0]
 }
@@ -73,7 +73,7 @@ const writeCheeringPhrase = async (
 
     const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
-    await challengeDao.updateCheeringPhrase(affiliation.affiliation_id, challengeId, content);
+    await userChallengeDao.updateCheeringPhrase(affiliation.affiliation_id, challengeId, content);
 
 }
 

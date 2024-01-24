@@ -8,11 +8,13 @@ const selectBasicQuestion = async(
 ): Promise<Question[]> => {
     const basicQuestionData = await prisma.$queryRaw<Question[]>
     `
-      SELECT q.question_id, q.question FROM Question as q
+      SELECT 
+      q.question_id, 
+      q.question 
+      FROM Question as q
       WHERE q.challenge_id = ${challengeId}
       AND q.category LIKE  '%베이직%'
-      ORDER BY q.question_id
-    
+      ORDER BY q.question_id  
     `
 
     return basicQuestionData
@@ -25,11 +27,14 @@ const selectSpecialQuestion = async (
 
     const specialQuestionData = await prisma.$queryRaw
     `
-      SELECT q.question_id, q.question, qt.category FROM Question as q
+      SELECT 
+      q.question_id, 
+      q.question, 
+      qt.category 
+      FROM Question as q
       INNER JOIN QuestionTag as qt ON q.question_id = qt.question_id
       WHERE q.challenge_id = ${challengeId}
       AND q.category LIKE  '%스페셜%'
-
       ORDER BY qt.category, q.question_id
     
     `

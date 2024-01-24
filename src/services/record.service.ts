@@ -19,7 +19,7 @@ const presentSituation = async (
     affiliationDao.selectNickname(affiliation.affiliation_id),
     userDao.selectUser(userId),
     challengeDao.selectOverlapPeriod(challengeId),
-    challengeDao.selectOverlapCount(challengeId),
+    challengeDayDao.selectOverlapCount(challengeId),
     userTemplateDao.selectSuccessChallengeCount(affiliation.affiliation_id, challengeId),
     userChallengeDao.selectUserChallengeDeposit(affiliation.affiliation_id, challengeId),
     challengeDao.selectChallenge(challengeId)

@@ -99,7 +99,7 @@ const selectIdentifierAndEmail = async <Key extends keyof User>(
 const updatePassword = async <Key extends keyof  User>(
   userId: number,
   password: string
-) => {
+): Promise<void> => {
 
   await prisma.user.update({
     where: { user_id: userId },

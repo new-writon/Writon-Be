@@ -1,5 +1,5 @@
 import prisma from '../client.js';
-import { PrismaClient, Affiliation } from '@prisma/client'
+import { PrismaClient, Affiliation, Challenge } from '@prisma/client'
 
 
 const selectNickname = async <Key extends keyof Affiliation>(
@@ -82,11 +82,10 @@ const selectAffiliation = async (
 
 
 const selectOrganizationAndChallengeId = async (
-  userId: number,
-) => {
+  userId: number
+): Promise<Challenge[]> => {
 
-  return await prisma.$queryRaw`
-
+  return await prisma.$queryRaw<Challenge[]>`
 
   SELECT 
   o.name, 
@@ -101,7 +100,7 @@ const selectOrganizationAndChallengeId = async (
 }
 
 
-const checkNickname = async <Key extends keyof Affiliation>(
+const checkNickname = async (
   organization: string,
   nickname: string
 ): Promise<Affiliation[]> => {

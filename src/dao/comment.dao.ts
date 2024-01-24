@@ -1,5 +1,5 @@
 import prisma from '../client.js';
-import { ChallengeDay } from '@prisma/client'
+import { ChallengeDay, Comment } from '@prisma/client'
 import { SelectComment } from '../interfaces/community.interface.js';
 
 
@@ -41,7 +41,7 @@ const insertComment = async (
     content: string,
     userTemplateId: number,
     commentGroup: number
-  ) => {
+  ): Promise<Comment> => {
   
     return await prisma.comment.create({
 
@@ -59,7 +59,7 @@ const insertComment = async (
     affiliationId: number,
     content: string,
     commentId: number
-  ) => {
+  ): Promise<Comment> => {
   
     return await prisma.comment.update({
 
@@ -80,7 +80,7 @@ const insertComment = async (
     affiliationId: number,
     commentId: number
 
-  ) => {
+  ): Promise<Comment> => {
   
     return await prisma.comment.delete({
 

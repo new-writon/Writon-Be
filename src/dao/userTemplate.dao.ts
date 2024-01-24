@@ -1,6 +1,6 @@
 import prisma from '../client.js';
 import { PrismaClient, Affiliation, Challenge, UserTemplete, } from '@prisma/client'
-import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt, SelectUserCompleteCount, SelectSuccessChallengeCount } from '../interfaces/challenge.interface.js';
+import { DataCount } from '../interfaces/challenge.interface.js';
 import { bool } from 'aws-sdk/clients/signer.js';
 
 
@@ -9,7 +9,7 @@ const insertUserTemplate = async (
     userChallnegeId: number,
     date: Date,
     complete: bool
-) => {
+): Promise<UserTemplete> => {
 
     return await prisma.userTemplete.create({
         data: {
@@ -30,7 +30,7 @@ const selectSuccessChallengeCount = async (
     challengeId: number
 ): Promise<number> => {
 
-    const successChallenge = await prisma.$queryRaw<SelectSuccessChallengeCount[]>`
+    const successChallenge = await prisma.$queryRaw<DataCount[]>`
 
         select count(*) as count from UserTemplete as ut
             where ut.complete = 1
@@ -95,7 +95,7 @@ const selectUserTemplateDay = async (
    
   ): Promise<number> => {
 
-    const userCompleteCount = await prisma.$queryRaw<SelectUserCompleteCount[]>`
+    const userCompleteCount = await prisma.$queryRaw<DataCount[]>`
 
     SELECT count(*) as count FROM UserTemplete as ut
     INNER JOIN UserChallenge as uc ON uc.user_challenge_id = ut.user_challenge_id AND uc.challenge_id = ${challengeId}
@@ -112,7 +112,6 @@ const selectUserTemplateDay = async (
 
 
 export default {
-
 
     selectSuccessChallengeCount,
     signTodayTemplate,

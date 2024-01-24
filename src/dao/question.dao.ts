@@ -23,9 +23,9 @@ const selectBasicQuestion = async(
 
 const selectSpecialQuestion = async (
     challengeId: number
-) => {
+): Promise<Question[]> => {
 
-    const specialQuestionData = await prisma.$queryRaw
+    const specialQuestionData = await prisma.$queryRaw<Question[]>
     `
       SELECT 
       q.question_id, 

@@ -24,7 +24,7 @@ const localLogin = async (
   identifier: string,
   password: string,
   organization: string
-): Promise<Login> => {
+) => {
 
   const userData = await userDao.userInformationSelect(identifier)
 
@@ -60,7 +60,7 @@ const localLogin = async (
 const kakaoLogin = async (
   kakaoAccessToken: string,
   organization: string
-): Promise<Login> => {
+) => {
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
 
@@ -86,8 +86,6 @@ const kakaoLogin = async (
     affiliatedConfirmation = null
   }
 
-
-
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
@@ -99,7 +97,7 @@ const kakaoLogin = async (
 
 const logout = async (
   userId: string
-): Promise<void> => {
+) => {
 
   await redisDao.deleteRedis(userId);
 
@@ -109,7 +107,7 @@ const signUp = async (
   identifier: string,
   password: string,
   email: string,
-): Promise<void> => {
+) => {
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 

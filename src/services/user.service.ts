@@ -12,14 +12,10 @@ import mailHandler from '../modules/mailHandler.js';
 import { FindIdentifier } from '../interfaces/user.interface.js';
 
 
-
-// : Promise<FindIdentifier>
-
-
 const findIdentifier = async (
   email: string,
   code: string
-): Promise<FindIdentifier | null> => {
+) => {
 
   const certifyCode = await redis.getRedis(email);
 
@@ -41,7 +37,7 @@ const changePassword = async (
   userId: number,
   oldPassword: string,
   newPassword: string
-): Promise<void> => {
+) => {
 
   const userPassword = await userDao.selectPassword(userId)
 
@@ -58,7 +54,7 @@ const changePassword = async (
 
 const checkIdentifier = async (
   identifier: string,
-): Promise<null> => {
+) => {
 
   const identifierData = await userDao.userInformationSelect(identifier);
 
@@ -72,7 +68,7 @@ const checkIdentifier = async (
 
 const checkEmail = async (
   email: string
-): Promise<null> => {
+) => {
 
   const emailData = await userDao.selectEmail(email);
 
@@ -89,7 +85,7 @@ const checkEmail = async (
 const generateTemporaryPassword = async (
   identifier: string,
   email: string
-): Promise<void> => {
+) => {
 
   const user = await userDao.selectIdentifierAndEmail(identifier);
 

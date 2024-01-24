@@ -2,7 +2,7 @@ import { bool } from "aws-sdk/clients/signer";
 
 interface SelectPeriod {
   period: number;
-//  challenge_id: number
+
 }
 
 interface SelectChallengeId {
@@ -37,27 +37,27 @@ interface InsertUserTemplateContent {
 }
 
 
-interface ChallengeParticipantCount {
+// interface ChallengeParticipantCount {
+//   count: number
+// }
+
+// interface SelectUserCompleteCount {
+//   count: number
+// }
+
+
+// interface SelectOverlapCount {
+//   count: number
+// }
+
+
+interface DataCount {
   count: number
 }
 
-interface SelectUserCompleteCount {
-  count: number
-}
-
-
-interface SelectOverlapCount {
-  count: number
-}
-
-
-interface SelectSuccessChallengeCount {
-  count: number
-}
-
-interface SelectLikeCount {
-  likeCount: number
-}
+// interface SelectLikeCount {
+//   likeCount: number
+// }
 
 export {
   SelectPeriod,
@@ -66,9 +66,10 @@ export {
   SelectFinishAt,
   WriteTemplete,
   InsertUserTemplateContent,
-  ChallengeParticipantCount,
-  SelectUserCompleteCount,
-  SelectOverlapCount,
-  SelectSuccessChallengeCount,
-  SelectLikeCount
+  DataCount
+  // ChallengeParticipantCount,
+  // SelectUserCompleteCount,
+  // SelectOverlapCount,
+  // SelectSuccessChallengeCount,
+  // SelectLikeCount
 }

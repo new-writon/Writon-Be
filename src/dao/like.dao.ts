@@ -1,13 +1,13 @@
-import { PrismaClient, ErrorLog } from '@prisma/client'
+import { Likes } from '@prisma/client'
 import prisma from '../client.js';
-import affiliationDao from './affiliation.dao.js';
-import { SelectLikeCount } from '../interfaces/challenge.interface.js';
+import { DataCount } from '../interfaces/challenge.interface.js';
+
 
 
 const insertLike = async(
     affiliationId: number,
     userTemplateId: number
-) => {
+): Promise<Likes> => {
 
     return await prisma.likes.create({
         data: {
@@ -22,7 +22,7 @@ const insertLike = async(
 const deleteLike = async(
     affiliationId: number,
     userTemplateId: number
-) => {
+): Promise<Likes> => {
 
     return await prisma.$queryRaw`
     
@@ -37,13 +37,13 @@ const selectLikeCount = async(
     userTemplateId: number
 ): Promise<number> => {
 
-    const likeCount = await prisma.$queryRaw<SelectLikeCount[]>
+    const likeCount = await prisma.$queryRaw<DataCount[]>
     `
     SELECT count(*) as likeCount
     FROM Likes AS l
     WHERE l.user_templete_id = ${userTemplateId}
     `
-    return likeCount[0].likeCount
+    return likeCount[0].count
     
 }
 

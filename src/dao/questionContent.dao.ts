@@ -1,5 +1,5 @@
 import prisma from '../client.js';
-import { PrismaClient, UserChallenge } from '@prisma/client'
+import { Prisma, PrismaClient, QuestionContent, UserChallenge } from '@prisma/client'
 import { SelectPeriod, SelectChallengeId, SelectDay, WriteTemplete, InsertUserTemplateContent } from '../interfaces/challenge.interface.js';
 
 
@@ -7,7 +7,7 @@ import { SelectPeriod, SelectChallengeId, SelectDay, WriteTemplete, InsertUserTe
 
 const insertUserTemplateContent = async(
     templateContent: Array<InsertUserTemplateContent>
-) => {
+): Promise<Prisma.BatchPayload> => {
 
     return await prisma.questionContent.createMany({
         data: templateContent

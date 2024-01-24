@@ -15,7 +15,7 @@ const enrollOrganization = async (
     company: string,
     companyPublic: boolean,
 
-): Promise<void> => {
+) => {
 
     const organizationId = await organizationDao.selectOrganizationId(organization);
 

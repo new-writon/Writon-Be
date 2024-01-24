@@ -2,14 +2,14 @@ import { Server } from 'http';
 import app from './app.js';
 import prisma from './client.js';
 import {logger} from './config/logger.js';
-//import { challengeScheduler } from './modules/challengeScheduler.js';
+import { challengeDepositCalculateScheduler } from './modules/challengeScheduler.js';
 import config from './config/config.js';
 let server: Server;
 prisma.$connect().then(() => {
   console.info('Connected to SQL Database');
   server = app.listen(config.port,() => {
     console.info('Writon Server Start');
-  //  challengeScheduler();
+    challengeDepositCalculateScheduler();
   })
 });
 

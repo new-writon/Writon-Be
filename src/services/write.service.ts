@@ -30,7 +30,6 @@ const selectSpecialQuestion = async (
 
 }
 
-
 const insertTemplateContent = async (
     userId: number,
     challengeId: number,

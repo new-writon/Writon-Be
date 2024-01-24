@@ -60,15 +60,50 @@ const selectTemplateContent = async (
 
   const userTemplateData = await prisma.$queryRaw<SelectTemplateContent[]>`
 
-     SELECT  qc.question_id, qc.user_templete_id, qc.question_content_id, qc.content, ut.finished_at, q.category, q.question  
+     SELECT  
+      qc.question_id,
+      qc.user_templete_id, 
+      qc.question_content_id, 
+      qc.content,
+      ut.finished_at AS created_at, 
+      q.category, 
+      q.question,
+      a.job,
+      a.company,
+      a.company_public,
+      a.nickname,
+      u.profile,
+      l.affiliation_id,
+      CAST(COUNT(DISTINCT l.like_id) AS CHAR) AS likeCount,
+      CAST(COUNT(DISTINCT cm.comment_id) AS CHAR) AS commentCount,
+      CASE WHEN MAX(CAST(l.affiliation_id AS SIGNED) = ${affiliationId}) THEN '1' ELSE '0' END AS myLikeSign
+
      FROM  UserChallenge as uc
       INNER JOIN UserTemplete as ut ON uc.user_challenge_id = ut.user_challenge_id
       INNER JOIN QuestionContent as qc ON ut.user_templete_id = qc.user_templete_id
       INNER JOIN Question as q ON q.question_id = qc.question_id
-        WHERE uc.affiliation_id = ${affiliationId}      
-          AND uc.challenge_id = ${challengeId} 
-            AND date_format(ut.finished_at, '%Y-%m') = ${yearAndMonth}
-              ORDER BY ut.finished_at, qc.created_at, q.created_at
+      INNER JOIN Affiliation AS a ON a.affiliation_id = uc.affiliation_id
+      INNER JOIN User AS u ON u.user_id = a.user_id
+      LEFT JOIN Likes AS l ON l.user_templete_id = ut.user_templete_id 
+      LEFT JOIN Comment AS cm ON cm.user_templete_id = ut.user_templete_id
+
+      WHERE uc.affiliation_id = ${affiliationId}    
+      GROUP BY
+        qc.question_id,
+        qc.user_templete_id,
+        qc.question_content_id,
+        qc.content,
+        q.category,
+        q.question,
+        created_at,
+        a.job,
+        a.company,
+        a.company_public,
+        a.nickname,
+        u.profile  
+        AND uc.challenge_id = ${challengeId} 
+        AND date_format(ut.finished_at, '%Y-%m') = ${yearAndMonth}
+        ORDER BY ut.finished_at, qc.created_at, q.created_at
   ;`;
 
   return userTemplateData

@@ -1,4 +1,4 @@
-FROM node:18.6.0 as blue
+FROM node:20.0.0 as blue
 
 
 ENV TZ=Asia/Seoul

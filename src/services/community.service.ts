@@ -5,6 +5,7 @@ import challengeDao from '../dao/challenge.dao.js';
 import { sortCompanyPublic, sortParticipantInformation } from '../utils/community.js';
 import { affiliationDao, challengeDayDao, commentDao, likeDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 import { sortDateUserTemplate, sortUserTemplate } from '../utils/challenge.js';
+import { commentDataCustom } from '../utils/dataCustom.js';
 
 
 
@@ -217,7 +218,4 @@ export default {
 
 }
 
-function commentDataCustom(commentData: import("../interfaces/community.interface.js").SelectComment[]) {
-    throw new Error('Function not implemented.');
-}
 

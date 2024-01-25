@@ -42,7 +42,7 @@ inputData.forEach((comment: { comment_id: any; comment_group: string; }) => {
 }
 
 export {
-
+    commentDataCustom
 
 }
 

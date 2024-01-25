@@ -96,7 +96,11 @@ const selectComment = async (
   
 ) => {
 
-    return sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId))
+    const commentData = sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId));
+
+
+
+    return commentDataCustom(commentData)
 }
 
 
@@ -211,5 +215,9 @@ export default {
     updateComment,
     deleteComment
 
+}
+
+function commentDataCustom(commentData: import("../interfaces/community.interface.js").SelectComment[]) {
+    throw new Error('Function not implemented.');
 }
 

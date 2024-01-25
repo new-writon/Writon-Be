@@ -13,7 +13,8 @@ const selectComment = async (
     return await prisma.$queryRaw`
     
       SELECT  
-      a.job, a.company,
+      a.job, 
+      a.company,
       a.company_public,
       u.profile,
       CAST(c.comment_id AS CHAR) AS comment_id,

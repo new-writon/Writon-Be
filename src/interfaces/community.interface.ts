@@ -19,7 +19,7 @@ interface SelectComment {
   nickname: string,
   comment_group: string,
   user_templete_id: number,
-  myCommentSign: number;
+  myCommentSign: boolean;
   content: string,
   created_at: Date
 

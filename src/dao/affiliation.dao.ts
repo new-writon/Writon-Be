@@ -1,5 +1,5 @@
 import prisma from '../client.js';
-import { PrismaClient, Affiliation, Challenge } from '@prisma/client'
+import { Affiliation, Challenge } from '@prisma/client'
 
 
 const selectNickname = async <Key extends keyof Affiliation>(

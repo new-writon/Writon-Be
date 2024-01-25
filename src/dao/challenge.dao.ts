@@ -1,5 +1,5 @@
 import prisma from '../client.js';
-import { PrismaClient, Affiliation, Challenge, UserChallenge, } from '@prisma/client'
+import { PrismaClient,  Challenge, } from '@prisma/client'
 import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt } from '../interfaces/challenge.interface.js';
 import { ParticipantData } from '../interfaces/community.interface.js';
 

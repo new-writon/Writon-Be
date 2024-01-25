@@ -19,7 +19,7 @@ const sendInvitationEmail = async  (
       html: `
       <p>초대장 입니다.</p>
 
-      <a href="https://meetpl.vercel.app/${organizaiton}/${challengeId}">링크 텍스트</a>
+      <a href="https://www.writon.co.kr/login?organization=${organizaiton}&challengeId=${challengeId}">링크 텍스트</a>
       `
     };
 

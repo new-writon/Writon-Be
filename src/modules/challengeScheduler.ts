@@ -14,12 +14,21 @@ export const challengeDepositCalculateScheduler = () => {
 
     const targetCount = 7;
 
-    const sortedChallengeData = sortChallengeData(challengeData)
+    const sortedChallengeData = sortChallengeData(challengeData);
+
+    const keys = Object.keys(sortedChallengeData);
+
+    for (const key of keys) {
+      const value = sortedChallengeData[key];
+
+  //    const userChallengeIds = await 
+ 
+    }
 
     const caculateDepositResult = calculateDeposit(sortedChallengeData, targetCount, 1);
 
 
-  
+
 
 
   })
@@ -36,8 +45,8 @@ const calculateDeposit = (
 
   if (targetDeduction) {
     const { start_count, end_count, deduction_rate } = targetDeduction;
-    console.log(`Target Count: ${targetCount}, Deduction Rate: ${deduction_rate}, Range: ${start_count} ~ ${end_count}`);
-    console.log(sortedChallengeData[key].deposit * (100 - deduction_rate)/100)
+    // console.log(`Target Count: ${targetCount}, Deduction Rate: ${deduction_rate}, Range: ${start_count} ~ ${end_count}`);
+    // console.log(sortedChallengeData[key].deposit * (100 - deduction_rate)/100)
   } else {
     console.log(`No matching range for Target Count: ${targetCount}`);
   }

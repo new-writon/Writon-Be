@@ -47,7 +47,7 @@ interface ChallengeAllInformation {
 
 
 interface ChallengeAllInformationCustom {
-  [key: number]: {
+  [key: string]: {
     challenge_id: number;
     deposit: number;
     challengeDayCount: string;

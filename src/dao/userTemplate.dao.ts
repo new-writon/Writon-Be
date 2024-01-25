@@ -114,7 +114,7 @@ const selectUserTemplateDay = async (
 
   ) => {
 
-    const userCompleteCount = await prisma.$queryRaw<DataCount[]>`
+    const userCompleteCount = await prisma.$queryRaw`
 
     SELECT 
     qc.question_id,
@@ -166,7 +166,7 @@ const selectUserTemplateDay = async (
 
  
 
-    return userCompleteCount[0].count
+    return userCompleteCount
   }
 
 

@@ -2,6 +2,7 @@ import prisma from '../client.js';
 import { PrismaClient, Affiliation, Challenge, UserTemplete, } from '@prisma/client'
 import { DataCount } from '../interfaces/challenge.interface.js';
 import { bool } from 'aws-sdk/clients/signer.js';
+import { SelectDateTemplateContent } from '../interfaces/userChallenge.interface.js';
 
 
 
@@ -113,9 +114,9 @@ const selectUserTemplateDay = async (
     userTemplateId: number,
     visibility: boolean
 
-  ) => {
+  ): Promise<SelectDateTemplateContent[]> => {
 
-    const userCompleteCount = await prisma.$queryRaw`
+    const userCompleteCount = await prisma.$queryRaw<Promise<SelectDateTemplateContent[]>>`
 
     SELECT 
     qc.question_id,

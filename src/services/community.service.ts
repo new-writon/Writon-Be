@@ -209,9 +209,7 @@ const selectUniqueTemplate = async (
 
     const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
-    console.log(await userTemplateDao.selectUniqueTemplate(affiliation.affiliation_id, userTemplateId, visibility))
-
-    return 
+    return sortCompanyPublic(await userTemplateDao.selectUniqueTemplate(affiliation.affiliation_id, userTemplateId, visibility));
 }
 
 

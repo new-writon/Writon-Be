@@ -212,7 +212,7 @@ model Comment {
   comments_son        Comment[]  @relation("comments")
 
   user_templete       UserTemplete @relation(fields: [user_templete_id], references: [user_templete_id], onDelete: Cascade, onUpdate: Cascade)
-  affiliation                Affiliation        @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
+  affiliation         Affiliation        @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
   comments            Comment?   @relation("comments", fields: [comment_group], references: [comment_id], onDelete: Cascade, onUpdate: Cascade) 
 
   @@id([comment_id, user_templete_id, affiliation_id])

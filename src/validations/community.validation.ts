@@ -42,7 +42,7 @@ const checkOraganizationAndUserTamplateIdAndContentAndCommentGroup = {
     content: Joi.string().required(),
     userTemplateId: Joi.number().required(),
     organization: Joi.string().required(),
-    commentGroup: Joi.string().required()
+    commentGroup: Joi.number().required()
 
   })
 }

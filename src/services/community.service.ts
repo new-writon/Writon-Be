@@ -154,12 +154,12 @@ const addComment = async (
     organization: string,
     userTemplateId: number,
     content: string,
-    commentGroup: string
+    commentGroup: number
 ) => {
 
     const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
-    await commentDao.insertComment(affiliation.affiliation_id, content, userTemplateId, Number(commentGroup));
+    await commentDao.insertComment(affiliation.affiliation_id, content, userTemplateId, commentGroup);
 
 //    return  sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId))
 

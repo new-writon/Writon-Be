@@ -22,7 +22,7 @@ const selectComment = async (
       c.content,
       DATE(c.created_at) AS created_at,
       CASE WHEN u.user_id = ${userId} THEN true ELSE false END AS myCommentSign,
-      CAST(c.comment_group AS CHAR) AS comment_group,
+      CAST(c.comment_group AS CHAR) AS comment_group
       FROM Comment AS c
       INNER JOIN Affiliation AS a ON a.affiliation_id = c.affiliation_id
       INNER JOIN User AS u ON u.user_id = a.user_id

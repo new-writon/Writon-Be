@@ -40,7 +40,7 @@ const insertComment = async (
     affiliationId: number,
     content: string,
     userTemplateId: number,
-    commentGroup: number
+    commentGroup: number 
   ): Promise<Comment> => {
   
     return await prisma.comment.create({

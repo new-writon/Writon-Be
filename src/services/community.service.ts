@@ -161,7 +161,7 @@ const addComment = async (
 
     await commentDao.insertComment(affiliation.affiliation_id, content, userTemplateId, commentGroup);
 
-    return  sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId))
+//    return  sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId))
 
 }
 
@@ -177,7 +177,7 @@ const updateComment = async (
 
     const updateCommentData = await commentDao.updateComment(affiliation.affiliation_id, content, commentId);
 
-    return sortCompanyPublic(await commentDao.selectComment(userId, updateCommentData.user_templete_id))
+//    return sortCompanyPublic(await commentDao.selectComment(userId, updateCommentData.user_templete_id))
 }
 
 
@@ -191,7 +191,7 @@ const deleteComment = async (
 
     const deleteCommentData = await commentDao.deleteComment(affiliation.affiliation_id, commentId);
     
-    return sortCompanyPublic(await commentDao.selectComment(userId, deleteCommentData.user_templete_id))
+ //   return sortCompanyPublic(await commentDao.selectComment(userId, deleteCommentData.user_templete_id))
 }
 
 

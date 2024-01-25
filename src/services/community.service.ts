@@ -99,8 +99,6 @@ const selectComment = async (
 
     const commentData = sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId));
 
-
-
     return commentDataCustom(commentData)
 }
 
@@ -200,6 +198,21 @@ const deleteComment = async (
 }
 
 
+const selectUniqueTemplate = async (
+    userId: number,
+    userTemplateId: number,
+    organization: string
+) => {
+
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    console.log(await userTemplateDao.selectUniqueTemplate(affiliation.affiliation_id, userTemplateId))
+
+    return 
+}
+
+
+
 
 export default {
 
@@ -214,7 +227,8 @@ export default {
     selectUserTemplateLikeCount,
     addComment,
     updateComment,
-    deleteComment
+    deleteComment,
+    selectUniqueTemplate 
 
 }
 

@@ -12,7 +12,7 @@ router.get('/:challengeId/my-participant-information', auth, validate(recordVali
 router.get('/:challengeId/template/:date/:organization', auth, validate(communityValidation.checkChallengeIdAndDateAndOrganization), communityController.selectDateTemplate);
 router.post('/cheering-phrase', auth, validate(communityValidation.checkChallengeIdAndOrganizationAndContent), communityController.writeCheeringPhrase);
 router.get('/:challengeId/date', auth, validate(recordValidation.checkChallengeId), communityController.selectChallengeDate);
-router.get('/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectComment);
+router.get('/:userTemplateId/comment', auth, validate(communityValidation.checkUserTemplateId), communityController.selectComment);
 
 router.post('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.addLike);
 router.delete('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
@@ -21,7 +21,10 @@ router.get('/like/:userTemplateId/comment', auth, validate(communityValidation.c
 
 router.post('/comment', auth, validate(communityValidation.checkOraganizationAndUserTamplateIdAndContentAndCommentGroup), communityController.addComment);
 router.patch('/comment', auth, validate(communityValidation.checkOraganizationAndContentAndCommentId), communityController.updateComment)
-router.delete('/comment', auth, validate(communityValidation.checkOraganizationAndCommentId), communityController.deleteComment);
+router.post('/comment/delete', auth, validate(communityValidation.checkOraganizationAndCommentId), communityController.deleteComment);
+
+router.get('/:organization/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUniqueTemplate);
+
 
 
 export default router;

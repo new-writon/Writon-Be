@@ -1,47 +1,59 @@
 
-import {  ParticipantData } from '../interfaces/community.interface.js';
+import {  CommentWithReplies, ParticipantData, SelectComment } from '../interfaces/community.interface.js';
 import { IncludeCompany, SelectDateTemplateContent } from '../interfaces/userChallenge.interface.js';
 import { isSameDate } from './record.js'
 
 
 
-const commentDataCustom = async(
-    inputData: any
 
-) => {
-
-    const result: any[] = [];
-
-    inputData.forEach((comment: { comment_id: any; comment_group: string; }) => {
-    const existingComment = result.find(item => item.comment_group === 'F' && item.comment_id === comment.comment_id);
-
-    if (existingComment) {
-        // Add the comment to the "reply" array of the existing "F" comment
+const commentDataCustom = async (
+    commentData : SelectComment[]
+  )=> {
+    const result: CommentWithReplies[] = [];
+  
+    commentData.forEach((comment: SelectComment) => {
+      const existingComment = result.find(
+        (item) => item.comment_group === '-1' && item.comment_id === comment.comment_id
+      );
+  
+      if (existingComment) {
         existingComment.reply.push({
-            ...comment,
-            reply: []
+          ...comment,
+          reply: [],
         });
-    } else if (comment.comment_group === '-1') {
-        // Create a new object for the main comment and initialize the "reply" array
-        const mainComment = {
-            ...comment,
-            reply: []
+      } else if (comment.comment_group === '-1') {
+        const mainComment: CommentWithReplies = {
+          ...comment,
+          reply: [],
         };
+  
+     
+        const replies = commentData.filter(
+          (reply) =>
+            reply.comment_group !== '-1' &&
+            reply.comment_group === comment.comment_id
+        );
+  
 
-        // Find replies with the same comment_id
-        const replies = inputData.filter((reply: { comment_group: string; }) => reply.comment_group !== '-1' && reply.comment_group === comment.comment_id);
-
-        // Add replies to the "reply" array
-        mainComment.reply = replies.map((reply: any) => ({ ...reply, reply: [] }));
-
-        // Add the main comment to the result array
+        mainComment.reply = replies.map((reply) => ({
+          ...reply,
+          reply: [],
+        }));
+  
         result.push(mainComment);
-    }
-});
+      }
+    });
+  
+    return result;
+  };
 
-return result
 
-}
+
+
+
+
+
+
 
 export {
     commentDataCustom

@@ -101,7 +101,13 @@ const deleteComment = catchAsync(async (req, res) => {
 
 });
 
+const selectUniqueTemplate = catchAsync(async (req, res) => {
 
+   
+
+    res.status(httpStatus.OK).send(await communityService.selectUniqueTemplate(req.decoded?.id, req.params.userTemplateId, req.params.organization));
+
+});
 
 
 export default {
@@ -117,7 +123,8 @@ export default {
     selectUserTemplateLikeCount,
     addComment,
     updateComment,
-    deleteComment
+    deleteComment,
+    selectUniqueTemplate
 
 }
 

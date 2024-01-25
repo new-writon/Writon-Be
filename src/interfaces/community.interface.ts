@@ -19,12 +19,20 @@ interface SelectComment {
   nickname: string,
   comment_group: string,
   user_templete_id: number,
+  myCommentSign: number;
   content: string,
   created_at: Date
 
 
 }
 
+
+
+
+interface CommentWithReplies extends SelectComment{
+
+  reply: CommentWithReplies[];
+}
 // interface DateTemplateContent {
 
 //   question_id: number,
@@ -46,6 +54,7 @@ interface SelectComment {
 
 export {
   ParticipantData,
-  SelectComment
-  //   DateTemplateContent
+  SelectComment,
+  //   DateTemplateContent,
+  CommentWithReplies
 }

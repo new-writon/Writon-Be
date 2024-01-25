@@ -108,6 +108,69 @@ const selectUserTemplateDay = async (
   }
 
 
+  const selectUniqueTemplate = async (
+    affiliationId: number,
+    userTemplateId: number
+
+  ) => {
+
+    const userCompleteCount = await prisma.$queryRaw<DataCount[]>`
+
+    SELECT 
+    qc.question_id,
+    qc.user_templete_id,
+    qc.question_content_id,
+    qc.content,
+    q.category,
+    q.question,
+    DATE(ut.created_at) AS created_at,
+    a.job,
+    a.company,
+    a.company_public,
+    a.nickname,
+    u.profile,
+    l.affiliation_id,
+    CAST(COUNT(DISTINCT l.like_id) AS CHAR) AS likeCount,
+    CAST(COUNT(DISTINCT cm.comment_id) AS CHAR) AS commentCount,
+    CASE WHEN MAX(CAST(l.affiliation_id AS SIGNED) = ${affiliationId}) THEN '1' ELSE '0' END AS myLikeSign
+
+    FROM
+    UserTemplete AS ut
+
+    INNER JOIN UserChallenge AS uc ON uc.user_challenge_id = ut.user_challenge_id 
+    INNER JOIN QuestionContent AS qc ON ut.user_templete_id = qc.user_templete_id AND qc.visibility = 1
+    INNER JOIN Question AS q ON q.question_id = qc.question_id
+    INNER JOIN Affiliation AS a ON a.affiliation_id = uc.affiliation_id
+    INNER JOIN User AS u ON u.user_id = a.user_id
+    LEFT JOIN Likes AS l ON l.user_templete_id = ut.user_templete_id 
+    LEFT JOIN Comment AS cm ON cm.user_templete_id = ut.user_templete_id
+  WHERE
+    ut.user_templete_id = ${userTemplateId}
+  GROUP BY
+    qc.question_id,
+    qc.user_templete_id,
+    qc.question_content_id,
+    qc.content,
+    q.category,
+    q.question,
+    created_at,
+    a.job,
+    a.company,
+    a.company_public,
+    a.nickname,
+    u.profile
+  ORDER BY
+    ut.created_at, qc.created_at, q.created_at;
+  
+    ;`;
+
+ 
+
+    return userCompleteCount[0].count
+  }
+
+
+
 
 
 
@@ -117,6 +180,7 @@ export default {
     signTodayTemplate,
     selectUserTemplateDay,
     insertUserTemplate,
-    selectUserCompleteCount
+    selectUserCompleteCount,
+    selectUniqueTemplate 
   
 }

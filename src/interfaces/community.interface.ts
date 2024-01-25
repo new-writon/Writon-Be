@@ -17,7 +17,7 @@ interface SelectComment {
   profile: string,
   comment_id: string,
   nickname: string,
-  comment_group: number,
+  comment_group: string,
   user_templete_id: number,
   content: string,
   created_at: Date

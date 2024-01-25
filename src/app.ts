@@ -55,9 +55,9 @@ app.get('/healthcheck', (req, res) => {
 });
 
 
-if (config.env === 'production') {
-  app.use('/api', authLimiter);
-}
+// if (config.env === 'production') {
+//   app.use('/api', authLimiter);
+// }
 
 app.use('/api', routes);
 

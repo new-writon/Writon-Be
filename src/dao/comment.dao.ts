@@ -16,7 +16,7 @@ const selectComment = async (
       a.job, a.company,
       a.company_public,
       u.profile,
-      c.comment_id,
+      CAST(c.comment_id AS CHAR) AS comment_id,
       a.nickname,
       c.user_templete_id,
       c.content,

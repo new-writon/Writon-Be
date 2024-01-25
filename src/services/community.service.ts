@@ -203,12 +203,13 @@ const deleteComment = async (
 const selectUniqueTemplate = async (
     userId: number,
     userTemplateId: number,
-    organization: string
+    organization: string,
+    visibility: boolean
 ) => {
 
     const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
-    console.log(await userTemplateDao.selectUniqueTemplate(affiliation.affiliation_id, userTemplateId))
+    console.log(await userTemplateDao.selectUniqueTemplate(affiliation.affiliation_id, userTemplateId, visibility))
 
     return 
 }

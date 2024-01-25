@@ -110,7 +110,8 @@ const selectUserTemplateDay = async (
 
   const selectUniqueTemplate = async (
     affiliationId: number,
-    userTemplateId: number
+    userTemplateId: number,
+    visibility: boolean
 
   ) => {
 
@@ -136,9 +137,8 @@ const selectUserTemplateDay = async (
 
     FROM
     UserTemplete AS ut
-
     INNER JOIN UserChallenge AS uc ON uc.user_challenge_id = ut.user_challenge_id 
-    INNER JOIN QuestionContent AS qc ON ut.user_templete_id = qc.user_templete_id AND qc.visibility = 1
+    INNER JOIN QuestionContent AS qc ON ut.user_templete_id = qc.user_templete_id AND (qc.visibility = 1 OR qc.visibility = ${visibility})
     INNER JOIN Question AS q ON q.question_id = qc.question_id
     INNER JOIN Affiliation AS a ON a.affiliation_id = uc.affiliation_id
     INNER JOIN User AS u ON u.user_id = a.user_id
@@ -159,8 +159,6 @@ const selectUserTemplateDay = async (
     a.company_public,
     a.nickname,
     u.profile
-
-  
     ;`;
 
  

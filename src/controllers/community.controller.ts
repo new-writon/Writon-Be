@@ -103,9 +103,11 @@ const deleteComment = catchAsync(async (req, res) => {
 
 const selectUniqueTemplate = catchAsync(async (req, res) => {
 
+    const { userTemplateId, organization, visibility} = req.params;
+
    
 
-    res.status(httpStatus.OK).send(await communityService.selectUniqueTemplate(req.decoded?.id, req.params.userTemplateId, req.params.organization));
+    res.status(httpStatus.OK).send(await communityService.selectUniqueTemplate(req.decoded?.id, userTemplateId, organization, visibility));
 
 });
 

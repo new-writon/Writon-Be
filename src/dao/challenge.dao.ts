@@ -1,6 +1,6 @@
 import prisma from '../client.js';
 import { PrismaClient,  Challenge, } from '@prisma/client'
-import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt } from '../interfaces/challenge.interface.js';
+import { SelectPeriod, SelectChallengeId, SelectDay, SelectFinishAt, ChallengeAllInformation } from '../interfaces/challenge.interface.js';
 import { ParticipantData } from '../interfaces/community.interface.js';
 
 
@@ -138,20 +138,21 @@ const selectChallengeInformation = async (
 
 
 const selectAllChallengeInformation = async () => {
-    return await prisma.$queryRaw`
+    return await prisma.$queryRaw<ChallengeAllInformation[]>`
 
     SELECT 
     c.challenge_id,
     c.deposit,
     CONVERT(COUNT(cd.day), CHAR) AS challengeDayCount,
-    cdd.count,
+    cdd.start_count,
+    cdd.end_count,
     cdd.deduction_rate
     FROM Challenge AS c
     INNER JOIN ChallengeDay AS cd ON cd.challenge_id = c.challenge_id 
     INNER JOIN ChallengeDepositDeduction AS cdd ON cdd.challenge_id = c.challenge_id
     WHERE CURDATE() < c.finish_at
     AND cd.day < CURDATE()
-    GROUP BY c.challenge_id, c.deposit, cdd.count, cdd.deduction_rate;
+    GROUP BY c.challenge_id, c.deposit, cdd.start_count, cdd.end_count, cdd.deduction_rate;
 
 
 

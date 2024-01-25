@@ -36,6 +36,14 @@ interface InsertUserTemplateContent {
   user_templete_id: number
 }
 
+interface ChallengeAllInformation {
+  challenge_id: number,
+  deposit: number,
+  challengeDayCount: string,
+  start_count: number,
+  end_count: number,
+  deduction_rate: number
+}
 
 // interface ChallengeParticipantCount {
 //   count: number
@@ -66,7 +74,8 @@ export {
   SelectFinishAt,
   WriteTemplete,
   InsertUserTemplateContent,
-  DataCount
+  DataCount,
+  ChallengeAllInformation 
   // ChallengeParticipantCount,
   // SelectUserCompleteCount,
   // SelectOverlapCount,

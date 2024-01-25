@@ -129,7 +129,7 @@ const selectUserTemplateDay = async (
     a.company_public,
     a.nickname,
     u.profile,
-    l.affiliation_id,
+    MAX(l.affiliation_id) AS affiliation_id,
     CAST(COUNT(DISTINCT l.like_id) AS CHAR) AS likeCount,
     CAST(COUNT(DISTINCT cm.comment_id) AS CHAR) AS commentCount,
     CASE WHEN MAX(CAST(l.affiliation_id AS SIGNED) = ${affiliationId}) THEN '1' ELSE '0' END AS myLikeSign
@@ -158,10 +158,8 @@ const selectUserTemplateDay = async (
     a.company,
     a.company_public,
     a.nickname,
-    u.profile,
-    l.affiliation_id
-  ORDER BY
-    ut.created_at, qc.created_at, q.created_at;
+    u.profile
+
   
     ;`;
 

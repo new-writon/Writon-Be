@@ -15,7 +15,7 @@ router.get('/:challengeId/date', auth, validate(recordValidation.checkChallengeI
 router.get('/:userTemplateId/comment', auth, validate(communityValidation.checkUserTemplateId), communityController.selectComment);
 
 router.post('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.addLike);
-router.delete('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
+router.delete('/like/delete', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
 router.get('/like/:userTemplateId/comment', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUserTemplateLikeCount);
 
 

@@ -15,7 +15,7 @@ router.get('/:challengeId/date', auth, validate(recordValidation.checkChallengeI
 router.get('/:userTemplateId/comment', auth, validate(communityValidation.checkUserTemplateId), communityController.selectComment);
 
 router.post('/like', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.addLike);
-router.delete('/like/delete', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
+router.post('/like/delete', auth, validate(communityValidation.checkUserTemplateIdAndOrganization), communityController.cancelLike);
 router.get('/like/:userTemplateId/comment', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUserTemplateLikeCount);
 
 
@@ -23,7 +23,7 @@ router.post('/comment', auth, validate(communityValidation.checkOraganizationAnd
 router.patch('/comment', auth, validate(communityValidation.checkOraganizationAndContentAndCommentId), communityController.updateComment)
 router.post('/comment/delete', auth, validate(communityValidation.checkOraganizationAndCommentId), communityController.deleteComment);
 
-router.get('/:organization/:userTemplateId', auth, validate(communityValidation.checkBodyUserTemplateIdAndOrganization), communityController.selectUniqueTemplate);
+router.get('/:organization/:userTemplateId/:visibility', auth, validate(communityValidation.checkBodyUserTemplateIdAndOrganization), communityController.selectUniqueTemplate);
 
 
 

@@ -39,7 +39,8 @@ const checkUserTemplateIdAndOrganization = {
 const checkBodyUserTemplateIdAndOrganization = {
   params: Joi.object().keys({
     userTemplateId: Joi.number().required(),
-    organization: Joi.string().required()
+    organization: Joi.string().required(),
+    visibility: Joi.boolean().required()
 
   })
 }

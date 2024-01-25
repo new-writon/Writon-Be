@@ -1,7 +1,7 @@
 import schedule from 'node-schedule';
 
 import { challengeDao } from '../dao/index.js';
-import { ChallengeAllInformation } from '../interfaces/challenge.interface.js';
+import { ChallengeAllInformation, ChallengeAllInformationCustom } from '../interfaces/challenge.interface.js';
 
 
 export const challengeDepositCalculateScheduler =  () => {
@@ -10,86 +10,38 @@ export const challengeDepositCalculateScheduler =  () => {
 
       const challegeData = await challengeDao.selectAllChallengeInformation();
 
-      console.log(challegeData)
-
 
       const targetCount = 2;
 
-  // 데이터를 challenge_id로 그룹화
-  // const groupedData: Record<number, ChallengeAllInformation[]>  = challegeData.reduce((acc:{}, item) => {
-  //   const key = item.challenge_id;
-  //   if (!acc[key]) {
-  //     acc[key] = {
-  //       challenge_id: item.challenge_id,
-  //       deposit: item.deposit,
-  //       challengeDayCount: item.challengeDayCount,
-  //       deductions: []
-  //     } 
-  //   }
-  
- 
-  //   return acc;
-  // }, {});
-
-
-  // console.log(groupedData)
-  
-
-
-
-
-
-
-
-      // 특정 count에 해당하는 deduction_rate 추출
-    //   const result = challegeData.map(item => {
-    //     if (item.deductions && Array.isArray(item.deductions)) {
-    //         const targetDeduction = item.deductions.find(({ startcount, endcount }) => targetCount >= startcount && targetCount <= endcount);
-         
-    //       if (targetDeduction) {
-    //         const calculatedDeduction = targetDeduction.deduction_rate;
-
-    //         // deposit와 곱하기
-    //         const calculatedResult = item.deposit * (calculatedDeduction / 100); // percentage로 변환
-    //         return {
-    //           challenge_id: item.challenge_id,
-    //           deduction_rate: calculatedDeduction,
-    //           calculatedResult: calculatedResult
-    //         };
-    //       }
-    //     }
-    //     return null;
-    //   }).filter(Boolean);
+      const transformedData: ChallengeAllInformationCustom = challegeData.reduce((acc, item) => {
+        const { challenge_id, deposit, challengeDayCount } = item;
       
-    //   console.log(result);
+        if (!acc[challenge_id]) {
+          acc[challenge_id] = {
+            challenge_id,
+            deposit,
+            challengeDayCount,
+            deductions: []
+          };
+        }
+      
+        acc[challenge_id].deductions.push({
+          start_count: item.start_count,
+          end_count: item.end_count,
+          deduction_rate: item.deduction_rate
+        });
+      
+        return acc;
+      }, {} as ChallengeAllInformationCustom);
+      
+      console.log(transformedData['1'].deductions);
+
     })
 }
 
 
 
-// const data = [
-//     {
-//       challenge_id: 1,
-//       deposit: 25000,
-//       challengeDayCount: '3',
-//       count: 3,
-//       deduction_rate: 10
-//     },
-//     {
-//       challenge_id: 1,
-//       deposit: 25000,
-//       challengeDayCount: '3',
-//       count: 6,
-//       deduction_rate: 20
-//     },
-//     {
-//       challenge_id: 1,
-//       deposit: 25000,
-//       challengeDayCount: '3',
-//       count: 9,
-//       deduction_rate: 30
-//     }
-//   ];
+
   
 //   // 데이터를 challenge_id로 그룹화
 //   const groupedData = data.reduce((acc, item) => {

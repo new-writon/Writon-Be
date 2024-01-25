@@ -45,27 +45,19 @@ interface ChallengeAllInformation {
   deduction_rate: number
 }
 
-// interface ChallengeParticipantCount {
-//   count: number
-// }
 
-// interface SelectUserCompleteCount {
-//   count: number
-// }
-
-
-// interface SelectOverlapCount {
-//   count: number
-// }
-
+interface ChallengeAllInformationCustom {
+  [key: number]: {
+    challenge_id: number;
+    deposit: number;
+    challengeDayCount: string;
+    deductions: { start_count: number; end_count: number; deduction_rate: number }[];
+  };
+}
 
 interface DataCount {
   count: number
 }
-
-// interface SelectLikeCount {
-//   likeCount: number
-// }
 
 export {
   SelectPeriod,
@@ -75,10 +67,6 @@ export {
   WriteTemplete,
   InsertUserTemplateContent,
   DataCount,
-  ChallengeAllInformation 
-  // ChallengeParticipantCount,
-  // SelectUserCompleteCount,
-  // SelectOverlapCount,
-  // SelectSuccessChallengeCount,
-  // SelectLikeCount
+  ChallengeAllInformation,
+  ChallengeAllInformationCustom
 }

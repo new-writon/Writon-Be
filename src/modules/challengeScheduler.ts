@@ -40,6 +40,7 @@ export const challengeDepositCalculateScheduler = () => {
     if (targetDeduction) {
       const { start_count, end_count, deduction_rate } = targetDeduction;
       console.log(`Target Count: ${targetCount}, Deduction Rate: ${deduction_rate}, Range: ${start_count} ~ ${end_count}`);
+      console.log(transformedData['1'].deposit * (100 - deduction_rate)/100)
     } else {
       console.log(`No matching range for Target Count: ${targetCount}`);
     }

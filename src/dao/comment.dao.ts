@@ -49,7 +49,7 @@ const insertComment = async (
             affiliation_id: affiliationId,
             content: content,
             user_templete_id: userTemplateId,
-            comment_group: commentGroup
+            comment_group: commentGroup,
         }
 
     });

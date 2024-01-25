@@ -200,7 +200,7 @@ model Likes {
 
 model Comment {
   comment_id          Int         @default(autoincrement()) @unique
-  comment_group       Int         
+  comment_group       String         
   user_templete_id    Int
   affiliation_id      Int
   content             String      @db.Text

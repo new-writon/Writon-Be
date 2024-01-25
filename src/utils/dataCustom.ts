@@ -12,7 +12,7 @@ const commentDataCustom = async(
 
     const result: any[] = [];
 
-inputData.forEach((comment: { comment_id: any; comment_group: string; }) => {
+    inputData.forEach((comment: { comment_id: any; comment_group: string; }) => {
     const existingComment = result.find(item => item.comment_group === 'F' && item.comment_id === comment.comment_id);
 
     if (existingComment) {
@@ -38,6 +38,8 @@ inputData.forEach((comment: { comment_id: any; comment_group: string; }) => {
         result.push(mainComment);
     }
 });
+
+return result
 
 }
 

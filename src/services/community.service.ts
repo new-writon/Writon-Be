@@ -164,7 +164,9 @@ const addComment = async (
 
     const commentResponse = await commentDao.insertComment(affiliation.affiliation_id, content, userTemplateId, commentGroup);
 
-    return  commentResponse.comment_id
+    return  {
+        comment_id: commentResponse.comment_id
+    }
 
 }
 

@@ -23,7 +23,7 @@ router.post('/comment', auth, validate(communityValidation.checkOraganizationAnd
 router.patch('/comment', auth, validate(communityValidation.checkOraganizationAndContentAndCommentId), communityController.updateComment)
 router.post('/comment/delete', auth, validate(communityValidation.checkOraganizationAndCommentId), communityController.deleteComment);
 
-router.get('/:organization/:userTemplateId', auth, validate(communityValidation.checkUserTemplateId), communityController.selectUniqueTemplate);
+router.get('/:organization/:userTemplateId', auth, validate(communityValidation.checkBodyUserTemplateIdAndOrganization), communityController.selectUniqueTemplate);
 
 
 

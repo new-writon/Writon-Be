@@ -36,6 +36,13 @@ const checkUserTemplateIdAndOrganization = {
   })
 }
 
+const checkBodyUserTemplateIdAndOrganization = {
+  params: Joi.object().keys({
+    userTemplateId: Joi.number().required(),
+    organization: Joi.string().required()
+
+  })
+}
 
 const checkOraganizationAndUserTamplateIdAndContentAndCommentGroup = {
   body: Joi.object().keys({
@@ -68,6 +75,7 @@ const checkOraganizationAndContentAndCommentId = {
 
 
 
+
 export default {
 
   checkChallengeIdAndOrganizationAndContent,
@@ -76,6 +84,7 @@ export default {
   checkUserTemplateIdAndOrganization,
   checkOraganizationAndUserTamplateIdAndContentAndCommentGroup,
   checkOraganizationAndContentAndCommentId,
-  checkOraganizationAndCommentId
+  checkOraganizationAndCommentId,
+  checkBodyUserTemplateIdAndOrganization
 
 };

@@ -158,7 +158,8 @@ const selectUserTemplateDay = async (
     a.company,
     a.company_public,
     a.nickname,
-    u.profile
+    u.profile,
+    l.affiliation_id
   ORDER BY
     ut.created_at, qc.created_at, q.created_at;
   

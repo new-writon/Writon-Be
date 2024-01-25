@@ -143,13 +143,19 @@ const selectAllChallengeInformation = async () => {
     SELECT 
     c.challenge_id,
     c.deposit,
-    cd.day,
+    CONVERT(COUNT(cd.day), CHAR) AS challengeDayCount,
     cdd.count,
     cdd.deduction_rate
     FROM Challenge AS c
-    INNER JOIN ChallengeDay AS cd ON cd.challenge_id = c.challenge_id
+    INNER JOIN ChallengeDay AS cd ON cd.challenge_id = c.challenge_id 
     INNER JOIN ChallengeDepositDeduction AS cdd ON cdd.challenge_id = c.challenge_id
     WHERE CURDATE() < c.finish_at
+    AND cd.day < CURDATE()
+    GROUP BY c.challenge_id, c.deposit, cdd.count, cdd.deduction_rate;
+
+
+
+
  
     `
 }

@@ -13,15 +13,31 @@ const sendInvitationEmail = async  (
   ) => {
    
     const mailOptions = {
-      from: "teamwritoner" + "@gmail.com",
+      from: "teamwritoner",
       to: email,
-      subject: '[Writon] 요청하신 서비스 이메일 인증 번호를 안내해드립니다.',
+      subject: `[Writon] ${organizaiton}의 챌린지에 참여해보세요`,
       html: `
-      <p>초대장 입니다.</p>
-
-      <a href="https://www.writon.co.kr/login?organization=${organizaiton}&challengeId=${challengeId}">링크 텍스트</a>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Image and Button Link</title>
+        </head>
+        <body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+          <div style="display: flex; justify-content: center; flex-direction: column; align-items: center; margin-bottom: 20px;">
+            <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5.png" alt="Your Image">
+          </div>
+          <div style="display: flex; justify-content: center; flex-direction: column; align-items: center; margin-bottom: 20px;">
+            <a href="https://www.writon.co.kr/login?organization=${organizaiton}&challengeId=${challengeId}">
+              <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5+%EB%B2%84%ED%8A%BC.png" alt="Your Button Image">
+            </a>
+          </div>
+        </body>
       `
     };
+    
+    
+    
+    
 
     smtpTransport.sendMail(mailOptions);
 

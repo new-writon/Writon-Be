@@ -10,8 +10,10 @@ export const challengeDepositCalculateScheduler = () => {
 
     const challengeData = await challengeDao.selectAllChallengeInformation();
 
-    const sortedChallengeData = sortChallengeData(challengeData);
+ 
 
+    const sortedChallengeData = sortChallengeData(challengeData);
+   
     const challengeIdKeys = Object.keys(sortedChallengeData);
 
     for (const challengeIdKey of challengeIdKeys) {
@@ -26,7 +28,8 @@ export const challengeDepositCalculateScheduler = () => {
           sortedChallengeData,
           userChallengeSuccessData[i].count,
           userChallengeSuccessData[i].user_challenge_id,
-          Number(challengeIdKey));
+          Number(challengeIdKey)
+          );
 
           userDepositInformation.push(caculateDepositResult!)
 
@@ -60,11 +63,17 @@ const calculateDeposit = (
     return {
 
       userChallengeId: userChallengeId,
-      calculatedDeposit: sortedChallengeData[key].deposit * (100 - deduction_rate) / 100
+      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit * (100 - deduction_rate) / 100)
 
     }
   } else {
-    console.log(`No matching range`);
+    
+    return {
+
+      userChallengeId: userChallengeId,
+      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit)
+
+    }
   }
 
 }

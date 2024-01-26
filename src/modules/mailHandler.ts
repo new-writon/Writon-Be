@@ -34,11 +34,9 @@ const sendInvitationEmail = async  (
         </body>
       `
     };
-    
-    
-    
-    
 
+    console.log(smtpTransport)
+    
     smtpTransport.sendMail(mailOptions);
 
     smtpTransport.close();

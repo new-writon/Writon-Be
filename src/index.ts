@@ -9,7 +9,7 @@ prisma.$connect().then(() => {
   console.info('Connected to SQL Database');
   server = app.listen(config.port,() => {
     console.info('Writon Server Start');
-  //  challengeDepositCalculateScheduler();
+    challengeDepositCalculateScheduler();
   })
 });
 

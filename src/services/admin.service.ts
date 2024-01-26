@@ -14,8 +14,9 @@ const sendInvitation = async (
 
     const challengeData = await challengeDao.selectChallengeInformation(challenge);
 
-    email.map((e) => {
-        emailFunction.sendInvitationEmail(organization, challengeData.challenge_id, e);
+    email.map( async (e) => {
+      const a =  await emailFunction.sendInvitationEmail(organization, challengeData.challenge_id, e);
+      console.log(a)
     })
 
      

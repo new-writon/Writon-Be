@@ -1,6 +1,6 @@
 import schedule from 'node-schedule';
 
-import { challengeDao } from '../dao/index.js';
+import { challengeDao, userChallengeDao } from '../dao/index.js';
 import { ChallengeAllInformation, ChallengeAllInformationCustom } from '../interfaces/challenge.interface.js';
 
 
@@ -16,16 +16,27 @@ export const challengeDepositCalculateScheduler = () => {
 
     const sortedChallengeData = sortChallengeData(challengeData);
 
-    const keys = Object.keys(sortedChallengeData);
+    const challengeIdKeys = Object.keys(sortedChallengeData);
 
-    for (const key of keys) {
-      const value = sortedChallengeData[key];
+    for (const challengeIdKey of challengeIdKeys) {
+      const value = sortedChallengeData[challengeIdKey];
 
-  //    const userChallengeIds = await 
+      const userChallengeIds = await userChallengeDao.selectUserChallengeId(Number(challengeIdKey))
+
+
+
+      for(let i = 0; i < userChallengeIds.length; i++){
+
+        const caculateDepositResult = calculateDeposit(sortedChallengeData, userChallengeIds[i].user_challenge_id, Number(challengeIdKey));
+
+        console.log(caculateDepositResult)
+
+
+      }
  
     }
 
-    const caculateDepositResult = calculateDeposit(sortedChallengeData, targetCount, 1);
+ 
 
 
 
@@ -47,9 +58,12 @@ const calculateDeposit = (
     const { start_count, end_count, deduction_rate } = targetDeduction;
     // console.log(`Target Count: ${targetCount}, Deduction Rate: ${deduction_rate}, Range: ${start_count} ~ ${end_count}`);
     // console.log(sortedChallengeData[key].deposit * (100 - deduction_rate)/100)
+
+    return sortedChallengeData[key].deposit * (100 - deduction_rate)/100;
   } else {
     console.log(`No matching range for Target Count: ${targetCount}`);
   }
+
 }
 
 

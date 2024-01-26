@@ -34,9 +34,12 @@ interface SelectDateTemplateContent {
     commentCount: string
 }
 
-
+interface UserChallengeId {
+    user_challenge_id: number
+}
 export {
     SelectTemplateContent,
     SelectDateTemplateContent,
-    IncludeCompany
+    IncludeCompany,
+    UserChallengeId
 }

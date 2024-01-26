@@ -1,7 +1,7 @@
 import prisma from '../client.js';
 import { PrismaClient, UserChallenge } from '@prisma/client'
 import { SelectPeriod, SelectChallengeId, DataCount} from '../interfaces/challenge.interface.js';
-import { SelectTemplateContent, SelectDateTemplateContent } from '../interfaces/userChallenge.interface.js';
+import { SelectTemplateContent, SelectDateTemplateContent, UserChallengeId } from '../interfaces/userChallenge.interface.js';
 import { ParticipantData } from '../interfaces/community.interface.js';
 
 
@@ -275,6 +275,20 @@ const challengeParticipantCount = async (
 
 }
 
+const selectUserChallengeId = async (
+  challengeId: number,
+): Promise<UserChallengeId[]> => {
+
+  const userChallengeIds = await prisma.$queryRaw<UserChallengeId[]>`
+
+      SELECT uc.user_challenge_id  FROM UserChallenge as uc 
+      WHERE uc.challenge_id = ${challengeId};`;
+
+   
+
+  return userChallengeIds
+
+}
 
 
 
@@ -288,5 +302,6 @@ export default {
   selectMyParticipantInformation,
   updateCheeringPhrase,
   challengeParticipantCount,
+  selectUserChallengeId
 
 }

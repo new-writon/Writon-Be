@@ -281,8 +281,26 @@ const selectUserChallengeId = async (
 
   const userChallengeIds = await prisma.$queryRaw<UserChallengeId[]>`
 
-      SELECT uc.user_challenge_id  FROM UserChallenge as uc 
-      WHERE uc.challenge_id = ${challengeId};`;
+  SELECT 
+  uc.user_challenge_id, 
+  CAST(COUNT(ut.user_challenge_id) AS CHAR) AS count 
+  FROM UserChallenge AS uc 
+  LEFT JOIN UserTemplete AS ut ON ut.user_challenge_id = uc.user_challenge_id AND ut.complete = 1
+  WHERE uc.challenge_id = ${challengeId}
+  GROUP BY uc.user_challenge_id;
+
+
+      
+      
+      
+      
+      
+      
+      
+      `
+      
+      
+      ;
 
    
 

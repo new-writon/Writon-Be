@@ -11,10 +11,9 @@ export const challengeDepositCalculateScheduler = () => {
     const challengeData = await challengeDao.selectAllChallengeInformation();
 
 
-
-    const targetCount = 7;
-
     const sortedChallengeData = sortChallengeData(challengeData);
+
+    console.log(sortedChallengeData)
 
     const challengeIdKeys = Object.keys(sortedChallengeData);
 
@@ -23,13 +22,15 @@ export const challengeDepositCalculateScheduler = () => {
 
       const userChallengeIds = await userChallengeDao.selectUserChallengeId(Number(challengeIdKey))
 
+     // console.log(userChallengeIds)
+
 
 
       for(let i = 0; i < userChallengeIds.length; i++){
 
-        const caculateDepositResult = calculateDeposit(sortedChallengeData, userChallengeIds[i].user_challenge_id, Number(challengeIdKey));
+        const caculateDepositResult = calculateDeposit(sortedChallengeData, userChallengeIds[i].count, Number(challengeIdKey));
 
-        console.log(caculateDepositResult)
+      //  console.log(caculateDepositResult)
 
 
       }
@@ -48,11 +49,14 @@ export const challengeDepositCalculateScheduler = () => {
 
 const calculateDeposit = (
   sortedChallengeData: ChallengeAllInformationCustom,
-  targetCount: number,
+  successCount: number,
   key: number
 
 ) => {
-  const targetDeduction = sortedChallengeData[key].deductions.find(({ start_count, end_count }) => targetCount >= start_count && targetCount <= end_count);
+  const targetDeduction = sortedChallengeData[key].deductions.find(({ start_count, end_count }) => successCount >= start_count && successCount <= end_count);
+
+
+
 
   if (targetDeduction) {
     const { start_count, end_count, deduction_rate } = targetDeduction;
@@ -61,7 +65,7 @@ const calculateDeposit = (
 
     return sortedChallengeData[key].deposit * (100 - deduction_rate)/100;
   } else {
-    console.log(`No matching range for Target Count: ${targetCount}`);
+    console.log(`No matching range for Target Count: ${successCount}`);
   }
 
 }

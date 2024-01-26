@@ -1,3 +1,5 @@
+import { DataCount } from "./challenge.interface"
+
 interface SelectTemplateContent {
     question_id: number,
     user_templete_id: number,
@@ -34,7 +36,7 @@ interface SelectDateTemplateContent {
     commentCount: string
 }
 
-interface UserChallengeId {
+interface UserChallengeId extends DataCount{
     user_challenge_id: number
 }
 export {

@@ -39,9 +39,20 @@ interface SelectDateTemplateContent {
 interface UserChallengeId extends DataCount{
     user_challenge_id: number
 }
+
+
+interface UserChallengeDeposit {
+    userChallengeId: number;
+    calculatedDeposit: number;
+}
+
+
+
+
 export {
     SelectTemplateContent,
     SelectDateTemplateContent,
     IncludeCompany,
-    UserChallengeId
+    UserChallengeId,
+    UserChallengeDeposit
 }

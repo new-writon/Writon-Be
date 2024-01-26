@@ -10,62 +10,61 @@ export const challengeDepositCalculateScheduler = () => {
 
     const challengeData = await challengeDao.selectAllChallengeInformation();
 
-
     const sortedChallengeData = sortChallengeData(challengeData);
-
-    console.log(sortedChallengeData)
 
     const challengeIdKeys = Object.keys(sortedChallengeData);
 
     for (const challengeIdKey of challengeIdKeys) {
-      const value = sortedChallengeData[challengeIdKey];
 
-      const userChallengeIds = await userChallengeDao.selectUserChallengeId(Number(challengeIdKey))
+      const userChallengeSuccessData = await userChallengeDao.selectChallengeSuccessCount(Number(challengeIdKey))
 
-     // console.log(userChallengeIds)
+      const userDepositInformation = [];
 
+      for (let i = 0; i < userChallengeSuccessData.length; i++) {
 
+        const caculateDepositResult = calculateDeposit(
+          sortedChallengeData,
+          userChallengeSuccessData[i].count,
+          userChallengeSuccessData[i].user_challenge_id,
+          Number(challengeIdKey));
 
-      for(let i = 0; i < userChallengeIds.length; i++){
-
-        const caculateDepositResult = calculateDeposit(sortedChallengeData, userChallengeIds[i].count, Number(challengeIdKey));
-
-      //  console.log(caculateDepositResult)
-
+          userDepositInformation.push(caculateDepositResult!)
 
       }
- 
+
+      await userChallengeDao.userDepositUpdate(userDepositInformation)
+
     }
-
- 
-
-
-
-
-
   })
+
+  console.log("스케줄링 완료")
 }
 
 
 const calculateDeposit = (
   sortedChallengeData: ChallengeAllInformationCustom,
   successCount: number,
+  userChallengeId: number,
   key: number
 
 ) => {
-  const targetDeduction = sortedChallengeData[key].deductions.find(({ start_count, end_count }) => successCount >= start_count && successCount <= end_count);
 
+  const failCount = Number(sortedChallengeData[key].challengeDayCount) - successCount;
 
-
+  const targetDeduction = sortedChallengeData[key].deductions.find(({ start_count, end_count }) => failCount >= start_count && failCount <= end_count);
 
   if (targetDeduction) {
-    const { start_count, end_count, deduction_rate } = targetDeduction;
-    // console.log(`Target Count: ${targetCount}, Deduction Rate: ${deduction_rate}, Range: ${start_count} ~ ${end_count}`);
-    // console.log(sortedChallengeData[key].deposit * (100 - deduction_rate)/100)
 
-    return sortedChallengeData[key].deposit * (100 - deduction_rate)/100;
+    const { deduction_rate } = targetDeduction;
+    
+    return {
+
+      userChallengeId: userChallengeId,
+      calculatedDeposit: sortedChallengeData[key].deposit * (100 - deduction_rate) / 100
+
+    }
   } else {
-    console.log(`No matching range for Target Count: ${successCount}`);
+    console.log(`No matching range`);
   }
 
 }

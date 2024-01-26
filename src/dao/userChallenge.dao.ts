@@ -1,7 +1,7 @@
 import prisma from '../client.js';
-import { PrismaClient, UserChallenge } from '@prisma/client'
+import { Prisma, PrismaClient, UserChallenge } from '@prisma/client'
 import { SelectPeriod, SelectChallengeId, DataCount} from '../interfaces/challenge.interface.js';
-import { SelectTemplateContent, SelectDateTemplateContent, UserChallengeId } from '../interfaces/userChallenge.interface.js';
+import { SelectTemplateContent, SelectDateTemplateContent, UserChallengeId, UserChallengeDeposit } from '../interfaces/userChallenge.interface.js';
 import { ParticipantData } from '../interfaces/community.interface.js';
 
 
@@ -275,7 +275,7 @@ const challengeParticipantCount = async (
 
 }
 
-const selectUserChallengeId = async (
+const selectChallengeSuccessCount = async (
   challengeId: number,
 ): Promise<UserChallengeId[]> => {
 
@@ -287,26 +287,36 @@ const selectUserChallengeId = async (
   FROM UserChallenge AS uc 
   LEFT JOIN UserTemplete AS ut ON ut.user_challenge_id = uc.user_challenge_id AND ut.complete = 1
   WHERE uc.challenge_id = ${challengeId}
-  GROUP BY uc.user_challenge_id;
-
-
-      
-      
-      
-      
-      
-      
-      
-      `
-      
-      
-      ;
-
-   
+  GROUP BY uc.user_challenge_id;  
+      `;
 
   return userChallengeIds
 
 }
+
+
+
+const userDepositUpdate = async (
+  userDepositInformation: Array<UserChallengeDeposit>
+):  Promise<Prisma.BatchPayload[]> => {
+
+  const updatePromise = userDepositInformation.map(async (depositInfo) => {
+    const { userChallengeId, calculatedDeposit } = depositInfo;
+    
+    return prisma.userChallenge.updateMany({
+      where: {
+        user_challenge_id: userChallengeId
+      },
+      data: {
+        user_deposit: calculatedDeposit
+    
+      }
+    });
+  });
+
+  return Promise.all(updatePromise);
+};
+
 
 
 
@@ -320,6 +330,7 @@ export default {
   selectMyParticipantInformation,
   updateCheeringPhrase,
   challengeParticipantCount,
-  selectUserChallengeId
+  selectChallengeSuccessCount,
+  userDepositUpdate
 
 }

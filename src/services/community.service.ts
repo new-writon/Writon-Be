@@ -99,8 +99,6 @@ const selectComment = async (
 
     const commentData = sortCompanyPublic(await commentDao.selectComment(userId, userTemplateId));
 
-    console.log(commentData)
-
     return commentDataCustom(commentData)
 }
 

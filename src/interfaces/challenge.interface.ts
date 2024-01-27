@@ -42,7 +42,7 @@ interface ChallengeAllInformation {
   challengeDayCount: string,
   start_count: number,
   end_count: number,
-  deduction_rate: number
+  deduction_amount: number
 }
 
 
@@ -51,7 +51,7 @@ interface ChallengeAllInformationCustom {
     challenge_id: number;
     deposit: number;
     challengeDayCount: string;
-    deductions: { start_count: number; end_count: number; deduction_rate: number }[];
+    deductions: { start_count: number; end_count: number; deduction_amount: number }[];
   };
 }
 

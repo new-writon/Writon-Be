@@ -125,7 +125,7 @@ model ChallengeDepositDeduction {
   challenge_id                  Int
   start_count                   Int
   end_count                     Int
-  deduction_rate                Int
+  deduction_amount               Int
   created_at                    DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at                     DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 

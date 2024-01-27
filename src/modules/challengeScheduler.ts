@@ -10,8 +10,6 @@ export const challengeDepositCalculateScheduler = async () => {
 
     const challengeData = await challengeDao.selectAllChallengeInformation();
 
- 
-
     const sortedChallengeData = sortChallengeData(challengeData);
    
     const challengeIdKeys = Object.keys(sortedChallengeData);
@@ -60,12 +58,12 @@ const calculateDeposit = (
 
   if (targetDeduction) {
 
-    const { deduction_rate } = targetDeduction;
+    const { deduction_amount } = targetDeduction;
     
     return {
 
       userChallengeId: userChallengeId,
-      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit * (100 - deduction_rate) / 100)
+      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit  - deduction_amount)
 
     }
   } else {
@@ -101,7 +99,7 @@ const sortChallengeData = (
     acc[challenge_id].deductions.push({
       start_count: item.start_count,
       end_count: item.end_count,
-      deduction_rate: item.deduction_rate
+      deduction_amount: item.deduction_amount
     });
 
     return acc;

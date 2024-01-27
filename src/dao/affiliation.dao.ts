@@ -93,6 +93,7 @@ const selectOrganizationAndChallengeId = async (
   FROM Affiliation AS a
   INNER JOIN Organization AS o ON o.organization_id = a.organization_id
   INNER JOIN UserChallenge AS uc ON uc.affiliation_id = a.affiliation_id
+  INNER JOIN Challenge AS c ON c.challenge_id = uc.challenge_id AND CURDATE() <= c.finish_at
   WHERE a.user_id = ${userId}
   ORDER BY uc.created_at desc;
   `;

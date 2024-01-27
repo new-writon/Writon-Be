@@ -58,7 +58,7 @@ const signChallengeComplete = async (
     SELECT *
     FROM Challenge as c
     WHERE c.challenge_id = ${challengeId}
-    AND curdate() < c.finish_at ;`;
+    AND curdate() <= c.finish_at ;`;
 
     return challengeComplete[0]
 }
@@ -94,8 +94,7 @@ const selectChallenge = async (
     SELECT 
     c.* 
     FROM Challenge as c 
-    WHERE curdate() <= c.finish_at 
-    AND c.challenge_id = ${challengeId};`;
+    WHERE c.challenge_id = ${challengeId};`;
 
 
 
@@ -150,8 +149,8 @@ const selectAllChallengeInformation = async () => {
     FROM Challenge AS c
     INNER JOIN ChallengeDay AS cd ON cd.challenge_id = c.challenge_id 
     INNER JOIN ChallengeDepositDeduction AS cdd ON cdd.challenge_id = c.challenge_id
-    WHERE CURDATE() < c.finish_at
-    AND cd.day < CURDATE()
+    WHERE CURDATE() <= c.finish_at
+    AND cd.day <= CURDATE()
     GROUP BY c.challenge_id, c.deposit, cdd.start_count, cdd.end_count, deduction_amount;
 
 

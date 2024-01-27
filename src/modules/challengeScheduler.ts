@@ -4,9 +4,9 @@ import { challengeDao, userChallengeDao } from '../dao/index.js';
 import { ChallengeAllInformation, ChallengeAllInformationCustom } from '../interfaces/challenge.interface.js';
 
 
-export const challengeDepositCalculateScheduler = () => {
+export const challengeDepositCalculateScheduler = async () => {
 
-  schedule.scheduleJob('*/10 * * * * *', async function () {       // UTC시간 기준 9시간 차이로 새벽 12시 의미
+ // schedule.scheduleJob('*/10 * * * * *', async function () {       // UTC시간 기준 9시간 차이로 새벽 12시 의미
 
     const challengeData = await challengeDao.selectAllChallengeInformation();
 
@@ -38,9 +38,11 @@ export const challengeDepositCalculateScheduler = () => {
       await userChallengeDao.userDepositUpdate(userDepositInformation)
 
     }
-  })
 
-  console.log("스케줄링 완료")
+    console.log("스케줄링 완료")
+ // })
+
+
 }
 
 

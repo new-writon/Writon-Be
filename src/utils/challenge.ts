@@ -120,13 +120,12 @@ const changeUserTemplateType = (
 
 const makeChallengeUserDeposit = async (
     challengeData: ChallengeAllInformation[],
-    userAffiliation: Affiliation
 ) => {
 
     const sortedChallengeData = sortChallengeData(challengeData);
 
     const challengeIdKeys = Object.keys(sortedChallengeData);
-
+    
     for (const challengeIdKey of challengeIdKeys) {
 
         return calculateStartUserChallengeDeposit(

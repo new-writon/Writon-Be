@@ -42,21 +42,35 @@ const enrollChallenge = async (
     challengeId: number
 ) => {
 
-    const [challengeData, userAffiliation] = await Promise.all([
+    const [challengeAllData, userAffiliation, challengeData] = await Promise.all([
 
         challengeDao.selectUniqueChallengeInformation(challengeId),
-        affiliationDao.selectAffiliation(userId, organization)
+        affiliationDao.selectAffiliation(userId, organization),
+        challengeDao.selectChallenge(challengeId)
 
     ]);
 
-    const caculateDepositResult = await makeChallengeUserDeposit(challengeData, userAffiliation);
 
-    await userChallengeDao.insertChallenge(
+    if (!challengeAllData[0]) {
+
+        return await userChallengeDao.insertChallenge(
+            userAffiliation.affiliation_id,
+            challengeId,
+            challengeData.deposit
+        );
+
+    }
+
+    const caculateDepositResult = await makeChallengeUserDeposit(challengeAllData);
+
+    return await userChallengeDao.insertChallenge(
         userAffiliation.affiliation_id,
         challengeId,
         caculateDepositResult!.calculatedDeposit
     );
 }
+
+
 
 
 const selectOrganizationChallengeId = async (

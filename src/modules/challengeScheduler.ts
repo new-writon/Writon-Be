@@ -6,39 +6,39 @@ import { ChallengeAllInformation, ChallengeAllInformationCustom } from '../inter
 
 export const challengeDepositCalculateScheduler = async () => {
 
- // schedule.scheduleJob('*/10 * * * * *', async function () {       // UTC시간 기준 9시간 차이로 새벽 12시 의미
+  // schedule.scheduleJob('*/10 * * * * *', async function () {       // UTC시간 기준 9시간 차이로 새벽 12시 의미
 
-    const challengeData = await challengeDao.selectAllChallengeInformation();
+  const challengeData = await challengeDao.selectAllChallengeInformation();
 
-    const sortedChallengeData = sortChallengeData(challengeData);
-   
-    const challengeIdKeys = Object.keys(sortedChallengeData);
+  const sortedChallengeData = sortChallengeData(challengeData);
 
-    for (const challengeIdKey of challengeIdKeys) {
+  const challengeIdKeys = Object.keys(sortedChallengeData);
 
-      const userChallengeSuccessData = await userChallengeDao.selectChallengeSuccessCount(Number(challengeIdKey))
+  for (const challengeIdKey of challengeIdKeys) {
 
-      const userDepositInformation = [];
+    const userChallengeSuccessData = await userChallengeDao.selectChallengeSuccessCount(Number(challengeIdKey))
 
-      for (let i = 0; i < userChallengeSuccessData.length; i++) {
+    const userDepositInformation = [];
 
-        const caculateDepositResult = calculateDeposit(
-          sortedChallengeData,
-          userChallengeSuccessData[i].count,
-          userChallengeSuccessData[i].user_challenge_id,
-          Number(challengeIdKey)
-          );
+    for (let i = 0; i < userChallengeSuccessData.length; i++) {
 
-          userDepositInformation.push(caculateDepositResult!)
+      const caculateDepositResult = calculateDeposit(
+        sortedChallengeData,
+        userChallengeSuccessData[i].count,
+        userChallengeSuccessData[i].user_challenge_id,
+        Number(challengeIdKey)
+      );
 
-      }
-
-      await userChallengeDao.userDepositUpdate(userDepositInformation)
+      userDepositInformation.push(caculateDepositResult!)
 
     }
 
-    console.log("스케줄링 완료")
- // })
+    await userChallengeDao.userDepositUpdate(userDepositInformation)
+
+  }
+
+  console.log("스케줄링 완료")
+  // })
 
 
 }
@@ -59,15 +59,15 @@ const calculateDeposit = (
   if (targetDeduction) {
 
     const { deduction_amount } = targetDeduction;
-    
+
     return {
 
       userChallengeId: userChallengeId,
-      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit  - deduction_amount)
+      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit - deduction_amount)
 
     }
   } else {
-    
+
     return {
 
       userChallengeId: userChallengeId,
@@ -78,7 +78,36 @@ const calculateDeposit = (
 
 }
 
+const calculateStartUserChallengeDeposit = (
+  sortedChallengeData: ChallengeAllInformationCustom,
+  successCount: number,
 
+  key: number
+
+) => {
+
+  const failCount = Number(sortedChallengeData[key].challengeDayCount) - successCount;
+
+  const targetDeduction = sortedChallengeData[key].deductions.find(({ start_count, end_count }) => failCount >= start_count && failCount <= end_count);
+
+  if (targetDeduction) {
+
+    const { deduction_amount } = targetDeduction;
+
+    return {
+
+      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit - deduction_amount)
+
+    }
+  } else {
+
+    return {
+      calculatedDeposit: Math.floor(sortedChallengeData[key].deposit)
+
+    }
+  }
+
+}
 
 const sortChallengeData = (
   challengeData: ChallengeAllInformation[]
@@ -112,7 +141,8 @@ const sortChallengeData = (
 
 export {
   sortChallengeData,
-  calculateDeposit
+  calculateDeposit,
+  calculateStartUserChallengeDeposit
 }
 
 

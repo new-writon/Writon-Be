@@ -2,7 +2,7 @@ import { Affiliation } from '@prisma/client';
 import { challengeDao, challengeDayDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 import { ChallengeAllInformation, WriteTemplete } from '../interfaces/challenge.interface.js';
 import { SelectTemplateContent, SelectDateTemplateContent } from '../interfaces/userChallenge.interface.js';
-import { calculateDeposit, sortChallengeData } from '../modules/challengeScheduler.js';
+import { calculateDeposit, calculateStartUserChallengeDeposit, sortChallengeData } from '../modules/challengeScheduler.js';
 
 
 
@@ -129,12 +129,9 @@ const makeChallengeUserDeposit = async (
 
     for (const challengeIdKey of challengeIdKeys) {
 
-        const userChallengeSuccessData = await userChallengeDao.selectUniqueUserChallengeSuccessCount(Number(challengeIdKey), userAffiliation.affiliation_id)
-
-        return  calculateDeposit(
+        return calculateStartUserChallengeDeposit(
             sortedChallengeData,
-            userChallengeSuccessData.count,
-            userChallengeSuccessData.user_challenge_id,
+            0,
             Number(challengeIdKey)
         );
     }

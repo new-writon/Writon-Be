@@ -1,6 +1,8 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, organizationDao, challengeDao, userChallengeDao } from '../dao/index.js';
+import { calculateDeposit, sortChallengeData } from '../modules/challengeScheduler.js';
+import { makeChallengeUserDeposit } from '../utils/challenge.js';
 
 
 
@@ -42,13 +44,18 @@ const enrollChallenge = async (
 
     const [challengeData, userAffiliation] = await Promise.all([
 
-        challengeDao.selectChallenge(challengeId),
+        challengeDao.selectUniqueChallengeInformation(challengeId),
         affiliationDao.selectAffiliation(userId, organization)
 
     ]);
 
-    await userChallengeDao.insertChallenge(userAffiliation.affiliation_id, challengeData.challenge_id, challengeData.deposit);
+    const caculateDepositResult = await makeChallengeUserDeposit(challengeData, userAffiliation);
 
+    await userChallengeDao.insertChallenge(
+        userAffiliation.affiliation_id,
+        challengeId,
+        caculateDepositResult!.calculatedDeposit
+    );
 }
 
 

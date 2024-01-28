@@ -1,6 +1,8 @@
-import { challengeDao, challengeDayDao, userTemplateDao } from '../dao/index.js';
-import { WriteTemplete } from '../interfaces/challenge.interface.js';
+import { Affiliation } from '@prisma/client';
+import { challengeDao, challengeDayDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
+import { ChallengeAllInformation, WriteTemplete } from '../interfaces/challenge.interface.js';
 import { SelectTemplateContent, SelectDateTemplateContent } from '../interfaces/userChallenge.interface.js';
+import { calculateDeposit, sortChallengeData } from '../modules/challengeScheduler.js';
 
 
 
@@ -83,7 +85,7 @@ const signUserChallengeComplete = async (
     challengeId: number,
     date: string
 ) => {
-   
+
     let complete = true;
     if (new Date(date).setHours(0, 0, 0, 0).toLocaleString() !== new Date().setHours(0, 0, 0, 0).toLocaleString()) {
 
@@ -114,13 +116,49 @@ const changeUserTemplateType = (
 }
 
 
+
+
+const makeChallengeUserDeposit = async (
+    challengeData: ChallengeAllInformation[],
+    userAffiliation: Affiliation
+) => {
+
+    const sortedChallengeData = sortChallengeData(challengeData);
+
+    const challengeIdKeys = Object.keys(sortedChallengeData);
+
+    for (const challengeIdKey of challengeIdKeys) {
+
+        const userChallengeSuccessData = await userChallengeDao.selectUniqueUserChallengeSuccessCount(Number(challengeIdKey), userAffiliation.affiliation_id)
+
+        return  calculateDeposit(
+            sortedChallengeData,
+            userChallengeSuccessData.count,
+            userChallengeSuccessData.user_challenge_id,
+            Number(challengeIdKey)
+        );
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
 export {
- 
+
     signChallengeComplete,
     signTodayTemplateStatusCalculation,
     sortUserTemplate,
     signUserChallengeComplete,
     changeUserTemplateType,
-    sortDateUserTemplate
-    
+    sortDateUserTemplate,
+    makeChallengeUserDeposit
+
 }

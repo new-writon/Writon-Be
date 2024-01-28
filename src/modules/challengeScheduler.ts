@@ -110,5 +110,10 @@ const sortChallengeData = (
 }
 
 
+export {
+  sortChallengeData,
+  calculateDeposit
+}
+
 
 

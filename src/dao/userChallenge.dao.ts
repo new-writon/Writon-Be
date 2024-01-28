@@ -294,6 +294,26 @@ const selectChallengeSuccessCount = async (
 
 }
 
+const selectUniqueUserChallengeSuccessCount = async (
+  challengeId: number,
+  affiliationId: number
+): Promise<UserChallengeId> => {
+
+  const userChallengeIds = await prisma.$queryRaw<UserChallengeId[]>`
+
+  SELECT 
+  uc.user_challenge_id, 
+  CAST(COUNT(ut.user_challenge_id) AS CHAR) AS count 
+  FROM UserChallenge AS uc 
+  LEFT JOIN UserTemplete AS ut ON ut.user_challenge_id = uc.user_challenge_id AND ut.complete = 1
+  WHERE uc.challenge_id = ${challengeId}
+  AND uc.affiliation_id = ${affiliationId}
+  GROUP BY uc.user_challenge_id;  
+      `;
+
+  return userChallengeIds[0]
+
+}
 
 
 const userDepositUpdate = async (
@@ -331,6 +351,7 @@ export default {
   updateCheeringPhrase,
   challengeParticipantCount,
   selectChallengeSuccessCount,
-  userDepositUpdate
+  userDepositUpdate,
+  selectUniqueUserChallengeSuccessCount
 
 }

@@ -141,7 +141,26 @@ const makeChallengeUserDeposit = async (
 
 
 
+const checkChallenge = async (
+    organization: string,
+    userId: number,
+    challengeId: number
+): Promise<boolean | null> => {
 
+    let challengedConfirmation;
+
+    const checkChallenge = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
+
+
+    if (!checkChallenge) {
+        challengedConfirmation = false;
+
+    } else {
+        challengedConfirmation = true;
+    }
+
+    return challengedConfirmation;
+}
 
 
 
@@ -155,6 +174,7 @@ export {
     signUserChallengeComplete,
     changeUserTemplateType,
     sortDateUserTemplate,
-    makeChallengeUserDeposit
+    makeChallengeUserDeposit,
+    checkChallenge
 
 }

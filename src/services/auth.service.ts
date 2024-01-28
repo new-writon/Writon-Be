@@ -2,13 +2,14 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import bcrypt from 'bcrypt';
-import { userDao,  redisDao } from '../dao/index.js';
+import { userDao, redisDao } from '../dao/index.js';
 import socialLogin from '../utils/socialLogin.js';
 import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
 import jwt from '../utils/jwtModules.js';
 import { checkOrganization } from '../utils/organization.js';
 import { GenerateAuthCode, Login, ReissueToken } from '../interfaces/auth.interface.js'
+import { checkChallenge } from '../utils/challenge.js';
 
 
 
@@ -23,7 +24,8 @@ import { GenerateAuthCode, Login, ReissueToken } from '../interfaces/auth.interf
 const localLogin = async (
   identifier: string,
   password: string,
-  organization: string
+  organization: string,
+  challengeId: number
 ) => {
 
   const userData = await userDao.userInformationSelect(identifier)
@@ -42,24 +44,30 @@ const localLogin = async (
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
 
-  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
+  // let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
 
-  if(organization === "null"){
-    affiliatedConfirmation = null
+  let challengedConfirmation = await checkChallenge(organization, userData!.user_id, challengeId);
+
+  if (organization === "null") {
+    challengedConfirmation = null
   }
 
   return {
+
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-    affiliatedConfirmation: affiliatedConfirmation
+    ///   affiliatedConfirmation: affiliatedConfirmation,
+    challengedConfirmation: challengedConfirmation
+
   };
 }
 
 
 const kakaoLogin = async (
   kakaoAccessToken: string,
-  organization: string
+  organization: string,
+  challengeId: number
 ) => {
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
@@ -80,17 +88,20 @@ const kakaoLogin = async (
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
-  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
+  //  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
 
-  if(organization === "null"){
-    affiliatedConfirmation = null
+  let challengedConfirmation = await checkChallenge(organization, userData!.user_id, challengeId);
+
+  if (organization === "null") {
+    challengedConfirmation = null
   }
 
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-    affiliatedConfirmation: affiliatedConfirmation
+  //   affiliatedConfirmation: affiliatedConfirmation
+    challengedConfirmation: challengedConfirmation
   };
 
 }

@@ -19,9 +19,9 @@ import { authService } from '../services/index.js'
  */
 const localLogin = catchAsync(async (req, res) => {
 
-    const { identifier, password, organization } = req.body;
+    const { identifier, password, organization, challengeId} = req.body;
 
-    res.status(httpStatus.OK).send(await authService.localLogin(identifier, password, organization));
+    res.status(httpStatus.OK).send(await authService.localLogin(identifier, password, organization, challengeId));
 });
 
 
@@ -34,7 +34,7 @@ const localLogin = catchAsync(async (req, res) => {
  */
 const kakaoLogin = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.header("Authentication") as string, req.body.organization));
+    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.header("Authentication") as string, req.body.organization, req.body.challengeId));
 
 });
 

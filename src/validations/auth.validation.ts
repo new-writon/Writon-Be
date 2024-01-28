@@ -6,7 +6,8 @@ const checkLocalLogin = {
   body: Joi.object().keys({
     identifier: Joi.string().required(),    // query 형태로 해당 키 값에 대한 타입 유효성 검사
     password: Joi.string().required(),
-    organization: Joi.string().required()
+    organization: Joi.string().required(),
+    challengeId: Joi.number().required()
 
   })
 };

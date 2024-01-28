@@ -44,7 +44,7 @@ const localLogin = async (
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
 
-  // let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
+  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
 
   let challengedConfirmation = await checkChallenge(organization, userData!.user_id, challengeId);
 
@@ -57,7 +57,7 @@ const localLogin = async (
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-    ///   affiliatedConfirmation: affiliatedConfirmation,
+    affiliatedConfirmation: affiliatedConfirmation,
     challengedConfirmation: challengedConfirmation
 
   };
@@ -88,7 +88,7 @@ const kakaoLogin = async (
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
-  //  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
+  let affiliatedConfirmation = await checkOrganization(organization, userData!.user_id);
 
   let challengedConfirmation = await checkChallenge(organization, userData!.user_id, challengeId);
 
@@ -100,7 +100,7 @@ const kakaoLogin = async (
     accessToken: accessToken,
     refreshToken: refreshToken,
     role: userData!.role,
-  //   affiliatedConfirmation: affiliatedConfirmation
+    affiliatedConfirmation: affiliatedConfirmation,
     challengedConfirmation: challengedConfirmation
   };
 

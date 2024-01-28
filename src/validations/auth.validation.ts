@@ -14,7 +14,8 @@ const checkLocalLogin = {
 
 const checkKakaoLogin = {
   body: Joi.object().keys({
-    organization: Joi.string().required()
+    organization: Joi.string().required(),
+    challengeId: Joi.number().required()
 
   })
 };

@@ -14,11 +14,11 @@ const sendInvitation = async (
 
     const challengeData = await challengeDao.selectChallengeInformation(challenge);
 
-    email.map(async (e) => {
-        await emailFunction.sendInvitationEmail(organization, challengeData.challenge_id, e);
-
-    })
-
+    await Promise.all(
+        email.map(async (e) => {
+          await emailFunction.sendInvitationEmail(organization, challengeData.challenge_id, e, challenge);
+        })
+      );
 
 
 }

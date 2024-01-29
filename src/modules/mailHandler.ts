@@ -8,7 +8,8 @@ require('dotenv').config();
 const sendInvitationEmail = async (  
   organization: string,
   challengeId: number,
-  email: string
+  email: string,
+  challenge: string
 ) => {
   try {
     const mailOptions = {
@@ -16,29 +17,39 @@ const sendInvitationEmail = async (
       to: email,
       subject: `[Writon] ${organization}의 챌린지에 참여해보세요`,
       html: `
-        <html>
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Image and Button Link</title>
-          </head>
-          <body style="margin: 0; padding: 0;">
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-              <tr>
-                <td style="text-align: center;">
-                  <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5.png" alt="Your Image" style="display: block; margin: 0 auto; margin-bottom: 20px;">
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: center;">
-                  <a href="https://www.writon.co.kr/login?organization=${organization}&challengeId=${challengeId}" style="display: block; text-align: center;">
-                    <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5+%EB%B2%84%ED%8A%BC.png" alt="Your Button Image" style="display: block; margin: 0 auto;">
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </body>
-        </html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Image and Button Link</title>
+      </head>
+      <body style="margin: 0; padding: 0;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+          <tr>
+            <td style="text-align: center;">
+              <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5+-v.png" alt="Your Image" style="display: block; margin: 0 auto; margin-bottom: 20px; width: 500px; height: 500px;">
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+            <p style="font-size: 18px; color: #333; white-space: pre-line; line-height: 0.7;">
+            <strong style="font-weight: bold;">${organization}</strong>에서 ${email}님을 <br>
+            <strong style="font-weight: bold;">${challenge}</strong> 챌린지로 초대하였습니다
+          </p>
+          
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <a href="https://www.writon.co.kr/login?organization=${organization}&challengeId=${challengeId}" style="display: block; text-align: center;">
+                <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5+%EB%B2%84%ED%8A%BC+-v.png" alt="Your Button Image" style="display: block; margin: 0 auto; width: 347px; height: 105px;">
+              </a>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+    
       `,
     };
 

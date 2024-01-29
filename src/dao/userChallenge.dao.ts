@@ -89,7 +89,9 @@ const selectTemplateContent = async (
       LEFT JOIN Likes AS l ON l.user_templete_id = ut.user_templete_id 
       LEFT JOIN Comment AS cm ON cm.user_templete_id = ut.user_templete_id
 
-      WHERE uc.affiliation_id = ${affiliationId}    
+      WHERE uc.affiliation_id = ${affiliationId}  
+      AND uc.challenge_id = ${challengeId} 
+      AND date_format(ut.finished_at, '%Y-%m') = ${yearAndMonth}  
       GROUP BY
         qc.question_id,
         qc.user_templete_id,
@@ -103,9 +105,8 @@ const selectTemplateContent = async (
         a.company_public,
         a.nickname,
         u.profile  
-        AND uc.challenge_id = ${challengeId} 
-        AND date_format(ut.finished_at, '%Y-%m') = ${yearAndMonth}
-        ORDER BY ut.finished_at, qc.created_at, q.created_at
+
+      ORDER BY ut.finished_at, qc.created_at, q.created_at
   ;`;
 
   return userTemplateData

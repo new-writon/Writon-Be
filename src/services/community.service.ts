@@ -14,6 +14,7 @@ const selectParticipantInformation = async (
     challengeId: number
 ) => {
 
+
     const [participantData, challengeParticipantCount, challengeOverlapPeriod] = await Promise.all([
 
         userChallengeDao.selectParticipantInformation(userId, challengeId),

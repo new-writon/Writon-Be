@@ -194,7 +194,9 @@ const selectParticipantInformation = async (
   userId: number,
   challengeId: number
 ): Promise<ParticipantData[]> => {
+
   const participantInformationData = await prisma.$queryRaw<ParticipantData[]>`
+
 
   SELECT 
   u.profile,
@@ -209,7 +211,7 @@ const selectParticipantInformation = async (
   INNER JOIN Affiliation as a ON a.affiliation_id = uc.affiliation_id
   INNER JOIN User as u ON u.user_id = a.user_id AND u.user_id != ${userId}
   WHERE uc.challenge_id = ${challengeId}
-  OR uc.cheering_phrase_date IS NULL
+
 
   ;`;
 
@@ -239,7 +241,7 @@ const selectMyParticipantInformation = async (
   INNER JOIN Affiliation as a ON a.affiliation_id = uc.affiliation_id
   INNER JOIN User as u ON u.user_id = a.user_id AND u.user_id = ${userId}
   WHERE uc.challenge_id = ${challengeId}
-  OR uc.cheering_phrase_date IS NULL
+
 
   ;`;
 

@@ -236,6 +236,7 @@ const selectMyParticipantInformation = async (
   a.nickname,
   a.company_public,
   a.company,
+  u.email,
   uc.cheering_phrase,
   uc.cheering_phrase_date
   FROM UserChallenge as uc

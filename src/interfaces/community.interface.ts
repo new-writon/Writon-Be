@@ -5,6 +5,7 @@ interface ParticipantData {
   nickname: string;
   company_public: number;
   company: string | null;
+  email: string;
   cheering_phrase: string | null;
   cheering_phrase_date: Date | null;
 }

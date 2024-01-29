@@ -54,6 +54,7 @@ const selectChallengeDate = async (
        cd.* 
        FROM ChallengeDay AS cd
        WHERE cd.challenge_id = ${challengeId}
+       AND cd.day <= CURDATE()
        ORDER BY cd.day
     `
 }

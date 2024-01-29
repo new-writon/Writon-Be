@@ -49,7 +49,7 @@ const localLogin = async (
   let challengedConfirmation = await checkChallenge(organization, userData!.user_id, challengeId);
 
   if (organization === "null") {
-    challengedConfirmation = null
+    affiliatedConfirmation = null
   }
 
   return {
@@ -93,7 +93,7 @@ const kakaoLogin = async (
   let challengedConfirmation = await checkChallenge(organization, userData!.user_id, challengeId);
 
   if (organization === "null") {
-    challengedConfirmation = null
+    affiliatedConfirmation = null
   }
 
   return {

@@ -2,7 +2,8 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import { affiliationDao, organizationDao, challengeDao, userChallengeDao } from '../dao/index.js';
 import { calculateDeposit, sortChallengeData } from '../modules/challengeScheduler.js';
-import { makeChallengeUserDeposit } from '../utils/challenge.js';
+import { checkChallenge, makeChallengeUserDeposit } from '../utils/challenge.js';
+import { checkOrganization } from '../utils/organization.js';
 
 
 
@@ -100,9 +101,37 @@ const checkNickname = async (
 
 
 
+const signUserOrganizationAndChallenge = async (
+    userId: number,
+    organization: string,
+    challengeId: number
+) => {
+
+    let [affiliatedConfirmation, challengedConfirmation] = await Promise.all([
+
+        checkOrganization(organization, userId),
+        checkChallenge(organization, userId, challengeId)
+
+    ]);
+
+    return {
+
+        affiliatedConfirmation: affiliatedConfirmation,
+        challengedConfirmation: challengedConfirmation
+
+    };
+
+
+
+
+}
+
+
+
 export default {
     enrollOrganization,
     enrollChallenge,
     selectOrganizationChallengeId,
-    checkNickname
+    checkNickname,
+    signUserOrganizationAndChallenge
 }

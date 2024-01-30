@@ -49,6 +49,11 @@ const checkNickname = catchAsync(async (req, res) => {
 });
 
 
+const signUserOrganizationAndChallenge = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await startService.signUserOrganizationAndChallenge(req.decoded?.id, req.params.organization, req.params.challengeId));
+
+});
 
 
 
@@ -57,5 +62,6 @@ export default {
     enrollOrganization,
     enrollChallenge,
     selectOrganizationChallengeId,
-    checkNickname
+    checkNickname,
+    signUserOrganizationAndChallenge
 }

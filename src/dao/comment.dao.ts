@@ -30,7 +30,7 @@ const selectComment = async (
       WHERE 
       c.user_templete_id = ${userTemplateId}
       ORDER BY 
-      c.comment_group desc, c.comment_id desc
+      c.comment_group, c.comment_id 
 
     
     `

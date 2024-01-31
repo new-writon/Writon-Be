@@ -7,6 +7,8 @@ const sortCallendarDateBadge = (
     userTemplateDays: UserTemplete[]
 
 ) => {
+    console.log(challengeDays)
+    console.log(userTemplateDays)
     const result = [];
 
     for (const challengeDay of challengeDays!) {

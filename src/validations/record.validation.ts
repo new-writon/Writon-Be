@@ -29,11 +29,13 @@ const checkOrganization = {
 const checkChallengeIdAndMonthAndOrganization = {
     params: Joi.object().keys({
         challengeId: Joi.number().required(),
-    //    month: Joi.string().required(),
+        month: Joi.string().required(),
         organization: Joi.string().required()    
 
   })
 };
+
+
 
 const checkChallengeIdAndDate = {
     params: Joi.object().keys({

@@ -17,13 +17,13 @@ const sendInvitationEmail = async (
       to: email,
       subject: `[Writon] ${organization}의 챌린지에 참여해보세요`,
       html: `
+ 
       <html>
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Image and Button Link</title>
       </head>
-      <body style="margin: 0; padding: 0;">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
           <tr>
             <td style="text-align: center;">
@@ -35,8 +35,7 @@ const sendInvitationEmail = async (
             <p style="font-size: 18px; color: #333; white-space: pre-line; line-height: 0.7;">
             <strong style="font-weight: bold;">${organization}</strong>에서 ${email}님을 <br>
             <strong style="font-weight: bold;">${challenge}</strong> 챌린지로 초대하였습니다
-          </p>
-          
+          </p> 
             </td>
           </tr>
           <tr>
@@ -47,8 +46,10 @@ const sendInvitationEmail = async (
             </td>
           </tr>
         </table>
-      </body>
     </html>
+   
+
+
     
       `,
     };

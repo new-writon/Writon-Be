@@ -5,6 +5,7 @@ import validate from '../../middlewares/validate.js';
 import auth from '../../middlewares/auth.js';
 
 
+
 const router = express.Router();
 
 //router.get('/', auth, validate(recordValidation.checkOrganization), recordController.selectChallenge);

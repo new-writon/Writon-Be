@@ -63,7 +63,7 @@ const selectCalendarSituation = async (
   userId: number,
   challengeId: number,
   organization: string,
-  yearAndMonth: Date
+ // yearAndMonth: Date
 ) => {
 
 
@@ -74,7 +74,7 @@ const selectCalendarSituation = async (
 
   ])
 
-  const userTemplateDay = await userTemplateDao.selectUserTemplateDay(affiliation.affiliation_id, challengeId, yearAndMonth);
+  const userTemplateDay = await userTemplateDao.selectUserTemplateDay(affiliation.affiliation_id, challengeId);
 
   return sortCallendarDateBadge(challengeDay, userTemplateDay)
 

@@ -69,15 +69,14 @@ const signTodayTemplate = async (
 const selectUserTemplateDay = async (
     affiliationId: number,
     challengeId: number,
-    yearAndMonth: Date
+   // yearAndMonth: Date
    
   ): Promise<UserTemplete[]> => {
 
     const userTemplateData = await prisma.$queryRaw<UserTemplete[]>`
 
         select ut.* from UserTemplete as ut
-            where date_format(ut.finished_at, '%Y-%m') = ${yearAndMonth}
-            and
+            where 
             ut.user_challenge_id = (select uc.user_challenge_id
             from UserChallenge as uc 
                 where uc.affiliation_id = ${affiliationId}

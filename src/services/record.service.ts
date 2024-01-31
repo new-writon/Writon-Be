@@ -29,6 +29,8 @@ const presentSituation = async (
   return {
     nickname: nickname?.nickname!,
     userProfile: userData.profile,
+    organization: organization,
+    challenge: challengeData.name,
     overlapPeriod: overlapPeriod,
     challengeOverlapCount: challengeOverlapCount,
     challengeSuccessCount: challengeSuccessCount,

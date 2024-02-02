@@ -87,13 +87,12 @@ const selectMyTemplate = async (
   userId: number,
   challengeId: number,
   organization: string,
-  yearAndMonth: Date
 ) => {
 
   const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
   const myTemplateData = sortUserTemplate(
-    await userChallengeDao.selectTemplateContent(affiliation.affiliation_id, challengeId, yearAndMonth)
+    await userChallengeDao.selectTemplateContent(affiliation.affiliation_id, challengeId)
   );
 
 

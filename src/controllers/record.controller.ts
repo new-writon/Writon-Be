@@ -42,7 +42,7 @@ const selectCalendarSituation  = catchAsync(async (req, res) => {
 
 const selectMyTemplate  = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await recordService.selectMyTemplate(req.decoded?.id, req.params.challengeId, req.params.organization, req.params.month));
+    res.status(httpStatus.OK).send(await recordService.selectMyTemplate(req.decoded?.id, req.params.challengeId, req.params.organization));
 
 });
 

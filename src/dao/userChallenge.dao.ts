@@ -57,7 +57,6 @@ const selectUserChallenge = async (
 const selectTemplateContent = async (
   affiliationId: number,
   challengeId: number,
-  yearAndMonth: Date
 ): Promise<SelectTemplateContent[]> => {
 
   const userTemplateData = await prisma.$queryRaw<SelectTemplateContent[]>`
@@ -91,7 +90,6 @@ const selectTemplateContent = async (
 
       WHERE uc.affiliation_id = ${affiliationId}  
       AND uc.challenge_id = ${challengeId} 
-      AND date_format(ut.finished_at, '%Y-%m') = ${yearAndMonth}  
       GROUP BY
         qc.question_id,
         qc.user_templete_id,

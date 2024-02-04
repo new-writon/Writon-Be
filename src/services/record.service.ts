@@ -32,6 +32,7 @@ const presentSituation = async (
     organization: organization,
     challenge: challengeData.name,
     overlapPeriod: overlapPeriod,
+    refundCondition: challengeData.refund_conditions,
     challengeOverlapCount: challengeOverlapCount,
     challengeSuccessCount: challengeSuccessCount,
     overlapDeposit: overlapDeposit,

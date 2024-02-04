@@ -74,6 +74,7 @@ model Challenge {
   start_at             DateTime              @db.Date
   finish_at            DateTime              @db.Date
   deposit              Int
+  refund_conditions    String?               @db.Text
 
 
   challenge_days       ChallengeDay[]

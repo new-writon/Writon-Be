@@ -51,18 +51,18 @@ const enrollChallenge = async (
 
     ]);
 
+    const caculateDepositResult = await makeChallengeUserDeposit(challengeAllData);
 
     if (!challengeAllData[0]) {
 
         return await userChallengeDao.insertChallenge(
             userAffiliation.affiliation_id,
             challengeId,
-            challengeData.deposit
+            caculateDepositResult!.calculatedDeposit
         );
 
     }
 
-    const caculateDepositResult = await makeChallengeUserDeposit(challengeAllData);
 
     return await userChallengeDao.insertChallenge(
         userAffiliation.affiliation_id,

@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
  */
 export const authLimiter = rateLimit({
   windowMs: 3 * 60 * 1000,
-  max: 200,
+  max: 400,
   skipSuccessfulRequests: false,
   skipFailedRequests: false
 

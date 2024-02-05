@@ -53,7 +53,7 @@ const enrollChallenge = async (
 
 
 
-    if (!challengeAllData[0]) {                           // 챌린지 종료 시
+    if (!challengeAllData[0]) {                           // 챌린지 미리 참여 시
 
         return await userChallengeDao.insertChallenge(
             userAffiliation.affiliation_id,

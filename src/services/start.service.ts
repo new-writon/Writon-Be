@@ -43,26 +43,27 @@ const enrollChallenge = async (
     challengeId: number
 ) => {
 
-    const [challengeAllData, userAffiliation] = await Promise.all([
+    const [challengeAllData, userAffiliation, challengeData] = await Promise.all([
 
         challengeDao.selectUniqueChallengeInformation(challengeId),
         affiliationDao.selectAffiliation(userId, organization),
-     //   challengeDao.selectChallenge(challengeId)
+        challengeDao.selectChallenge(challengeId)
 
     ]);
 
+
+
+    if (!challengeAllData[0]) {                           // 챌린지 종료 시
+
+        return await userChallengeDao.insertChallenge(
+            userAffiliation.affiliation_id,
+            challengeId,
+            challengeData.deposit
+        );
+
+    }
+
     const caculateDepositResult = await makeChallengeUserDeposit(challengeAllData);
-
-    // if (!challengeAllData[0]) {
-
-    //     return await userChallengeDao.insertChallenge(
-    //         userAffiliation.affiliation_id,
-    //         challengeId,
-    //         caculateDepositResult!.calculatedDeposit
-    //     );
-
-    // }
-
 
     return await userChallengeDao.insertChallenge(
         userAffiliation.affiliation_id,

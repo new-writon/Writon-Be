@@ -172,8 +172,9 @@ const selectUniqueChallengeInformation = async (
     FROM Challenge AS c
     INNER JOIN ChallengeDay AS cd ON cd.challenge_id = c.challenge_id 
     INNER JOIN ChallengeDepositDeduction AS cdd ON cdd.challenge_id = c.challenge_id
-    WHERE 
-     cd.day < CURDATE()
+    WHERE CURDATE() <= c.finish_at
+    AND
+    cd.day < CURDATE()
     AND c.challenge_id = ${challengeId}
     GROUP BY c.challenge_id, c.deposit, cdd.start_count, cdd.end_count, deduction_amount;
     `

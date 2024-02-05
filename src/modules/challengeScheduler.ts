@@ -81,7 +81,6 @@ const calculateDeposit = (
 const calculateStartUserChallengeDeposit = (
   sortedChallengeData: ChallengeAllInformationCustom,
   successCount: number,
-
   key: number
 
 ) => {

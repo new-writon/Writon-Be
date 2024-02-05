@@ -2,23 +2,67 @@ import * as redis from 'redis';
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 import { smtpTransport } from "../config/email.js";
+import { error } from 'console';
 require('dotenv').config();
 
+const sendInvitationEmail = async (  
+  organization: string,
+  challengeId: number,
+  email: string,
+  challenge: string
+) => {
+  try {
+    const mailOptions = {
+      from: process.env.NODEEMAIL_FROM,
+      to: email,
+      subject: `[Writon] ${organization}의 챌린지에 참여해보세요`,
+      html: `
+ 
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+          <tr>
+            <td style="text-align: center;">
+              <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5+-v.png" alt="Your Image" style="display: block; margin: 0 auto; margin-bottom: 20px; width: 500px; height: 500px;">
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+            <p style="font-size: 18px; color: #333; white-space: pre-line; line-height: 0.7;">
+            <strong style="font-weight: bold;">${organization}</strong>에서 ${email}님을 <br>
+            <strong style="font-weight: bold;">${challenge}</strong> 챌린지로 초대하였습니다
+          </p> 
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <a href="https://www.writon.co.kr/login?organization=${organization}&challengeId=${challengeId}" style="display: block; text-align: center;">
+                <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5+%EB%B2%84%ED%8A%BC+-v.png" alt="Your Button Image" style="display: block; margin: 0 auto; width: 347px; height: 105px;">
+              </a>
+            </td>
+          </tr>
+        </table>
+      `,
+    };
+
+    await smtpTransport.sendMail(mailOptions);
+
+    smtpTransport.close();
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 
 
-
-
-const sendCodeEmail = async  (
+const sendCodeEmail = async (
   email: string,
   code: number
-  ) => {
-   
-    const mailOptions = {
-      from: "teamwritoner" + "@gmail.com",
-      to: email,
-      subject: '[Writon] 요청하신 서비스 이메일 인증 번호를 안내해드립니다.',
-      html: `
+) => {
+
+  const mailOptions = {
+    from: "teamwritoner" + "@gmail.com",
+    to: email,
+    subject: '[Writon] 요청하신 서비스 이메일 인증 번호를 안내해드립니다.',
+    html: `
       <p>본 메일은 Writon 서비스의 회원가입을 위한 이메일 인증입니다.</p>
     
       <p>진행 중인 화면에 인증번호를 정확히 입력해주세요.</p>
@@ -27,22 +71,22 @@ const sendCodeEmail = async  (
     
       <p><strong>** 인증 코드 **</strong> : ${code}</p>
       `
-    };
+  };
 
-    smtpTransport.sendMail(mailOptions);
+  smtpTransport.sendMail(mailOptions);
 
-    smtpTransport.close();
+  smtpTransport.close();
 
 }
 
 
 const randomPasswordsmtpSender = async (email: string, randomPassword: string) => {
 
-    const mailOptions = {
-      from: "teamwritoner" + "@gmail.com",
-      to: email,
-      subject: '[Writon] 임시 비밀번호 안내',
-      html: `
+  const mailOptions = {
+    from: "teamwritoner" + "@gmail.com",
+    to: email,
+    subject: '[Writon] 임시 비밀번호 안내',
+    html: `
       <p>안녕하세요, 라이톤 입니다. </p>
     
       <p>회원님의 임시 비밀번호는 다음과 같습니다.</p>
@@ -51,16 +95,19 @@ const randomPasswordsmtpSender = async (email: string, randomPassword: string) =
 
       <strong>임시비밀번호</strong>  : ${randomPassword}
       `
-    };
-    smtpTransport.sendMail(mailOptions);
-    smtpTransport.close();
+  };
+  smtpTransport.sendMail(mailOptions);
+  smtpTransport.close();
 
 
 }
 
 export default {
   randomPasswordsmtpSender,
-  sendCodeEmail
+  sendCodeEmail,
+  sendInvitationEmail
 }
+
+
 
 

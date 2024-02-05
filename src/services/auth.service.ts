@@ -1,16 +1,17 @@
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import bcrypt from 'bcrypt';
-import { userDao, authDao, redisDao } from '../dao/index.js';
+import { userDao, redisDao } from '../dao/index.js';
 import socialLogin from '../utils/socialLogin.js';
 import mailHandler from '../modules/mailHandler.js';
 import random from '../utils/random.js';
 import jwt from '../utils/jwtModules.js';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { checkOrganization } from '../utils/organization.js';
+import { GenerateAuthCode, Login, ReissueToken } from '../interfaces/auth.interface.js'
+import { checkChallenge } from '../utils/challenge.js';
+
+
 
 
 
@@ -23,9 +24,11 @@ const __dirname = dirname(__filename);
 const localLogin = async (
   identifier: string,
   password: string,
+  organization: string,
+  challengeId: number
 ) => {
 
-  const userData = await userDao.userInformationSelect(identifier);
+  const userData = await userDao.userInformationSelect(identifier)
 
   if (!userData) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Identifier is not correct");
@@ -35,45 +38,77 @@ const localLogin = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, "Password is not correct");
   }
 
-
   const accessToken = jwt.sign(userData!.user_id, userData!.role);
   const refreshToken = jwt.refresh()
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
+
+  let [ affiliatedConfirmation, challengedConfirmation] = await Promise.all([
+
+    checkOrganization(organization, userData!.user_id),
+    checkChallenge(organization, userData!.user_id, challengeId)
+    
+  ]);
+
+
+  if (organization === "null") {
+    affiliatedConfirmation = null
+  }
+
   return {
+
     accessToken: accessToken,
     refreshToken: refreshToken,
-    role: userData!.role
+    role: userData!.role,
+    affiliatedConfirmation: affiliatedConfirmation,
+    challengedConfirmation: challengedConfirmation
+
   };
 }
 
 
 const kakaoLogin = async (
   kakaoAccessToken: string,
+  organization: string,
+  challengeId: number
 ) => {
 
   const userKakaoData = await socialLogin.getKakaoData(kakaoAccessToken);
 
-  const userCheck = await userDao.userInformationSelect(userKakaoData.data.kakao_account.email);
+  const userCheck = await userDao.userInformationSelect(userKakaoData.data.id);
 
   if (!userCheck) {
 
-    await authDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.properties.nickname);
+    await userDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.id, userKakaoData.data.properties.profile_image);
 
   }
-  const userData = await userDao.userInformationSelect(userKakaoData.data.kakao_account.email);
 
+  const userData = await userDao.userInformationSelect(userKakaoData.data.id);
 
   const accessToken = jwt.sign(userData!.user_id, userData!.role);
+
   const refreshToken = jwt.refresh()
 
   await redisDao.setRedis(String(userData!.user_id), refreshToken!);
 
+  let [ affiliatedConfirmation, challengedConfirmation] = await Promise.all([
+
+    checkOrganization(organization, userData!.user_id),
+    checkChallenge(organization, userData!.user_id, challengeId)
+
+  ]);
+
+  if (organization === "null") {
+    affiliatedConfirmation = null
+  }
+
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
-    role: userData!.role
+    role: userData!.role,
+    affiliatedConfirmation: affiliatedConfirmation,
+    challengedConfirmation: challengedConfirmation
   };
 
 }
@@ -90,18 +125,14 @@ const signUp = async (
   identifier: string,
   password: string,
   email: string,
-  phone: string,
-  nickname: string
 ) => {
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
-  await authDao.localSignUp(
+  await userDao.localSignUp(
     identifier,
     encryptedPassword,
-    email,
-    phone,
-    nickname
+    email
   );
 
 
@@ -110,7 +141,7 @@ const signUp = async (
 
 const generateAuthCode = async (
   email: string
-) => {
+): Promise<number> => {
 
   const verificationCode = random.generateRandom(100000, 999999);
 
@@ -127,7 +158,7 @@ const generateAuthCode = async (
 const verifyAuthCode = async (
   email: string,
   code: string
-) => {
+): Promise<void> => {
 
   const redisCode = await redisDao.getRedis(email);
 
@@ -142,7 +173,7 @@ const verifyAuthCode = async (
 const reissueToken = async (
   accessToken: string,
   refreshToken: string
-) => {
+): Promise<ReissueToken> => {
 
   const authResult = jwt.verify(accessToken.split('Bearer ')[1]);
   const decoded = jwt.decode(accessToken.split('Bearer ')[1]);

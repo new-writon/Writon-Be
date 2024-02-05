@@ -9,16 +9,10 @@ import redis from '../dao/redis.dao.js';
 import bcrypt from 'bcrypt';
 import random from '../utils/random.js';
 import mailHandler from '../modules/mailHandler.js';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-
-
-
+import { FindIdentifier } from '../interfaces/user.interface.js';
 
 
 const findIdentifier = async (
-  nickname: string,
   email: string,
   code: string
 ) => {
@@ -30,12 +24,12 @@ const findIdentifier = async (
     throw new ApiError(httpStatus.FORBIDDEN, "certify failed");
   }
 
-  if (! await userDao.identifierSelect(nickname, email)) {
+  if (! await userDao.identifierSelect(email)) {
 
     throw new ApiError(httpStatus.NOT_FOUND, "not found");
   }
 
-  return userDao.identifierSelect(nickname, email);
+  return userDao.identifierSelect(email);
 };
 
 
@@ -60,7 +54,7 @@ const changePassword = async (
 
 const checkIdentifier = async (
   identifier: string,
-): Promise<null> => {
+) => {
 
   const identifierData = await userDao.userInformationSelect(identifier);
 

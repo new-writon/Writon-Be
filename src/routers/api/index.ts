@@ -1,9 +1,12 @@
 import express from 'express';
-import challengeRoute from './challenge.route.js';
-import plannerRoute from './planner.route.js';
-import writeRoute from './write.route.js';
 import userRoute from './user.route.js'; 
 import authRoute from './auth.route.js'; 
+import recordRoute from './record.route.js';
+import startRoute from './start.route.js';
+import writeRoute from './write.route.js';
+import communityRoute from './community.route.js';
+import adminRoute from './admin.route.js';
+import scheduleRoute from './schedule.route.js';
 
 
 const router = express.Router();
@@ -14,27 +17,40 @@ const defaultRoutes = [
     route: authRoute
 
   },
-  {
-    path: '/challenge',
-    route: challengeRoute
-  },
+
   {
     path: '/user',
     route: userRoute
   },
-  // {
-  //   path: '/profile',
-  //   route: profileRoute
-  // },
+  
   {
-    path: '/planner',
-    route: plannerRoute
+    path: '/challenge/record',
+    route: recordRoute
   },
   {
-    path: '/write',
+    path: '/challenge/start',
+    route: startRoute
+  },
+  {
+    path: '/challenge/write',
     route: writeRoute
+  },
+  {
+    path: '/community',
+    route: communityRoute
+  },
+  {
+    path: '/admin',
+    route: adminRoute
+  },
+  {
+    path: '/schedule',
+    route: scheduleRoute
   }
+
 ];
+
+
 
 
 defaultRoutes.forEach((route) => {

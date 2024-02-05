@@ -27,7 +27,7 @@ const setTimeoutRedis = async (
     value: string,
     timeout: string,
     time: number
-) => {
+): Promise<void> => {
 
     await redisClient.v4.set(key, value, timeout, time);
 

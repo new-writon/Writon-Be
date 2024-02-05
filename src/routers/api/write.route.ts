@@ -1,20 +1,17 @@
 import express from 'express';
-import {writeController} from '../../controllers/index.js'
+import  {authController, writeController} from '../../controllers/index.js';
+import { authValidation, writeValidation } from '../../validations/index.js';
+import validate from '../../middlewares/validate.js';
 import auth from '../../middlewares/auth.js';
-
 
 
 
 const router = express.Router();
 
 
-router.post('/', auth, writeController.writeChallenge);
-router.get('/start/:name', auth,writeController.newChallenge);
-router.get('/:challengeName', auth, writeController.selectTemplate);
-router.post('/planner/temporary-storage', auth, writeController.plannerTemporaryChallenge);
-router.post('/temporary-storage', auth, writeController.insertTemporaryChallenge);
-router.post('/register', auth, writeController.insertChallengeComplete);
+router.get('/:challengeId/basic-question', auth, validate(writeValidation.checkChallengeId), writeController.selectBasicQuestion);
+router.get('/:challengeId/special-question', auth, validate(writeValidation.checkChallengeId), writeController.selectSpecialQuestion);
+router.post('/', auth, validate(writeValidation.checkWrite), writeController.insertTemplateContent);
 
+export default router;
 
-
-export default router

@@ -5,7 +5,17 @@ import Joi from 'joi';
 const checkLocalLogin = {
   body: Joi.object().keys({
     identifier: Joi.string().required(),    // query 형태로 해당 키 값에 대한 타입 유효성 검사
-    password: Joi.string().required()
+    password: Joi.string().required(),
+    organization: Joi.string().required(),
+    challengeId: Joi.number().required()
+
+  })
+};
+
+const checkKakaoLogin = {
+  body: Joi.object().keys({
+    organization: Joi.string().required(),
+    challengeId: Joi.number().required()
 
   })
 };
@@ -14,9 +24,7 @@ const checkSignUp = {
   body: Joi.object().keys({
     identifier: Joi.string().required(),    // query 형태로 해당 키 값에 대한 타입 유효성 검사
     password: Joi.string().required(),
-    email : Joi.string().email().required(),
-    phone : Joi.string().required(),
-    nickname : Joi.string().required()
+    email : Joi.string().email().required()
 
   })
 };
@@ -44,5 +52,6 @@ export default {
   checkLocalLogin,
   checkSignUp,
   checkEmail,
-  checkCode
+  checkCode,
+  checkKakaoLogin
 };

@@ -23,6 +23,8 @@ if (config.env !== 'test') {
   app.use(morgan.errorHandler);     // 실패 로그 커스텀
 }
 
+//app.set('trust proxy', 1);
+
 app.use(helmet());
 
 app.use(cors({ credentials: true }));
@@ -38,9 +40,18 @@ app.use(xss());
 app.use(compression());
 
 app.all('/*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type');
+
+  res.setHeader('Access-Control-Allow-Credentials', "true");
   next();
+});
+
+
+app.get('/healthcheck', (req, res) => {
+  res.status(200).send();
 });
 
 
@@ -58,6 +69,7 @@ app.use((req, res, next) => {
 app.use(errorConverter);
 
 app.use(errorHandler);
+
 
 export default app;
 

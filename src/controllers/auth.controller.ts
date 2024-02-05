@@ -2,7 +2,6 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 require('dotenv').config();
 import * as jwt from '../utils/jwtModules.js';
-import { ErrorResponse, SuccessResponse } from '../modules/returnResponse.js';
 import { logger } from '../config/logger.js';
 import catchAsync from '../utils/catchAsync.js';
 import httpStatus from 'http-status';
@@ -20,9 +19,9 @@ import { authService } from '../services/index.js'
  */
 const localLogin = catchAsync(async (req, res) => {
 
-    const { identifier, password } = req.body;
+    const { identifier, password, organization, challengeId} = req.body;
 
-    res.status(httpStatus.OK).send(await authService.localLogin(identifier, password));
+    res.status(httpStatus.OK).send(await authService.localLogin(identifier, password, organization, challengeId));
 });
 
 
@@ -35,10 +34,9 @@ const localLogin = catchAsync(async (req, res) => {
  */
 const kakaoLogin = catchAsync(async (req, res) => {
 
-    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.headers.authentication as string));
+    res.status(httpStatus.OK).send(await authService.kakaoLogin(req.header("Authentication") as string, req.body.organization, req.body.challengeId));
 
 });
-
 
 /**
  * 
@@ -66,15 +64,13 @@ const logout = catchAsync(async (req, res) => {
 const signup = catchAsync(async (req, res) => {
 
 
-    const { email, password, nickname, identifier, phone } = req.body;
+    const { email, password, identifier } = req.body;
 
 
     res.status(httpStatus.OK).send(await authService.signUp(
         identifier,
         password,
-        email,
-        phone,
-        nickname
+        email
     ));
 });
 

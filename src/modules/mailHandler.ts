@@ -11,6 +11,8 @@ const sendInvitationEmail = async (
   email: string,
   challenge: string
 ) => {
+
+
   try {
     const mailOptions = {
       from: process.env.NODEEMAIL_FROM,
@@ -34,7 +36,9 @@ const sendInvitationEmail = async (
           </tr>
           <tr>
             <td style="text-align: center;">
-              <a href="https://www.writon.co.kr/login?organization=${organization}&challengeId=${challengeId}" style="display: block; text-align: center;">
+              <a href="${generateInvitationLink(organization, challengeId)}" style="display: block; text-align: center;"
+              target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://www.writon.co.kr/login?organization=${organization}&challengeId=${challengeId}">
+            
                 <img src="https://writon-data.s3.ap-northeast-2.amazonaws.com/invitation/%EC%B4%88%EB%8C%80%EC%9E%A5+%EB%B2%84%ED%8A%BC+-v.png" alt="Your Button Image" style="display: block; margin: 0 auto; width: 347px; height: 105px;">
               </a>
             </td>
@@ -43,6 +47,7 @@ const sendInvitationEmail = async (
       `,
     };
 
+    
     await smtpTransport.sendMail(mailOptions);
 
     smtpTransport.close();
@@ -101,6 +106,17 @@ const randomPasswordsmtpSender = async (email: string, randomPassword: string) =
 
 
 }
+
+const generateInvitationLink = (
+  organization: string, 
+  challengeId: number
+  ) => {
+  const baseUrl = 'https://www.writon.co.kr/login';
+  const link = `${baseUrl}?organization=${encodeURIComponent(organization)}&challengeId=${encodeURIComponent(challengeId)}`;
+  return link;
+}
+
+
 
 export default {
   randomPasswordsmtpSender,

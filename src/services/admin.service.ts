@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import challengeDao from '../dao/challenge.dao.js';
 import emailFunction from '../modules/mailHandler.js'
-
+import { smtpTransport } from "../config/email.js";
 
 const sendInvitation = async (
     organization: string,
@@ -20,7 +20,7 @@ const sendInvitation = async (
         })
       );
 
-
+      smtpTransport.close();
 }
 
 export default {

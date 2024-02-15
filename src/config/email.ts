@@ -18,5 +18,4 @@ const smtpTransport = nodemailer.createTransport({
   debug: true,
   port: 587,
 });
-
 export { smtpTransport }

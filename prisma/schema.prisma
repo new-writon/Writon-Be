@@ -75,6 +75,7 @@ model Challenge {
   finish_at            DateTime              @db.Date
   deposit              Int
   refund_conditions    String?               @db.Text
+  review_url           String?               @db.Text
 
 
   challenge_days       ChallengeDay[]
@@ -141,6 +142,7 @@ model UserChallenge {
   user_deposit      Int
   cheering_phrase  String?     @db.VarChar(255)
   cheering_phrase_date  DateTime?    @db.Date
+  review            Boolean
   created_at        DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at         DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 

@@ -142,7 +142,7 @@ model UserChallenge {
   user_deposit      Int
   cheering_phrase  String?     @db.VarChar(255)
   cheering_phrase_date  DateTime?    @db.Date
-  review            Boolean
+  review            Boolean?
   created_at        DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at         DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 

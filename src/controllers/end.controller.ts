@@ -7,7 +7,21 @@ require('dotenv').config();
 
 
 
-const sendInvitation = catchAsync(async (req, res) => {
+const signReviewStatus = catchAsync(async (req, res) => {
+
+  
+    res.status(httpStatus.OK).send();
+});
+
+
+const editReviewStatus = catchAsync(async (req, res) => {
+
+  
+    res.status(httpStatus.OK).send();
+});
+
+
+const selectChallengeReivewData = catchAsync(async (req, res) => {
 
   
     res.status(httpStatus.OK).send();
@@ -15,9 +29,10 @@ const sendInvitation = catchAsync(async (req, res) => {
 
 
 
-
 export default {
-   
+    signReviewStatus, 
+    editReviewStatus,
+    selectChallengeReivewData
 }
 
 

@@ -1,6 +1,6 @@
 import express from 'express';
-import  { communityController, startController } from '../../controllers/index.js';
-import { communityValidation, recordValidation, startValidation } from '../../validations/index.js';
+import  { endController } from '../../controllers/index.js';
+import {  endValidation } from '../../validations/index.js';
 import validate from '../../middlewares/validate.js';
 import auth from '../../middlewares/auth.js';
 
@@ -8,9 +8,9 @@ import auth from '../../middlewares/auth.js';
 const router = express.Router();
 
 
-router.get('/:challengeId/my-participant-information', auth, validate(recordValidation.checkChallengeId), communityController.selectMyParticipantInformation);
-router.get('/:challengeId/template/:date/:organization', auth, validate(communityValidation.checkChallengeIdAndDateAndOrganization), communityController.selectDateTemplate);
-router.post('/cheering-phrase', auth, validate(communityValidation.checkChallengeIdAndOrganizationAndContent), communityController.writeCheeringPhrase);
+router.get('/:organization/:challengeId/review', auth, validate(endValidation.checkChallengeIdAndOrganization), endController.signReviewStatus);
+router.put('/:organization/:challengeId/review', auth, validate(endValidation.checkChallengeIdAndOrganization), endController.editReviewStatus);
+router.get('/:organization/:challengeId', auth, validate(endValidation.checkChallengeIdAndOrganization), endController.selectChallengeReivewData);
 
 
 

@@ -7,7 +7,7 @@ import { affiliationDao, challengeDayDao, commentDao, likeDao, userChallengeDao,
 
 
 
-const selectParticipantInformation = async (
+const signReviewStatus = async (
 
 ) => {
 
@@ -16,9 +16,28 @@ const selectParticipantInformation = async (
 }
 
 
+const editReviewStatus = async (
+
+    ) => {
+    
+    
+    
+    }
+
+
+const selectChallengeReivewData = async (
+
+    ) => {
+    
+    
+    
+    }
+
 export default {
 
-
+    signReviewStatus, 
+    editReviewStatus,
+    selectChallengeReivewData
 
 }
 

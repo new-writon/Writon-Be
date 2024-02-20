@@ -27,9 +27,7 @@ const editReviewStatus = async (
 
     ) => {
 
-        const affiliation = await affiliationDao.selectAffiliation(userId, organization);
-    
-    
+        return await userChallengeDao.updateUserChallengeReview(userId, organization, challengeId)
     
     }
 

@@ -1,24 +1,33 @@
 
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import challengeDao from '../dao/challenge.dao.js';
-import { sortCompanyPublic, sortParticipantInformation } from '../utils/community.js';
 import { affiliationDao, challengeDayDao, commentDao, likeDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 
 
 
 const signReviewStatus = async (
-
+    userId: number,
+    organization: string,
+    challengeId: number
 ) => {
 
+    const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
 
+    return {
+        review : userChallengeData.review
+    }
 
 }
 
 
 const editReviewStatus = async (
+    userId: number,
+    organization: string,
+    challengeId: number
 
     ) => {
+
+        const affiliation = await affiliationDao.selectAffiliation(userId, organization);
     
     
     
@@ -26,9 +35,13 @@ const editReviewStatus = async (
 
 
 const selectChallengeReivewData = async (
-
+    userId: number,
+    organization: string,
+    challengeId: number
     ) => {
     
+
+        const affiliation = await affiliationDao.selectAffiliation(userId, organization);
     
     
     }

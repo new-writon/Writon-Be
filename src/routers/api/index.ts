@@ -7,7 +7,7 @@ import writeRoute from './write.route.js';
 import communityRoute from './community.route.js';
 import adminRoute from './admin.route.js';
 import scheduleRoute from './schedule.route.js';
-
+import endRoute from './end.route.js';
 
 const router = express.Router();
 
@@ -46,6 +46,10 @@ const defaultRoutes = [
   {
     path: '/schedule',
     route: scheduleRoute
+  },
+  {
+    path: '/challenge/end',
+    route: endRoute
   }
 
 ];

@@ -181,7 +181,8 @@ const insertChallenge = async (
       data: {
           challenge_id: challengeId,
           affiliation_id: affiliationId,
-          user_deposit: deposit
+          user_deposit: deposit,
+          review: false
       }
 
   })
@@ -341,6 +342,27 @@ const userDepositUpdate = async (
 
 
 
+const  updateUserChallengeReview = async (
+  userId: number,
+  organization: string,
+  challengeId: number
+
+)=> {
+
+  return await prisma.$queryRaw<UserChallengeId[]>
+  `
+   UPDATE UserChallenge as uc SET uc.review = 1 
+    WHERE uc.affiliation_id = ( SELECT a.affiliation_id FROM Affiliation as a
+    WHERE a.user_id = ${userId} 
+    AND a.organization_id = (
+    SELECT o.organization_id FROM Organization as o
+    WHERE o.name = ${organization} ) )
+    AND uc.challenge_id = ${challengeId};
+  `
+
+}
+
+
 
 export default {
   selectUserChallengeDeposit,
@@ -354,6 +376,7 @@ export default {
   challengeParticipantCount,
   selectChallengeSuccessCount,
   userDepositUpdate,
-  selectUniqueUserChallengeSuccessCount
+  selectUniqueUserChallengeSuccessCount,
+  updateUserChallengeReview
 
 }

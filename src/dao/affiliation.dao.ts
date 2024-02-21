@@ -88,8 +88,9 @@ const selectOrganizationAndChallengeId = async (
   return await prisma.$queryRaw<Challenge[]>`
 
   SELECT 
-  o.name, 
+  o.name AS organization, 
   uc.challenge_id,
+  c.name AS challenge,
   CASE WHEN c.finish_at < CURDATE() THEN '1' ELSE '0' END AS challengeFinishSign
   FROM Affiliation AS a
   INNER JOIN Organization AS o ON o.organization_id = a.organization_id

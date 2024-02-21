@@ -18,6 +18,7 @@ model User {
   password      String?   @db.VarChar(255)
   email         String    @db.VarChar(40) @unique
   profile       String?   @db.VarChar(500)
+  discount_number String? @db.VarChar(40)
   created_at    DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at     DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   affiliations  Affiliation[]

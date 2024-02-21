@@ -40,6 +40,14 @@ const checkIdentifierAndEmail = {
 };
 
 
+const checkOganization = {
+  params: Joi.object().keys({
+    organization: Joi.string().required()
+  
+
+  })
+};
+
 
 
 export default {
@@ -48,5 +56,6 @@ export default {
     checkNicknameAndEmailAndCode,
     checkNewPasswordAndOldPassword,
     checkEmail,
-    checkIdentifierAndEmail
+    checkIdentifierAndEmail,
+    checkOganization
 };

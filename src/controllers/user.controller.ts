@@ -81,13 +81,21 @@ const generateTemporaryPassword = catchAsync(async (req, res) => {
 
 });
 
+const selectUserMyPage = catchAsync(async (req, res) => {
+
+
+    res.status(httpStatus.OK).send(await userService.selectUserMyPage(req.decoded?.id, req.params.organization));
+
+});
+
 
 export default {
     findIdentifier,
     checkIdentifier,
     changePassword,
     checkEmail,
-    generateTemporaryPassword
+    generateTemporaryPassword,
+    selectUserMyPage
 }
 
 

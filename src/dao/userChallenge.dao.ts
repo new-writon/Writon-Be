@@ -349,7 +349,7 @@ const  updateUserChallengeReview = async (
 
 )=> {
 
-  return await prisma.$queryRaw<UserChallengeId[]>
+  return await prisma.$queryRaw<void>
   `
    UPDATE UserChallenge as uc SET uc.review = 1 
     WHERE uc.affiliation_id = ( SELECT a.affiliation_id FROM Affiliation as a

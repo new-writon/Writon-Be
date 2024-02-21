@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { userDao } from '../dao/index.js';
+import { affiliationDao, userDao } from '../dao/index.js';
 import redis from '../dao/redis.dao.js';
 import bcrypt from 'bcrypt';
 import random from '../utils/random.js';
@@ -107,13 +107,22 @@ const generateTemporaryPassword = async (
 
 }
 
+const selectUserMyPage = async (
+  userId: number,
+  organization: string
+) => {
 
+  return await affiliationDao.selectUserMyPageData(userId, organization)
+
+
+}
 export default {
   changePassword,
   findIdentifier,
   checkIdentifier,
   checkEmail,
-  generateTemporaryPassword
+  generateTemporaryPassword,
+  selectUserMyPage
 }
 
 

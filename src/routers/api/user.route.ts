@@ -13,7 +13,7 @@ router.patch('/password/change', validate(userValidation.checkNewPasswordAndOldP
 router.get('/identifier/check', validate(userValidation.checkIdentifier), userController.checkIdentifier);
 router.get('/email/check', validate(userValidation.checkEmail), userController.checkEmail);
 router.patch('/temporary-password/generate', validate(userValidation.checkIdentifierAndEmail), userController.generateTemporaryPassword);
-
+router.get('/:organization/my-profile', auth, validate(userValidation.checkOganization), userController.selectUserMyPage);
 
 
 

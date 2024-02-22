@@ -152,6 +152,41 @@ WHERE u.user_id = ${userId} AND o.name = ${organization}
 }
 
 
+
+const updateAffiliationMyPageData = async (
+  userId: number,
+  organization: string,
+  nickname: string, 
+  company: string, 
+  hireDate: Date, 
+  job: string, 
+  jobIntroduce: string,
+  companyPublic: boolean
+
+) => {
+
+  return await prisma.$queryRaw
+  `
+  UPDATE Affiliation AS a 
+  SET a.nickname = ${nickname}, 
+      a.hire_date = ${hireDate}, 
+      a.job = ${job}, 
+      a.job_introduce = ${jobIntroduce}, 
+      a.company_public = ${companyPublic}, 
+      a.company = ${company}
+  WHERE 
+      a.organization_id = (
+        SELECT o.organization_id FROM Organization AS o
+        WHERE o.name = ${organization}
+      )
+  AND a.user_id = ${userId}
+
+
+  `
+}
+
+
+
 export default {
 
   selectNickname,
@@ -160,5 +195,7 @@ export default {
   selectAffiliation,
   selectOrganizationAndChallengeId,
   checkNickname,
-  selectUserMyPageData
+  selectUserMyPageData,
+  updateAffiliationMyPageData
+ 
 }

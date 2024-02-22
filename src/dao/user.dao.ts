@@ -178,7 +178,19 @@ const localSignUp = async (
 }
 
 
+const updateUserMyPageData = async (
+  userId: number,
+  accountNumber: string, 
 
+) => {
+
+  return await prisma.$queryRaw
+  `
+  UPDATE User as u 
+  SET u.account_number = ${accountNumber}
+  WHERE u.user_id = ${userId}
+  `
+}
 
 
 
@@ -196,5 +208,6 @@ export default {
   updateRandomPassword,
   selectUser,
   kakaoSignUp,
-  localSignUp
+  localSignUp,
+  updateUserMyPageData
 }

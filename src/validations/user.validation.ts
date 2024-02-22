@@ -49,7 +49,23 @@ const checkOganization = {
 };
 
 
+const checkOganizationAndMyPageAllData = {
+  params: Joi.object().keys({
+    organization: Joi.string().required()
+  
+  }),
+  body: Joi.object().keys({
+    nickname: Joi.string().required(),
+    accountNumber: Joi.string().required(),
+    company: Joi.string().required(),
+    hireDate: Joi.date().required(),
+    job: Joi.string().required(),
+    jobIntroduce: Joi.string().required(),
+    companyPublic: Joi.boolean().required()
 
+  
+  }),
+};
 export default {
 
     checkIdentifier,
@@ -57,5 +73,6 @@ export default {
     checkNewPasswordAndOldPassword,
     checkEmail,
     checkIdentifierAndEmail,
-    checkOganization
+    checkOganization,
+    checkOganizationAndMyPageAllData
 };

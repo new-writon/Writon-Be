@@ -116,13 +116,56 @@ const selectUserMyPage = async (
 
 
 }
+
+
+const updateUserMyPage = async (
+  userId: number,
+  organization: string,
+  nickname: string,  
+  accountNumber: string, 
+  company: string, 
+  hireDate: Date, 
+  job: string, 
+  jobIntroduce: string,
+  companyPublic: boolean
+) => {
+
+  return await Promise.all([
+
+    affiliationDao.updateAffiliationMyPageData(
+      userId,
+      organization,
+      nickname, 
+      company, 
+      hireDate, 
+      job, 
+      jobIntroduce,
+      companyPublic
+    ),
+    userDao.updateUserMyPageData(
+      userId,
+      accountNumber
+    )
+
+  ])
+
+
+
+
+  
+
+
+}
+
+
 export default {
   changePassword,
   findIdentifier,
   checkIdentifier,
   checkEmail,
   generateTemporaryPassword,
-  selectUserMyPage
+  selectUserMyPage,
+  updateUserMyPage
 }
 
 

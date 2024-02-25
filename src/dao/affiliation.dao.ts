@@ -138,6 +138,7 @@ const selectUserMyPageData = async (
   u.email AS email,
   u.profile AS userProfile,
   u.account_number AS accountNumber,
+  u.bank AS bank,
   a.nickname AS nickname,
   a.hire_date AS hiredate,
   a.company AS company,

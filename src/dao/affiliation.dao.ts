@@ -143,7 +143,8 @@ const selectUserMyPageData = async (
   a.hire_date AS hiredate,
   a.company AS company,
   a.job AS job,
-  a.job_introduce AS jobIntroduce
+  a.job_introduce AS jobIntroduce,
+  a.company_public AS companyPublic
 FROM Affiliation as a
 LEFT JOIN User AS u ON u.user_id = a.user_id
 INNER JOIN Organization AS o ON o.organization_id = a.organization_id 

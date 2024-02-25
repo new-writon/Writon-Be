@@ -122,7 +122,6 @@ const updateUserMyPage = async (
   userId: number,
   organization: string,
   nickname: string,  
-  accountNumber: string, 
   company: string, 
   hireDate: Date, 
   job: string, 
@@ -130,9 +129,7 @@ const updateUserMyPage = async (
   companyPublic: boolean
 ) => {
 
-  return await Promise.all([
-
-    affiliationDao.updateAffiliationMyPageData(
+  return await affiliationDao.updateAffiliationMyPageData(
       userId,
       organization,
       nickname, 
@@ -141,20 +138,7 @@ const updateUserMyPage = async (
       job, 
       jobIntroduce,
       companyPublic
-    ),
-    userDao.updateUserMyPageData(
-      userId,
-      accountNumber
     )
-
-  ])
-
-
-
-
-  
-
-
 }
 
 

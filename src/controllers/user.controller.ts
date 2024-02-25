@@ -91,14 +91,13 @@ const selectUserMyPage = catchAsync(async (req, res) => {
 const updateUserMyPage = catchAsync(async (req, res) => {
 
 
-    const { nickname,  accountNumber, company, hireDate, job, jobIntroduce, companyPublic } = req.body
+    const { nickname, company, hireDate, job, jobIntroduce, companyPublic } = req.body
 
 
     res.status(httpStatus.OK).send(await userService.updateUserMyPage(
         req.decoded?.id, 
         req.params.organization,
         nickname,  
-        accountNumber, 
         company, 
         hireDate, 
         job, 

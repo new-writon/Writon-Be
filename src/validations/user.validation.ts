@@ -56,7 +56,6 @@ const checkOganizationAndMyPageAllData = {
   }),
   body: Joi.object().keys({
     nickname: Joi.string().required(),
-    accountNumber: Joi.string().required(),
     company: Joi.string().required(),
     hireDate: Joi.date().required(),
     job: Joi.string().required(),

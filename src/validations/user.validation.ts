@@ -65,6 +65,19 @@ const checkOganizationAndMyPageAllData = {
   
   }),
 };
+
+const checkAccountNumberAndBank = {
+  body: Joi.object().keys({
+    accountNumber: Joi.string().required(),
+    bank: Joi.string().required(),
+
+  }),
+};
+
+
+
+
+
 export default {
 
     checkIdentifier,
@@ -73,5 +86,6 @@ export default {
     checkEmail,
     checkIdentifierAndEmail,
     checkOganization,
-    checkOganizationAndMyPageAllData
+    checkOganizationAndMyPageAllData,
+    checkAccountNumberAndBank
 };

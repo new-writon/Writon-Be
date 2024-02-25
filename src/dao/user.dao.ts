@@ -178,16 +178,19 @@ const localSignUp = async (
 }
 
 
-const updateUserMyPageData = async (
+const updateUserAccountInformation = async (
   userId: number,
   accountNumber: string, 
+  bank: string
 
 ) => {
 
   return await prisma.$queryRaw
   `
   UPDATE User as u 
-  SET u.account_number = ${accountNumber}
+  SET 
+    u.account_number = ${accountNumber},
+    u.bank = ${bank}
   WHERE u.user_id = ${userId}
   `
 }
@@ -209,5 +212,5 @@ export default {
   selectUser,
   kakaoSignUp,
   localSignUp,
-  updateUserMyPageData
+  updateUserAccountInformation
 }

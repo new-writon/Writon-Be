@@ -142,6 +142,22 @@ const updateUserMyPage = async (
 }
 
 
+const updateAccountInformation = async (
+  userId: number,
+  accountNumber: string,
+  bank: string,  
+
+) => {
+
+  return await userDao.updateUserAccountInformation(
+    userId,
+    accountNumber,
+    bank
+  )
+}
+
+
+
 export default {
   changePassword,
   findIdentifier,
@@ -149,7 +165,8 @@ export default {
   checkEmail,
   generateTemporaryPassword,
   selectUserMyPage,
-  updateUserMyPage
+  updateUserMyPage,
+  updateAccountInformation
 }
 
 

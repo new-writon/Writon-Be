@@ -15,6 +15,7 @@ router.get('/email/check', validate(userValidation.checkEmail), userController.c
 router.patch('/temporary-password/generate', validate(userValidation.checkIdentifierAndEmail), userController.generateTemporaryPassword);
 router.get('/:organization/my-profile', auth, validate(userValidation.checkOganization), userController.selectUserMyPage);
 router.put('/:organization/my-profile', auth, validate(userValidation.checkOganizationAndMyPageAllData), userController.updateUserMyPage);
+router.patch('/account-number', auth, validate(userValidation.checkAccountNumberAndBank), userController.updateAccountInformation);
 
 
 

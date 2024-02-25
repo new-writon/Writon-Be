@@ -108,6 +108,20 @@ const updateUserMyPage = catchAsync(async (req, res) => {
 });
 
 
+const updateAccountInformation = catchAsync(async (req, res) => {
+
+
+    const { accountNumber, bank } = req.body
+
+
+    res.status(httpStatus.OK).send(await userService.updateAccountInformation(
+        req.decoded?.id, 
+        accountNumber,
+        bank
+        ));
+
+});
+
 
 export default {
     findIdentifier,
@@ -116,7 +130,8 @@ export default {
     checkEmail,
     generateTemporaryPassword,
     selectUserMyPage,
-    updateUserMyPage
+    updateUserMyPage,
+    updateAccountInformation 
 }
 
 

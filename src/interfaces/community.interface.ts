@@ -27,7 +27,14 @@ interface SelectComment {
 
 }
 
-
+interface SelectCommentInformation {
+  commentId: number,
+  commentCreateAt: Date,
+  content: string,
+  userTemplateFinishedAt: Date,
+  writorNickname: string,
+  userTemplateId: number
+}
 
 
 interface CommentWithReplies extends SelectComment{
@@ -57,5 +64,6 @@ export {
   ParticipantData,
   SelectComment,
   //   DateTemplateContent,
-  CommentWithReplies
+  CommentWithReplies,
+  SelectCommentInformation
 }

@@ -1,6 +1,6 @@
 import prisma from '../client.js';
 import { ChallengeDay, Comment } from '@prisma/client'
-import { SelectComment } from '../interfaces/community.interface.js';
+import { SelectComment, SelectCommentInformation } from '../interfaces/community.interface.js';
 
 
 
@@ -93,10 +93,64 @@ const insertComment = async (
   }
 
 
+  const selectCommentInformation = async (
+    userId: number,
+    organization: string,
+    challengeId: number
+
+): Promise<SelectCommentInformation[]> => {
+
+    return await prisma.$queryRaw<SelectCommentInformation[]>
+    `
+    SELECT 
+    c.comment_id AS commentId,
+    c.created_at AS commentCreateAt,
+    c.content AS content,
+    ut.finished_at AS userTemplateFinishedAt,
+    aSelect.nickname AS writorNickname,
+    ut.user_templete_id AS userTemplateId
+
+    FROM
+      Comment AS c
+    INNER JOIN
+      UserTemplete AS ut ON ut.user_templete_id = c.user_templete_id
+    INNER JOIN 
+      UserChallenge AS uc ON uc.user_challenge_id =  ut.user_challenge_id
+    INNER JOIN
+      Affiliation AS aSelect ON aSelect.affiliation_id =  uc.affiliation_id
+    WHERE
+      c.affiliation_id = (SELECT 
+                            aFind.affiliation_id
+                          FROM Affiliation as aFind
+                          WHERE aFind.user_id = ${userId} 
+                          AND aFind.organization_id = (SELECT o.organization_id
+                              FROM Organization AS o
+                              WHERE o.name = ${organization}
+                              )
+                          )
+    ORDER BY c.created_at DESC
+    
+
+    
+ 
+      
+    
+
+    
+    `
+
+}
+
+
+
+
+
+
 export default {
     selectComment,
     insertComment,
     deleteComment,
-    updateComment
+    updateComment,
+    selectCommentInformation
 
 }

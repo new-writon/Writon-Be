@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { affiliationDao, userDao } from '../dao/index.js';
+import { affiliationDao, commentDao, userDao } from '../dao/index.js';
 import redis from '../dao/redis.dao.js';
 import bcrypt from 'bcrypt';
 import random from '../utils/random.js';
@@ -156,7 +156,20 @@ const updateAccountInformation = async (
   )
 }
 
+const selectCommentInformation = async (
+  userId: number,
+  organization: string,
+  challengeId: number
 
+) => {
+
+  return commentDao.selectCommentInformation(
+    userId,
+    organization,
+    challengeId
+  );
+
+}
 
 export default {
   changePassword,
@@ -166,7 +179,8 @@ export default {
   generateTemporaryPassword,
   selectUserMyPage,
   updateUserMyPage,
-  updateAccountInformation
+  updateAccountInformation,
+  selectCommentInformation
 }
 
 

@@ -123,6 +123,19 @@ const updateAccountInformation = catchAsync(async (req, res) => {
 });
 
 
+
+const selectCommentInformation = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await userService.selectCommentInformation(
+        req.decoded?.id, 
+        req.params.organization,
+        req.params.challengeId
+     
+        ));
+});
+
+
+
 export default {
     findIdentifier,
     checkIdentifier,
@@ -131,7 +144,8 @@ export default {
     generateTemporaryPassword,
     selectUserMyPage,
     updateUserMyPage,
-    updateAccountInformation 
+    updateAccountInformation,
+    selectCommentInformation
 }
 
 

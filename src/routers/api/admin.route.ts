@@ -9,6 +9,8 @@ import auth from '../../middlewares/auth.js';
 const router = express.Router();
 
 router.post('/invitation', validate(adminValidation.checkOrganizationAndChallengeAndEmail), adminController.sendInvitation);
+router.get('/all-organization/all-challenge', adminController.selectAllOragnizationAndAllChallenge);
+
 
 
 

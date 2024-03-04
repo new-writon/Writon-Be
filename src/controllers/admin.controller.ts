@@ -16,9 +16,18 @@ const sendInvitation = catchAsync(async (req, res) => {
 
 
 
+const selectAllOragnizationAndAllChallenge = catchAsync(async (req, res) => {
+
+
+    res.status(httpStatus.OK).send(await adminService.selectAllOragnizationAndAllChallenge());
+});
+
+
+
 
 export default {
-    sendInvitation
+    sendInvitation,
+    selectAllOragnizationAndAllChallenge
 }
 
 

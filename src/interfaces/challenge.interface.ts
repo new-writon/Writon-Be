@@ -59,6 +59,12 @@ interface DataCount {
   count: number
 }
 
+
+interface OrganizationChallenge {
+  organization: string
+  challenge: string
+}
+
 export {
   SelectPeriod,
   SelectChallengeId,
@@ -68,5 +74,6 @@ export {
   InsertUserTemplateContent,
   DataCount,
   ChallengeAllInformation,
-  ChallengeAllInformationCustom
+  ChallengeAllInformationCustom,
+  OrganizationChallenge
 }

@@ -1,6 +1,7 @@
 import prisma from '../client.js';
 import { Affiliation, Challenge } from '@prisma/client'
 import { SelectUserMyPageData } from '../interfaces/affiliation.interface.js';
+import { OrganizationChallenge } from '../interfaces/challenge.interface.js';
 
 
 const selectNickname = async <Key extends keyof Affiliation>(
@@ -187,6 +188,27 @@ const updateAffiliationMyPageData = async (
   `
 }
 
+const selectAllOragnizationAndAllChallenge = async (
+
+) => {
+
+  return (await prisma.$queryRaw<OrganizationChallenge[]>
+    `
+    SELECT 
+    o.name AS organization,
+    c.name AS challenge
+   
+    FROM Affiliation as a
+    INNER JOIN Challenge AS c ON c.affiliation_id = a.affiliation_id
+    INNER JOIN Organization AS o ON o.organization_id = a.organization_id 
+  
+  
+    `)
+
+}
+
+
+
 
 
 export default {
@@ -198,6 +220,7 @@ export default {
   selectOrganizationAndChallengeId,
   checkNickname,
   selectUserMyPageData,
-  updateAffiliationMyPageData
+  updateAffiliationMyPageData,
+  selectAllOragnizationAndAllChallenge
  
 }

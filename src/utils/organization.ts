@@ -1,4 +1,5 @@
 import { organizationDao } from '../dao/index.js';
+import { OrganizationChallenge } from '../interfaces/challenge.interface.js';
 
 
 
@@ -21,6 +22,32 @@ const checkOrganization = async (
 }
 
 
+
+const sortOrganization = (array : Array<OrganizationChallenge>) => 
+{
+
+    
+    const groupOrganization : {
+        [organization: string]: string[];
+      } = {}
+
+    array.forEach(item => {
+    if (!groupOrganization[item.organization]) {
+        groupOrganization[item.organization] = [];
+    }
+    groupOrganization[item.organization].push(item.challenge);
+    });
+
+
+    const sortData = Object.entries(groupOrganization).map(([organization, challenges]) => ({
+    organization,
+    challenges
+    }));
+
+    return sortData
+}
+
 export {
-    checkOrganization
+    checkOrganization,
+    sortOrganization
 }

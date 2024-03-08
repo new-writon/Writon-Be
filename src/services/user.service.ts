@@ -4,12 +4,14 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { affiliationDao, commentDao, userDao } from '../dao/index.js';
+import { affiliationDao, commentDao, questionContentDao, userDao } from '../dao/index.js';
 import redis from '../dao/redis.dao.js';
 import bcrypt from 'bcrypt';
 import random from '../utils/random.js';
 import mailHandler from '../modules/mailHandler.js';
 import { FindIdentifier } from '../interfaces/user.interface.js';
+import { WriteTemplete } from '../interfaces/challenge.interface.js';
+import { changeUserTemplateType } from '../utils/challenge.js';
 
 
 const findIdentifier = async (
@@ -121,31 +123,31 @@ const selectUserMyPage = async (
 const updateUserMyPage = async (
   userId: number,
   organization: string,
-  nickname: string,  
-  company: string, 
-  hireDate: Date, 
-  job: string, 
+  nickname: string,
+  company: string,
+  hireDate: Date,
+  job: string,
   jobIntroduce: string,
   companyPublic: boolean
 ) => {
 
   return await affiliationDao.updateAffiliationMyPageData(
-      userId,
-      organization,
-      nickname, 
-      company, 
-      hireDate, 
-      job, 
-      jobIntroduce,
-      companyPublic
-    )
+    userId,
+    organization,
+    nickname,
+    company,
+    hireDate,
+    job,
+    jobIntroduce,
+    companyPublic
+  )
 }
 
 
 const updateAccountInformation = async (
   userId: number,
   accountNumber: string,
-  bank: string,  
+  bank: string,
 
 ) => {
 
@@ -171,6 +173,33 @@ const selectCommentInformation = async (
 
 }
 
+
+const updateMyPosting = async (
+  userTemplateId: number,
+  templateContent: Array<WriteTemplete>
+
+) => {
+
+  await questionContentDao.deleteUserTemplateContent(userTemplateId);
+
+  const changedTemplate = changeUserTemplateType(templateContent, userTemplateId);
+
+  await questionContentDao.insertUserTemplateContent(changedTemplate);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 export default {
   changePassword,
   findIdentifier,
@@ -180,7 +209,8 @@ export default {
   selectUserMyPage,
   updateUserMyPage,
   updateAccountInformation,
-  selectCommentInformation
+  selectCommentInformation,
+  updateMyPosting
 }
 
 

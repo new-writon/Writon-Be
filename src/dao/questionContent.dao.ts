@@ -15,9 +15,22 @@ const insertUserTemplateContent = async(
     
 }
 
+const deleteUserTemplateContent = async(
+    userTemplateId: number
+): Promise<void> => {
 
+    return await prisma.$queryRaw<void>
+    `
+    DELETE FROM
+    QuestionContent 
+    WHERE user_templete_id = ${userTemplateId}
+    `
+  
+
+}
 
 export default {
-    insertUserTemplateContent 
+    insertUserTemplateContent,
+    deleteUserTemplateContent
 
 }

@@ -80,6 +80,13 @@ const checkAccountNumberAndBank = {
   }),
 };
 
+const checkUserTemplateIdAndTemplateContent = {
+  body: Joi.object().keys({
+    userTemplateId: Joi.number().required(),
+    templateContent: Joi.array().required()
+
+  }),
+};
 
 
 
@@ -94,5 +101,6 @@ export default {
     checkOganization,
     checkOganizationAndMyPageAllData,
     checkAccountNumberAndBank,
-    checkOganizationAndChallengeId 
+    checkOganizationAndChallengeId,
+    checkUserTemplateIdAndTemplateContent
 };

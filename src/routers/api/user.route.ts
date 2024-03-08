@@ -17,7 +17,7 @@ router.get('/:organization/:challengeId/writing-comment', auth, validate(userVal
 router.get('/:organization/my-profile', auth, validate(userValidation.checkOganization), userController.selectUserMyPage);
 router.put('/:organization/my-profile', auth, validate(userValidation.checkOganizationAndMyPageAllData), userController.updateUserMyPage);
 router.patch('/account-number', auth, validate(userValidation.checkAccountNumberAndBank), userController.updateAccountInformation);
-
+router.put('/my-posting', auth, validate(userValidation.checkUserTemplateIdAndTemplateContent), userController.updateMyPosting);
 
 
 export default router;

@@ -134,6 +134,14 @@ const selectCommentInformation = catchAsync(async (req, res) => {
         ));
 });
 
+const updateMyPosting = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await userService.updateMyPosting(
+        req.body.userTemplateId,
+        req.body.templateContent   
+        ));
+});
+
 
 
 export default {
@@ -145,7 +153,8 @@ export default {
     selectUserMyPage,
     updateUserMyPage,
     updateAccountInformation,
-    selectCommentInformation
+    selectCommentInformation,
+    updateMyPosting
 }
 
 

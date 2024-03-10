@@ -122,6 +122,7 @@ const selectUserTemplateDay = async (
     qc.user_templete_id,
     qc.question_content_id,
     qc.content,
+    qc.visibility,
     q.category,
     q.question,
     DATE(ut.created_at) AS created_at,

@@ -128,6 +128,9 @@ const insertComment = async (
                               WHERE o.name = ${organization}
                               )
                           )
+      AND
+      uc.challenge_id = ${challengeId}
+
     ORDER BY c.created_at DESC
     
 

@@ -100,6 +100,7 @@ const insertComment = async (
 
 ): Promise<SelectCommentInformation[]> => {
 
+
     return await prisma.$queryRaw<SelectCommentInformation[]>
     `
     SELECT 
@@ -115,7 +116,7 @@ const insertComment = async (
     INNER JOIN
       UserTemplete AS ut ON ut.user_templete_id = c.user_templete_id
     INNER JOIN 
-      UserChallenge AS uc ON uc.user_challenge_id =  ut.user_challenge_id
+      UserChallenge AS uc ON uc.user_challenge_id =  ut.user_challenge_id AND uc.challenge_id = ${challengeId}
     INNER JOIN
       Affiliation AS aSelect ON aSelect.affiliation_id =  uc.affiliation_id
     WHERE
@@ -128,8 +129,8 @@ const insertComment = async (
                               WHERE o.name = ${organization}
                               )
                           )
-      AND
-      uc.challenge_id = ${challengeId}
+    AND uc.challenge_id = ${challengeId}
+
 
     ORDER BY c.created_at DESC
     

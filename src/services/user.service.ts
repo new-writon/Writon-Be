@@ -165,10 +165,9 @@ const selectCommentInformation = async (
 
 ) => {
 
-  const affiliation = await affiliationDao.selectAffiliation(userId, organization);
 
   return commentDao.selectCommentInformation(
-    affiliation.affiliation_id,
+    userId,
     organization,
     challengeId
   );

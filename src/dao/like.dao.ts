@@ -13,7 +13,8 @@ const insertLike = async(
         data: {
 
             affiliation_id: affiliationId,
-            user_templete_id: userTemplateId       
+            user_templete_id: userTemplateId,
+            check: false       
         }
       });
 

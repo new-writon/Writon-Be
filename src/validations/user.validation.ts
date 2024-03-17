@@ -55,6 +55,19 @@ const checkOganizationAndChallengeId = {
   })
 };
 
+const checkOganizationAndChallengeIdAndCheckCount = {
+  params: Joi.object().keys({
+    organization: Joi.string().required(),
+    challengeId: Joi.string().required()
+  
+  }),
+  body:Joi.object().keys({
+    checkCount: Joi.number().required(),
+
+  })
+
+};
+
 const checkOganizationAndMyPageAllData = {
   params: Joi.object().keys({
     organization: Joi.string().required()
@@ -102,5 +115,6 @@ export default {
     checkOganizationAndMyPageAllData,
     checkAccountNumberAndBank,
     checkOganizationAndChallengeId,
-    checkUserTemplateIdAndTemplateContent
+    checkUserTemplateIdAndTemplateContent,
+    checkOganizationAndChallengeIdAndCheckCount
 };

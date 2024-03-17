@@ -51,6 +51,7 @@ const insertComment = async (
             content: content,
             user_templete_id: userTemplateId,
             comment_group: commentGroup,
+            check: false    
         }
 
     });

@@ -142,6 +142,30 @@ const updateMyPosting = catchAsync(async (req, res) => {
         ));
 });
 
+const getCheckCount = catchAsync(async (req, res) => {
+
+    const { organization, challengeId } = req.params;
+
+    res.status(httpStatus.OK).send(await userService.getCheckCount(
+        req.decoded?.id,
+        organization,
+        challengeId
+    ));
+});
+
+
+const updateCheckCount = catchAsync(async (req, res) => {
+
+    const { organization, challengeId } = req.params;
+
+    res.status(httpStatus.OK).send(await userService.updateCheckCount(
+        req.decoded?.id,
+        organization,
+        challengeId,
+        req.body.checkCount
+
+    ));
+});
 
 
 export default {
@@ -154,7 +178,9 @@ export default {
     updateUserMyPage,
     updateAccountInformation,
     selectCommentInformation,
-    updateMyPosting
+    updateMyPosting,
+    getCheckCount,
+    updateCheckCount
 }
 
 

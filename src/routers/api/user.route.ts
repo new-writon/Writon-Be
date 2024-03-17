@@ -18,7 +18,8 @@ router.get('/:organization/my-profile', auth, validate(userValidation.checkOgani
 router.put('/:organization/my-profile', auth, validate(userValidation.checkOganizationAndMyPageAllData), userController.updateUserMyPage);
 router.patch('/account-number', auth, validate(userValidation.checkAccountNumberAndBank), userController.updateAccountInformation);
 router.put('/my-posting', auth, validate(userValidation.checkUserTemplateIdAndTemplateContent), userController.updateMyPosting);
-
+router.get('/:organization/:challengeId/check-count', auth,  validate(userValidation.checkOganizationAndChallengeId), userController.getCheckCount);
+router.patch('/:organization/:challengeId/check-count', auth,  validate(userValidation.checkOganizationAndChallengeIdAndCheckCount), userController.updateCheckCount);
 
 export default router;
 

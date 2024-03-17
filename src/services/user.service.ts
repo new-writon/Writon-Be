@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { affiliationDao, commentDao, questionContentDao, userDao } from '../dao/index.js';
+import { affiliationDao, commentDao, questionContentDao, userChallengeDao, userDao } from '../dao/index.js';
 import redis from '../dao/redis.dao.js';
 import bcrypt from 'bcrypt';
 import random from '../utils/random.js';
@@ -187,12 +187,36 @@ const updateMyPosting = async (
 
   await questionContentDao.insertUserTemplateContent(changedTemplate);
 
+}
+
+
+const getCheckCount = async (
+  userId: number,
+  organization: string,
+  challengeId: number
+) => {
+
+  const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
+
+  return {
+    checkCount: userChallengeData.check_count
+  };
 
 
 }
 
+const updateCheckCount = async (
+  userId: number,
+  organization: string,
+  challengeId: number,
+  checkCount: number
+) => {
+
+  await userChallengeDao.updateCheckCount(userId, organization, challengeId, checkCount);
 
 
+
+}
 
 
 
@@ -211,7 +235,9 @@ export default {
   updateUserMyPage,
   updateAccountInformation,
   selectCommentInformation,
-  updateMyPosting
+  updateMyPosting,
+  getCheckCount,
+  updateCheckCount
 }
 
 

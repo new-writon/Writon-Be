@@ -145,6 +145,7 @@ model UserChallenge {
   cheering_phrase  String?     @db.VarChar(255)
   cheering_phrase_date  DateTime?    @db.Date
   review            Boolean
+  check_count       Int    
   created_at        DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at         DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
@@ -195,6 +196,7 @@ model Likes {
   like_id          Int         @default(autoincrement()) @unique
   affiliation_id   Int
   user_templete_id Int
+  check            Boolean
   created_at       DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at        DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
@@ -210,6 +212,7 @@ model Comment {
   user_templete_id    Int
   affiliation_id      Int
   content             String      @db.Text
+  check               Boolean
   created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at           DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 

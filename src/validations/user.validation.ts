@@ -101,7 +101,17 @@ const checkUserTemplateIdAndTemplateContent = {
   }),
 };
 
+const checkLikeId = {
+  body: Joi.object().keys({
+    likeId: Joi.number().required()
+  }),
+};
 
+const checkCommentId = {
+  body: Joi.object().keys({
+    commentId: Joi.number().required()
+  }),
+};
 
 
 export default {
@@ -116,5 +126,7 @@ export default {
     checkAccountNumberAndBank,
     checkOganizationAndChallengeId,
     checkUserTemplateIdAndTemplateContent,
-    checkOganizationAndChallengeIdAndCheckCount
+    checkOganizationAndChallengeIdAndCheckCount,
+    checkLikeId,
+    checkCommentId
 };

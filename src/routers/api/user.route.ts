@@ -20,6 +20,8 @@ router.patch('/account-number', auth, validate(userValidation.checkAccountNumber
 router.put('/my-posting', auth, validate(userValidation.checkUserTemplateIdAndTemplateContent), userController.updateMyPosting);
 router.get('/:organization/:challengeId/check-count', auth,  validate(userValidation.checkOganizationAndChallengeId), userController.getCheckCount);
 router.patch('/:organization/:challengeId/check-count', auth,  validate(userValidation.checkOganizationAndChallengeIdAndCheckCount), userController.updateCheckCount);
+router.patch('/check-comment', auth,  validate(userValidation.checkCommentId), userController.signComment);
+router.patch('/check-like', auth,  validate(userValidation.checkLikeId), userController.signLike);
 
 export default router;
 

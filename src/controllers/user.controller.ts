@@ -167,6 +167,19 @@ const updateCheckCount = catchAsync(async (req, res) => {
     ));
 });
 
+const signComment = catchAsync(async (req, res) => {
+
+
+
+    res.status(httpStatus.OK).send(await userService.signComment(req.body.commentId));
+});
+
+
+const signLike = catchAsync(async (req, res) => {
+    
+    res.status(httpStatus.OK).send(await userService.signLike(req.body.likeId));
+});
+
 
 export default {
     findIdentifier,
@@ -180,7 +193,9 @@ export default {
     selectCommentInformation,
     updateMyPosting,
     getCheckCount,
-    updateCheckCount
+    updateCheckCount,
+    signComment,
+    signLike
 }
 
 

@@ -48,9 +48,23 @@ const selectLikeCount = async(
     
 }
 
+const updateLikeCheck = async(
+    likeId: number
+): Promise<void> => {
+
+    return await prisma.$queryRaw<void>
+    `
+    UPDATE Likes AS l
+    SET l.check = 1
+    WHERE like_id = ${likeId}
+
+    `  
+}
+
 export default {
     insertLike,
     deleteLike,
-    selectLikeCount
+    selectLikeCount,
+    updateLikeCheck
     
   }

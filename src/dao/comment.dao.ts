@@ -133,21 +133,23 @@ const insertComment = async (
     AND uc.challenge_id = ${challengeId}
 
 
-    ORDER BY c.created_at DESC
-    
-
-    
- 
-      
-    
-
-    
+    ORDER BY c.created_at DESC  
     `
-
 }
 
 
+const updateCommentCheck = async(
+  commentId: number
+): Promise<void> => {
 
+  return await prisma.$queryRaw<void>
+  `
+  UPDATE Comment AS c
+  SET c.check = 1
+  WHERE comment_id = ${commentId}
+
+  `  
+}
 
 
 
@@ -156,6 +158,7 @@ export default {
     insertComment,
     deleteComment,
     updateComment,
-    selectCommentInformation
+    selectCommentInformation,
+    updateCommentCheck
 
 }

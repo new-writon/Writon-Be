@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
-import { affiliationDao, commentDao, questionContentDao, userChallengeDao, userDao } from '../dao/index.js';
+import { affiliationDao, commentDao, likeDao, questionContentDao, userChallengeDao, userDao } from '../dao/index.js';
 import redis from '../dao/redis.dao.js';
 import bcrypt from 'bcrypt';
 import random from '../utils/random.js';
@@ -214,14 +214,27 @@ const updateCheckCount = async (
 
   await userChallengeDao.updateCheckCount(userId, organization, challengeId, checkCount);
 
+}
+
+
+const signComment = async (
+  commentId: number
+
+) => {
+
+  await commentDao.updateCommentCheck(commentId);
 
 
 }
 
 
+const signLike = async (
+  likeId: number
+) => {
 
+  await likeDao.updateLikeCheck(likeId);
 
-
+}
 
 
 
@@ -237,7 +250,9 @@ export default {
   selectCommentInformation,
   updateMyPosting,
   getCheckCount,
-  updateCheckCount
+  updateCheckCount,
+  signComment,
+  signLike
 }
 
 

@@ -1,6 +1,7 @@
 import prisma from '../client.js';
 import { ChallengeDay, Comment } from '@prisma/client'
 import { SelectComment, SelectCommentInformation } from '../interfaces/community.interface.js';
+import { GetCommentNotify } from '../interfaces/comment.interface.js';
 
 
 
@@ -151,6 +152,52 @@ const updateCommentCheck = async(
   `  
 }
 
+const getCommentNotify = async(
+  userId: number,
+  organization: string,
+  challengeId: number
+): Promise<GetCommentNotify[]> => {
+  return await prisma.$queryRaw<GetCommentNotify[]>
+  `
+  SELECT 
+  c.comment_id AS commentId, 
+  c.content AS content,
+  c.created_at AS createdAt,
+  c.check AS sign,
+  ut.user_templete_id AS userTempleteId,
+  ut.finished_at AS templateName,
+  a.nickname AS nickname,
+  'comment' AS type
+  FROM 
+    Comment AS c
+  INNER JOIN 
+    UserTemplete AS ut ON ut.user_templete_id = c.user_templete_id
+  INNER JOIN 
+    UserChallenge AS uc ON uc.user_challenge_id = ut.user_challenge_id
+  INNER JOIN 
+    Affiliation AS a ON a.affiliation_id = c.affiliation_id
+  INNER JOIN 
+    Affiliation AS aFind ON aFind.user_id = ${userId} 
+                        AND aFind.organization_id = (
+                          SELECT 
+                            o.organization_id
+                          FROM 
+                            Organization AS o
+                          WHERE 
+                            o.name = ${organization}
+                        )
+  WHERE
+    uc.affiliation_id = aFind.affiliation_id
+    AND
+    uc.challenge_id = ${challengeId}
+    AND
+    aFind.affiliation_id != a.affiliation_id;
+
+  `  
+}
+
+
+
 
 
 export default {
@@ -159,6 +206,7 @@ export default {
     deleteComment,
     updateComment,
     selectCommentInformation,
-    updateCommentCheck
+    updateCommentCheck,
+    getCommentNotify
 
 }

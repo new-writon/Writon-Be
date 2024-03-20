@@ -12,6 +12,8 @@ import mailHandler from '../modules/mailHandler.js';
 import { FindIdentifier } from '../interfaces/user.interface.js';
 import { WriteTemplete } from '../interfaces/challenge.interface.js';
 import { changeUserTemplateType } from '../utils/challenge.js';
+import { GetCommentNotify } from '../interfaces/comment.interface.js';
+import { GetLikeNotify } from '../interfaces/like.interface.js';
 
 
 const findIdentifier = async (
@@ -240,15 +242,31 @@ const getNotify = async (
   userId: number,
   organization: string,
   challengeId: number
- 
+
 ) => {
 
+  const commentData = await commentDao.getCommentNotify(userId, organization, challengeId)
 
-  // 댓글에 대한 데이터 => 댓글 id, 닉네임, 댓글내용, 댓글 단 날짜, 댓글을 단 템플릿, 유저 템플릿 id, 댓글인지 좋아요인지 구분 type 값, check 컬럼 값
-  // 좋아요에 대한 데이터 => 좋아요id, 닉네임, 좋아요 누른 날짜, 좋아요 누른 템플릿, 유저 템플릿 id, 댓글인지 좋아요인지 구분 type 값 check 컬럼 값
+  const likeData = await likeDao.getLikeNotify(userId, organization, challengeId)
 
-  // 댓글에 대한 데이터와 좋아요에 대한 데이터를 created_at 기준으로 내림차순으로 한 배열로 반환
+  return mergeAndSortTimeCommentAndLike(commentData, likeData)
 
+}
+
+
+
+
+const mergeAndSortTimeCommentAndLike = (comments: GetCommentNotify[], likes: GetLikeNotify[]): (GetCommentNotify | GetLikeNotify)[] => {
+
+  const mergedArray: (GetCommentNotify | GetLikeNotify)[] = [...comments, ...likes];
+
+
+  mergedArray.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); 
+  });
+
+
+  return mergedArray;
 }
 
 

@@ -181,6 +181,19 @@ const signLike = catchAsync(async (req, res) => {
 });
 
 
+const getNotify = catchAsync(async (req, res) => {
+
+    const { organization, challengeId } = req.params;
+    
+    res.status(httpStatus.OK).send(await userService.getNotify(
+        req.decoded?.id,
+        organization,
+        challengeId
+    ));
+});
+
+
+
 export default {
     findIdentifier,
     checkIdentifier,
@@ -195,7 +208,8 @@ export default {
     getCheckCount,
     updateCheckCount,
     signComment,
-    signLike
+    signLike,
+    getNotify
 }
 
 

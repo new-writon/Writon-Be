@@ -22,6 +22,8 @@ router.get('/:organization/:challengeId/check-count', auth,  validate(userValida
 router.patch('/:organization/:challengeId/check-count', auth,  validate(userValidation.checkOganizationAndChallengeIdAndCheckCount), userController.updateCheckCount);
 router.patch('/check-comment', auth,  validate(userValidation.checkCommentId), userController.signComment);
 router.patch('/check-like', auth,  validate(userValidation.checkLikeId), userController.signLike);
+router.get('/:organization/:challengeId/notify', auth,  validate(userValidation.checkOganizationAndChallengeId), userController.getNotify);
+
 
 export default router;
 

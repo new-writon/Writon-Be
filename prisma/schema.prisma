@@ -60,6 +60,7 @@ model Affiliation {
   user_challenges UserChallenge[]
   comments Comment[]
   likes         Likes[]
+  agoracomments       AgoraComment[]
 
   user            User       @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
   organization    Organization @relation(fields: [organization_id], references: [organization_id], onDelete: Cascade, onUpdate: Cascade)
@@ -150,6 +151,7 @@ model UserChallenge {
   update_at         DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
   user_templetes    UserTemplete[]
+  agoras            Agora[]
 
   affiliation       Affiliation @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
   challenge         Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
@@ -225,4 +227,33 @@ model Comment {
 
   @@id([comment_id, user_templete_id, affiliation_id])
  
+}
+
+
+model Agora {
+
+  agora_id            Int         @default(autoincrement()) @unique
+  question            String         
+  user_challenge_id    Int
+  created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at           DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+
+  agoracomments       AgoraComment[]
+
+
+  user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model AgoraComment{
+  agora_comment_id          Int         @default(autoincrement()) @unique
+  content                 String
+  agora_id                  Int
+  affiliation_id            Int
+  created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime
+  update_at           DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+
+  agora               Agora           @relation(fields: [agora_id], references: [agora_id], onDelete: Cascade, onUpdate: Cascade)
+  affiliation         Affiliation     @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
+ 
+  @@id([agora_comment_id, agora_id, affiliation_id])
 }

@@ -111,6 +111,39 @@ const selectUniqueTemplate = catchAsync(async (req, res) => {
 
 });
 
+const insertAgora = catchAsync(async (req, res) => {
+
+    const { challengeId, organization, agoraQuestion } = req.body;
+
+   
+
+    res.status(httpStatus.OK).send(await communityService.insertAgora(
+        req.decoded?.id,
+        challengeId,
+        organization,
+        agoraQuestion
+    ));
+
+});
+
+
+const insertAgoraComment = catchAsync(async (req, res) => {
+
+    const { organization, agoraId, agoraComment } = req.body;
+
+   
+
+    res.status(httpStatus.OK).send(await communityService.insertAgoraComment(
+        req.decoded?.id,
+        agoraId,
+        organization,
+        agoraComment
+    ));
+
+});
+
+
+
 
 export default {
 
@@ -126,7 +159,9 @@ export default {
     addComment,
     updateComment,
     deleteComment,
-    selectUniqueTemplate
+    selectUniqueTemplate,
+    insertAgora,
+    insertAgoraComment
 
 }
 

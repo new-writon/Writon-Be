@@ -12,3 +12,4 @@ export { default as questionDao } from './question.dao.js';
 export { default as commentDao } from './comment.dao.js';
 export { default as likeDao } from './like.dao.js';
 export { default as transactionDao } from './transaction.dao.js';
+export { default as agoraDao } from './agora.dao.js';

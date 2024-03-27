@@ -73,9 +73,22 @@ const checkOraganizationAndContentAndCommentId = {
   })
 }
 
+const ckeckAgora = {
+  body: Joi.object().keys({
+    challengeId: Joi.number().required(),
+    organization: Joi.string().required(),
+    agoraQuestion: Joi.string().required()
 
+  })
+}
 
-
+const ckeckAgoraComment = {
+  body: Joi.object().keys({
+    organization: Joi.string().required(),
+    agoraId: Joi.number().required(),
+    agoraComment: Joi.string().required()
+  })
+}
 
 export default {
 
@@ -86,6 +99,8 @@ export default {
   checkOraganizationAndUserTamplateIdAndContentAndCommentGroup,
   checkOraganizationAndContentAndCommentId,
   checkOraganizationAndCommentId,
-  checkBodyUserTemplateIdAndOrganization
+  checkBodyUserTemplateIdAndOrganization,
+  ckeckAgora,
+  ckeckAgoraComment
 
 };

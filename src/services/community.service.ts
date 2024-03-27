@@ -3,7 +3,7 @@ import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import challengeDao from '../dao/challenge.dao.js';
 import { sortCompanyPublic, sortParticipantInformation } from '../utils/community.js';
-import { affiliationDao, challengeDayDao, commentDao, likeDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
+import { affiliationDao, agoraDao, challengeDayDao, commentDao, likeDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 import { sortDateUserTemplate, sortUserTemplate } from '../utils/challenge.js';
 import { commentDataCustom } from '../utils/dataCustom.js';
 
@@ -214,6 +214,32 @@ const selectUniqueTemplate = async (
 }
 
 
+const insertAgora = async (
+    userId:number,
+    challengeId: number,
+    organization: string,
+    agoraQuestion: string
+) => {
+
+    const userChallengeData = userChallengeDao.selectUserChallenge(userId, organization, challengeId);
+
+    return await agoraDao.insertAgora((await userChallengeData).user_challenge_id, agoraQuestion);
+}
+
+
+const insertAgoraComment = async (
+    userId: number,
+    agoraId: number,
+    organization: string,
+    agoraComment: string
+) => {
+
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    return await agoraDao.insertAgoraComment(agoraId, affiliation.affiliation_id, agoraComment);
+}
+
+
 
 
 export default {
@@ -230,7 +256,9 @@ export default {
     addComment,
     updateComment,
     deleteComment,
-    selectUniqueTemplate 
+    selectUniqueTemplate,
+    insertAgora,
+    insertAgoraComment
 
 }
 

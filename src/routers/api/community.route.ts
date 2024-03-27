@@ -25,6 +25,14 @@ router.post('/comment/delete', auth, validate(communityValidation.checkOraganiza
 
 router.get('/:organization/:userTemplateId/:visibility', auth, validate(communityValidation.checkBodyUserTemplateIdAndOrganization), communityController.selectUniqueTemplate);
 
+router.post('/agora', auth, validate(communityValidation.ckeckAgora), communityController.insertAgora);
+router.post('/agora/comment', auth, validate(communityValidation.ckeckAgoraComment), communityController.insertAgoraComment);
+
+
+// router.get('/agora/:organization/:challengeId/:date', auth, communityController.selectUniqueTemplate);
+// router.get('/agora/:agoraId/comment', auth, communityController.selectUniqueTemplate);
+
+
 
 
 export default router;

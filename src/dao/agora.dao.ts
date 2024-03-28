@@ -87,6 +87,7 @@ const selectAgora = async(
     INNER JOIN User AS u ON u.user_id = a.user_id
     WHERE 
       agc.agora_id = ${agoraId}
+    ORDER BY agc.created_at asc;
     
     `
   

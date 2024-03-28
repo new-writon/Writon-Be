@@ -48,7 +48,7 @@ const selectAgora = async(
     SELECT  
     ag.agora_id,
     ag.question,
-    COUNT(agc.agora_comment_id) AS comment_count,
+    COUNT(DISTINCT agc.affiliation_id) AS participate_count,
     a.nickname,
     TIME_FORMAT(ag.created_at, '%H:%i') AS created_time,
     u.profile

@@ -1,7 +1,7 @@
 interface SelectAgora {
     agora_id:number
     question: string,
-    comment_count:number,
+    participate_count:number,
     nickname:string,
     created_time:string,
     profile:string

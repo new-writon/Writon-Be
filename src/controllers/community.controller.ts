@@ -159,6 +159,16 @@ const selectAgoraComment = catchAsync(async (req, res) => {
 
 });
 
+const signAgoraAdd = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await communityService.signAgoraAdd(
+        req.params.challengeId,
+        req.params.date
+    ));
+
+});
+
+
 export default {
 
     selectParticipantInformation,
@@ -177,7 +187,8 @@ export default {
     insertAgora,
     insertAgoraComment,
     selectAgora,
-    selectAgoraComment
+    selectAgoraComment,
+    signAgoraAdd
 
 }
 

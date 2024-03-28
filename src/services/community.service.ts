@@ -275,11 +275,25 @@ const selectAgoraComment = async (
 
     return await agoraDao.selectAgoraComment(userId, agoraId);
 
-
-  
 }
 
+const  signAgoraAdd = async (
+    challengeId:number,
+    date:Date
+) => {
 
+    if((await agoraDao.selectAgora(challengeId, date)).length >= 3){
+
+        return {
+            status: false
+        }
+      }
+
+    return {
+        status: true
+    }
+
+}
 
 
 
@@ -303,7 +317,8 @@ export default {
     insertAgora,
     insertAgoraComment,
     selectAgora,
-    selectAgoraComment
+    selectAgoraComment,
+    signAgoraAdd
 
 }
 

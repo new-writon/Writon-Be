@@ -131,8 +131,6 @@ const insertAgoraComment = catchAsync(async (req, res) => {
 
     const { organization, agoraId, agoraComment } = req.body;
 
-   
-
     res.status(httpStatus.OK).send(await communityService.insertAgoraComment(
         req.decoded?.id,
         agoraId,
@@ -143,7 +141,23 @@ const insertAgoraComment = catchAsync(async (req, res) => {
 });
 
 
+const selectAgora = catchAsync(async (req, res) => {
 
+   
+
+    res.status(httpStatus.OK).send(await communityService.selectAgora(
+        req.params.date
+    ));
+
+});
+
+const selectAgoraComment = catchAsync(async (req, res) => {
+
+    res.status(httpStatus.OK).send(await communityService.selectAgoraComment(
+       req.params.agoraId
+    ));
+
+});
 
 export default {
 
@@ -161,7 +175,9 @@ export default {
     deleteComment,
     selectUniqueTemplate,
     insertAgora,
-    insertAgoraComment
+    insertAgoraComment,
+    selectAgora,
+    selectAgoraComment
 
 }
 

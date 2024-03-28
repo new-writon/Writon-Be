@@ -240,6 +240,27 @@ const insertAgoraComment = async (
 }
 
 
+const selectAgora = async (
+    date: Date
+) => {
+
+    const agoraData = await agoraDao.selectAgora(date);
+    console.log(agoraData)
+
+}
+
+
+const selectAgoraComment = async (
+    agoraId: number
+) => {
+
+  
+}
+
+
+
+
+
 
 
 export default {
@@ -258,7 +279,9 @@ export default {
     deleteComment,
     selectUniqueTemplate,
     insertAgora,
-    insertAgoraComment
+    insertAgoraComment,
+    selectAgora,
+    selectAgoraComment
 
 }
 

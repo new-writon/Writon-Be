@@ -35,7 +35,34 @@ const insertAgora = async(
     }); 
   }
 
+const selectAgora = async(
+    date: Date
+  ) => {
+   
+    return await prisma.$queryRaw
+    `
+    SELECT  
+    ag.question
+    FROM Agora AS ag
+    INNER JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
+    WHERE
+      Date(ag.created_at) = ${date}
+
+    `
+  
+  
+  }
+
+
+  const selectAgoraComment = async(
+    agoraId: number
+  ): Promise<void> => {
+  
+  
+  }
+
 export default {
     insertAgora,
-    insertAgoraComment
+    insertAgoraComment,
+    selectAgora
 }

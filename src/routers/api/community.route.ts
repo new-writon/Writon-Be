@@ -29,8 +29,8 @@ router.post('/agora', auth, validate(communityValidation.ckeckAgora), communityC
 router.post('/agora/comment', auth, validate(communityValidation.ckeckAgoraComment), communityController.insertAgoraComment);
 
 
-// router.get('/agora/:organization/:challengeId/:date', auth, communityController.selectUniqueTemplate);
-// router.get('/agora/:agoraId/comment', auth, communityController.selectUniqueTemplate);
+router.get('/agora/:date', auth, communityController.selectAgora);
+router.get('/agora/:agoraId/comment', auth, communityController.selectAgoraComment);
 
 
 

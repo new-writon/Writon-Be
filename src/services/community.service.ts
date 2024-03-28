@@ -221,9 +221,9 @@ const insertAgora = async (
     agoraQuestion: string
 ) => {
 
-    const userChallengeData = userChallengeDao.selectUserChallenge(userId, organization, challengeId);
+    const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
 
-    return await agoraDao.insertAgora((await userChallengeData).user_challenge_id, agoraQuestion);
+    return await agoraDao.insertAgora(challengeId, userChallengeData.user_challenge_id, agoraQuestion);
 }
 
 
@@ -241,11 +241,17 @@ const insertAgoraComment = async (
 
 
 const selectAgora = async (
+    challengeId:number,
     date: Date
 ) => {
 
-    const agoraData = await agoraDao.selectAgora(date);
-    console.log(agoraData)
+    const agoraData = (await agoraDao.selectAgora(challengeId, date)).map(e => ({
+        agoraId: e.agora_id,
+        question: e.question,
+        commentCount: Number(e.comment_count)
+    }));
+
+    return agoraData;
 
 }
 

@@ -85,6 +85,7 @@ model Challenge {
   challenge_deposit_deductions ChallengeDepositDeduction[]
   user_challenges      UserChallenge[]
   questions            Question[]
+  agoras               Agora[]
  
   affiliation         Affiliation @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
 
@@ -235,6 +236,7 @@ model Agora {
   agora_id            Int         @default(autoincrement()) @unique
   question            String         
   user_challenge_id    Int
+  challenge_id         Int
   created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at           DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
@@ -242,6 +244,9 @@ model Agora {
 
 
   user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id], onDelete: Cascade, onUpdate: Cascade)
+  challenges        Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([agora_id, user_challenge_id, challenge_id])
 }
 
 model AgoraComment{

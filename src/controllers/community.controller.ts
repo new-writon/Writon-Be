@@ -143,9 +143,8 @@ const insertAgoraComment = catchAsync(async (req, res) => {
 
 const selectAgora = catchAsync(async (req, res) => {
 
-   
-
     res.status(httpStatus.OK).send(await communityService.selectAgora(
+        req.params.challengeId,
         req.params.date
     ));
 

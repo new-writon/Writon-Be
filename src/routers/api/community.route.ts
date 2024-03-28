@@ -7,6 +7,11 @@ import auth from '../../middlewares/auth.js';
 
 const router = express.Router();
 
+router.get('/agora/:challengeId/:date', auth, communityController.selectAgora);
+router.get('/agora/:agoraId/comment', auth, communityController.selectAgoraComment);
+router.post('/agora', auth, validate(communityValidation.ckeckAgora), communityController.insertAgora);
+router.post('/agora/comment', auth, validate(communityValidation.ckeckAgoraComment), communityController.insertAgoraComment);
+
 router.get('/:challengeId/participant-information', auth, validate(recordValidation.checkChallengeId), communityController.selectParticipantInformation);
 router.get('/:challengeId/my-participant-information', auth, validate(recordValidation.checkChallengeId), communityController.selectMyParticipantInformation);
 router.get('/:challengeId/template/:date/:organization', auth, validate(communityValidation.checkChallengeIdAndDateAndOrganization), communityController.selectDateTemplate);
@@ -25,12 +30,10 @@ router.post('/comment/delete', auth, validate(communityValidation.checkOraganiza
 
 router.get('/:organization/:userTemplateId/:visibility', auth, validate(communityValidation.checkBodyUserTemplateIdAndOrganization), communityController.selectUniqueTemplate);
 
-router.post('/agora', auth, validate(communityValidation.ckeckAgora), communityController.insertAgora);
-router.post('/agora/comment', auth, validate(communityValidation.ckeckAgoraComment), communityController.insertAgoraComment);
 
 
-router.get('/agora/:date', auth, communityController.selectAgora);
-router.get('/agora/:agoraId/comment', auth, communityController.selectAgoraComment);
+
+
 
 
 

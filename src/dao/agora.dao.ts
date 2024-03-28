@@ -3,6 +3,7 @@ import { ChallengeDay, Comment } from '@prisma/client'
 
 
 const insertAgora = async(
+    challengeId:number,
     userChallengeId: number,
     agoraQuestion: string
   ): Promise<void> => {
@@ -11,7 +12,9 @@ const insertAgora = async(
 
         data:{
             user_challenge_id: userChallengeId,
-            question: agoraQuestion       
+            question: agoraQuestion,
+            challenge_id: challengeId
+                 
         }
 
     }); 
@@ -36,21 +39,25 @@ const insertAgora = async(
   }
 
 const selectAgora = async(
-    date: Date
+  challengeId:number,
+  date: Date
   ) => {
    
-    return await prisma.$queryRaw
+    return await prisma.$queryRaw<SelectAgora[]>
     `
     SELECT  
-    ag.question
+    ag.agora_id,
+    ag.question,
+    COUNT(agc.agora_comment_id) AS comment_count
     FROM Agora AS ag
-    INNER JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
+    LEFT JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
     WHERE
-      Date(ag.created_at) = ${date}
+        DATE(ag.created_at) = ${date}
+        AND
+        ag.challenge_id = ${challengeId}
+    GROUP BY ag.agora_id, ag.question;
 
     `
-  
-  
   }
 
 

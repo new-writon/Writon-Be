@@ -259,7 +259,8 @@ const selectAgora = async (
         question: e.question,
         commentCount: Number(e.comment_count),
         nickname: e.nickname,
-        createdAt: e.created_time
+        createdAt: e.created_time,
+        profile: e.profile
     }));
 
     return agoraData;

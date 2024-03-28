@@ -257,7 +257,9 @@ const selectAgora = async (
     const agoraData = (await agoraDao.selectAgora(challengeId, date)).map(e => ({
         agoraId: e.agora_id,
         question: e.question,
-        commentCount: Number(e.comment_count)
+        commentCount: Number(e.comment_count),
+        nickname: e.nickname,
+        createdAt: e.created_time
     }));
 
     return agoraData;

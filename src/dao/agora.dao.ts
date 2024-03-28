@@ -48,14 +48,19 @@ const selectAgora = async(
     SELECT  
     ag.agora_id,
     ag.question,
-    COUNT(agc.agora_comment_id) AS comment_count
+    COUNT(agc.agora_comment_id) AS comment_count,
+    a.nickname,
+    TIME_FORMAT(ag.created_at, '%H:%i') AS created_time
     FROM Agora AS ag
     LEFT JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
+    INNER JOIN UserChallenge AS uc ON uc.user_challenge_id = ag.user_challenge_id
+    INNER JOIN Affiliation AS a ON a.affiliation_id = uc.affiliation_id
     WHERE
         DATE(ag.created_at) = ${date}
         AND
         ag.challenge_id = ${challengeId}
-    GROUP BY ag.agora_id, ag.question;
+    GROUP BY ag.agora_id, ag.question
+    ORDER BY ag.created_at desc;
 
     `
   }

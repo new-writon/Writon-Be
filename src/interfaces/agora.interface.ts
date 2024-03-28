@@ -6,3 +6,12 @@ interface SelectAgora {
     created_time:string,
     profile:string
 }
+
+interface SelectAgoraComment{
+    agora_comment_id: number,
+    content: string,
+    nickanme: string,
+    profile: string,
+    created_time: string
+
+}

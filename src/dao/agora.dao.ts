@@ -69,14 +69,32 @@ const selectAgora = async(
 
 
   const selectAgoraComment = async(
+    userId:number,
     agoraId: number
-  ): Promise<void> => {
-  
+  ) => {
+    return await prisma.$queryRaw<SelectAgoraComment[]>
+    `
+    SELECT
+    agc.agora_comment_id,
+    agc.content,
+    a.nickname,
+    u.profile,
+    TIME_FORMAT(agc.created_at, '%H:%i') AS created_time,
+    CASE WHEN u.user_id = ${userId} THEN '1' ELSE '0' END  AS myCommentSign
+    FROM
+    AgoraComment AS agc
+    INNER JOIN Affiliation AS a ON a.affiliation_id = agc.affiliation_id
+    INNER JOIN User AS u ON u.user_id = a.user_id
+    WHERE 
+      agc.agora_id = ${agoraId}
+    
+    `
   
   }
 
 export default {
     insertAgora,
     insertAgoraComment,
-    selectAgora
+    selectAgora,
+    selectAgoraComment
 }

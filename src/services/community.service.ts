@@ -269,8 +269,12 @@ const selectAgora = async (
 
 
 const selectAgoraComment = async (
+    userId:number,
     agoraId: number
 ) => {
+
+    return await agoraDao.selectAgoraComment(userId, agoraId);
+
 
   
 }

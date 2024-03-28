@@ -6,9 +6,9 @@ import auth from '../../middlewares/auth.js';
 
 
 const router = express.Router();
-
+router.get('/agora/comment/:agoraId', auth, communityController.selectAgoraComment);
 router.get('/agora/:challengeId/:date', auth, communityController.selectAgora);
-router.get('/agora/:agoraId/comment', auth, communityController.selectAgoraComment);
+
 router.post('/agora', auth, validate(communityValidation.ckeckAgora), communityController.insertAgora);
 router.post('/agora/comment', auth, validate(communityValidation.ckeckAgoraComment), communityController.insertAgoraComment);
 

@@ -153,7 +153,8 @@ const selectAgora = catchAsync(async (req, res) => {
 const selectAgoraComment = catchAsync(async (req, res) => {
 
     res.status(httpStatus.OK).send(await communityService.selectAgoraComment(
-       req.params.agoraId
+        req.decoded?.id,
+        req.params.agoraId
     ));
 
 });

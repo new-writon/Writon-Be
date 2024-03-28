@@ -6,6 +6,7 @@ import { sortCompanyPublic, sortParticipantInformation } from '../utils/communit
 import { affiliationDao, agoraDao, challengeDayDao, commentDao, likeDao, userChallengeDao, userTemplateDao } from '../dao/index.js';
 import { sortDateUserTemplate, sortUserTemplate } from '../utils/challenge.js';
 import { commentDataCustom } from '../utils/dataCustom.js';
+import { getKoreanDateISOString } from '../modules/koreanTime.js';
 
 
 
@@ -221,10 +222,18 @@ const insertAgora = async (
     agoraQuestion: string
 ) => {
 
+    if((await agoraDao.selectAgora(challengeId, new Date(getKoreanDateISOString()))).length >= 3){
+
+        throw new ApiError(httpStatus.EXPECTATION_FAILED, "오늘 아고라 개수를 초과했습니다.");
+      }
+
     const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
 
     return await agoraDao.insertAgora(challengeId, userChallengeData.user_challenge_id, agoraQuestion);
 }
+
+
+
 
 
 const insertAgoraComment = async (

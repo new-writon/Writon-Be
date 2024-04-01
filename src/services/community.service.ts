@@ -222,7 +222,7 @@ const insertAgora = async (
     agoraQuestion: string
 ) => {
 
-    if((await agoraDao.selectAgora(challengeId, new Date(getKoreanDateISOString()))).length >= 3){
+    if((await agoraDao.selectAgora(userId, challengeId, new Date(getKoreanDateISOString()))).length >= 3){
 
         throw new ApiError(httpStatus.EXPECTATION_FAILED, "오늘 아고라 개수를 초과했습니다.");
       }
@@ -250,17 +250,19 @@ const insertAgoraComment = async (
 
 
 const selectAgora = async (
+    userId:number,
     challengeId:number,
     date: Date
 ) => {
 
-    const agoraData = (await agoraDao.selectAgora(challengeId, date)).map(e => ({
+    const agoraData = (await agoraDao.selectAgora(userId,challengeId, date)).map(e => ({
         agoraId: e.agora_id,
         question: e.question,
         participateCount: Number(e.participate_count),
         nickname: e.nickname,
         createdAt: e.created_time,
-        profile: e.profile
+        profile: e.profile,
+        myAgoraSign:e.myAgoraSign
     }));
 
     return agoraData;
@@ -278,11 +280,12 @@ const selectAgoraComment = async (
 }
 
 const  signAgoraAdd = async (
+    userId:number,
     challengeId:number,
     date:Date
 ) => {
 
-    if((await agoraDao.selectAgora(challengeId, date)).length >= 3){
+    if((await agoraDao.selectAgora(userId, challengeId, date)).length >= 3){
 
         return {
             status: false

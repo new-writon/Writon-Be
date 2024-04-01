@@ -4,7 +4,8 @@ interface SelectAgora {
     participate_count:number,
     nickname:string,
     created_time:string,
-    profile:string
+    profile:string,
+    myAgoraSign:string
 }
 
 interface SelectAgoraComment{

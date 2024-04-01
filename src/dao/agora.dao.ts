@@ -39,6 +39,7 @@ const insertAgora = async(
   }
 
 const selectAgora = async(
+  userId:number,
   challengeId:number,
   date: Date
   ) => {
@@ -51,7 +52,8 @@ const selectAgora = async(
     COUNT(DISTINCT agc.affiliation_id) AS participate_count,
     a.nickname,
     TIME_FORMAT(ag.created_at, '%H:%i') AS created_time,
-    u.profile
+    u.profile,
+    CASE WHEN u.user_id = ${userId} THEN '1' ELSE '0' END  AS myAgoraSign
     FROM Agora AS ag
     LEFT JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
     INNER JOIN UserChallenge AS uc ON uc.user_challenge_id = ag.user_challenge_id

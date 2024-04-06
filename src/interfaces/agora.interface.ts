@@ -6,7 +6,7 @@ interface SelectAgora {
     created_time:string,
     profile:string,
     myAgoraSign:string,
-    created_at:Date
+    created_date:Date
 }
 
 interface SelectAgoraComment{

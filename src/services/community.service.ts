@@ -263,7 +263,7 @@ const selectAgora = async (
         createdTime: e.created_time,
         profile: e.profile,
         myAgoraSign:e.myAgoraSign,
-        createdAt:e.created_at
+        createdDate:e.created_date
     }));
 
     return agoraData;

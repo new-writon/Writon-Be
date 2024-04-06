@@ -87,20 +87,24 @@ const selectAgora = async(
       TIME_FORMAT(ag.created_at, '%H:%i') AS created_time,
       DATE(ag.created_at) AS created_date,
       u.profile,
-      CASE WHEN agc.affiliation_id = ${affiliationId} THEN '1' ELSE '0' END  AS myAgoraSign
-      FROM Agora AS ag
-      LEFT JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
-      INNER JOIN UserChallenge AS uc ON uc.user_challenge_id = ag.user_challenge_id
-      INNER JOIN Affiliation AS a ON a.affiliation_id = uc.affiliation_id
-      INNER JOIN User AS u ON u.user_id = a.user_id
-      WHERE
-          DATE(ag.created_at) = ${date}
-          AND
-          ag.challenge_id = ${challengeId}
-      GROUP BY ag.agora_id, ag.question
-      ORDER BY ag.created_at desc;
-  
-      `
+      CASE WHEN EXISTS (
+          SELECT 1
+          FROM AgoraComment AS agcm
+          WHERE agcm.agora_id = ag.agora_id
+          AND agcm.affiliation_id = ${affiliationId}
+        ) THEN '1' ELSE '0' END  AS myAgoraSign
+    FROM Agora AS ag
+    LEFT JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
+    INNER JOIN UserChallenge AS uc ON uc.user_challenge_id = ag.user_challenge_id
+    INNER JOIN Affiliation AS a ON a.affiliation_id = uc.affiliation_id
+    INNER JOIN User AS u ON u.user_id = a.user_id
+    WHERE
+        DATE(ag.created_at) = ${date}
+        AND
+        ag.challenge_id = ${challengeId}
+    GROUP BY ag.agora_id, ag.question
+    ORDER BY ag.created_at DESC;
+    `
     }
 
 

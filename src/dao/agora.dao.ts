@@ -87,7 +87,7 @@ const selectAgora = async(
       TIME_FORMAT(ag.created_at, '%H:%i') AS created_time,
       DATE(ag.created_at) AS created_date,
       u.profile,
-      CASE WHEN al.affiliation_id = ${affiliationId} THEN '1' ELSE '0' END  AS myAgoraSign
+      CASE WHEN agc.affiliation_id = ${affiliationId} THEN '1' ELSE '0' END  AS myAgoraSign
       FROM Agora AS ag
       LEFT JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
       LEFT JOIN Affiliation AS al ON al.affiliation_id = agc.affiliation_id

@@ -260,9 +260,10 @@ const selectAgora = async (
         question: e.question,
         participateCount: Number(e.participate_count),
         nickname: e.nickname,
-        createdAt: e.created_time,
+        createdTime: e.created_time,
         profile: e.profile,
-        myAgoraSign:e.myAgoraSign
+        myAgoraSign:e.myAgoraSign,
+        createdAt:e.created_at
     }));
 
     return agoraData;

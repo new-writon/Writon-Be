@@ -52,6 +52,7 @@ const selectAgora = async(
     COUNT(DISTINCT agc.affiliation_id) AS participate_count,
     a.nickname,
     TIME_FORMAT(ag.created_at, '%H:%i') AS created_time,
+    DATE(ag.created_at) AS created_at,
     u.profile,
     CASE WHEN u.user_id = ${userId} THEN '1' ELSE '0' END  AS myAgoraSign
     FROM Agora AS ag

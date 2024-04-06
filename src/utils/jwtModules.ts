@@ -59,8 +59,6 @@ const refreshVerify = async (token: string, userId: number) => {
 
     const data = await redisDao.getRedis(String(userId));
 
-    console.log(data)
-
     if (token === data.split('Bearer ')[1]) {
 
       jwt.verify(token, secret);

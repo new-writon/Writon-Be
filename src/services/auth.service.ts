@@ -79,7 +79,7 @@ const kakaoLogin = async (
   const userCheck = await userDao.userInformationSelect(userKakaoData.data.id);
 
   if (!userCheck) {
-
+   
     await userDao.kakaoSignUp(userKakaoData.data.kakao_account.email, userKakaoData.data.id, userKakaoData.data.properties.profile_image);
 
   }

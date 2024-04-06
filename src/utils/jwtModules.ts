@@ -18,7 +18,7 @@ const sign = (userId: number, userRole: string) => {
 const refresh = () => {
   return 'Bearer ' +jwt.sign({}, secret, {
     algorithm: 'HS256',
-    expiresIn: '3m',
+    expiresIn: '1m',
   });
 }
 const decode = (token: string) => {

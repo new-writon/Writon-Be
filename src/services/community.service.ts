@@ -251,11 +251,14 @@ const insertAgoraComment = async (
 
 const selectAgora = async (
     userId:number,
+    organization:string,
     challengeId:number,
     date: Date
 ) => {
 
-    const agoraData = (await agoraDao.selectAgora(userId,challengeId, date)).map(e => ({
+    const affiliation = await affiliationDao.selectAffiliation(userId, organization);
+
+    const agoraData = (await agoraDao.selectAgoraAndUserSign(affiliation.affiliation_id, challengeId, date)).map(e => ({
         agoraId: e.agora_id,
         question: e.question,
         participateCount: Number(e.participate_count),

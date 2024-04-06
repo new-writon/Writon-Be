@@ -7,7 +7,7 @@ import auth from '../../middlewares/auth.js';
 
 const router = express.Router();
 router.get('/agora/comment/:agoraId', auth, communityController.selectAgoraComment);
-router.get('/agora/:challengeId/:date', auth, communityController.selectAgora);
+router.get('/agora/:organization/:challengeId/:date', auth, communityController.selectAgora);
 router.get('/agora/check/:challengeId/:date', auth, communityController.signAgoraAdd);
 
 

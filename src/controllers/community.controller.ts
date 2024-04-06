@@ -146,6 +146,7 @@ const selectAgora = catchAsync(async (req, res) => {
 
     res.status(httpStatus.OK).send(await communityService.selectAgora(
         req.decoded?.id,
+        req.params.organization,
         req.params.challengeId,
         req.params.date
     ));

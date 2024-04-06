@@ -251,7 +251,7 @@ model Agora {
 
 model AgoraComment{
   agora_comment_id          Int         @default(autoincrement()) @unique
-  content                 String
+  content                 String        @db.Text
   agora_id                  Int
   affiliation_id            Int
   created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime

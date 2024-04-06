@@ -90,7 +90,6 @@ const selectAgora = async(
       CASE WHEN agc.affiliation_id = ${affiliationId} THEN '1' ELSE '0' END  AS myAgoraSign
       FROM Agora AS ag
       LEFT JOIN AgoraComment AS agc ON agc.agora_id = ag.agora_id
-      LEFT JOIN Affiliation AS al ON al.affiliation_id = agc.affiliation_id
       INNER JOIN UserChallenge AS uc ON uc.user_challenge_id = ag.user_challenge_id
       INNER JOIN Affiliation AS a ON a.affiliation_id = uc.affiliation_id
       INNER JOIN User AS u ON u.user_id = a.user_id

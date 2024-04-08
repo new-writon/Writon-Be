@@ -234,7 +234,7 @@ model Comment {
 model Agora {
 
   agora_id            Int         @default(autoincrement()) @unique
-  question            String         
+  question            String         @db.Text
   user_challenge_id    Int
   challenge_id         Int
   created_at          DateTime  @default(dbgenerated("NOW()")) @db.DateTime

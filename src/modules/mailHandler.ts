@@ -27,7 +27,7 @@ const sendInvitationEmail = async (
             <td style="text-align: center;">
               <p style="font-size: 18px; color: #333; white-space: pre-line; line-height: 0.7;">
                 <strong style="font-weight: bold;">${organization}</strong>에서 ${email}님을 <br>
-                <strong style="font-weight: bold;">${challenge}</strong> 챌린지로 초대하였습니다
+                <strong style="font-weight: bold;">${challenge}</strong> 챌린지로 초대하였습니다<br>
               </p> 
             </td>
           </tr>

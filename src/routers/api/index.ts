@@ -53,7 +53,7 @@ const defaultRoutes = [
     route: endRoute
   },
   {
-    path: '/saticfaction',
+    path: '/satisfaction',
     route: satisfactionRoute 
   }
 

@@ -149,7 +149,7 @@ model UserChallenge {
   cheering_phrase_date  DateTime?    @db.Date
   review            Boolean
   check_count       Int    
-  re_engagement     Boolean
+  re_engagement     Boolean?
   created_at        DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at         DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 
@@ -272,7 +272,7 @@ model SatisfactionObjectiveResult {
   satisfaction_objective_id   Int         @id @default(autoincrement()) 
   user_challenge_id      Int
   satisfaction_id        Int
-  score                 Boolean
+  score                 Int
   created_at        DateTime   @default(dbgenerated("NOW()")) @db.DateTime
   update_at         DateTime   @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 

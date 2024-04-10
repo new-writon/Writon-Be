@@ -11,6 +11,36 @@ const selectSatisfactionQuestion  = catchAsync(async (req, res) => {
 });
 
 
+const insertObjectiveAnswer  = catchAsync(async (req, res) => {
+
+    const { challengeId, organization, satisfationAnswer} = req.body;
+
+    res.status(httpStatus.OK).send(await satisfactionService.insertObjectiveAnswer(
+        req.decoded?.id,
+        challengeId,
+        organization,
+        satisfationAnswer
+    ));
+
+});
+
+
+const insertSubjectiveAnswer  = catchAsync(async (req, res) => {
+
+    const { challengeId, organization, satisfationAnswer} = req.body;
+
+    res.status(httpStatus.OK).send(await satisfactionService.insertSubjectiveAnswer(
+        req.decoded?.id,
+        challengeId,
+        organization,
+        satisfationAnswer
+    ));
+
+});
+
+
 export default {
-    selectSatisfactionQuestion
+    selectSatisfactionQuestion,
+    insertSubjectiveAnswer,
+    insertObjectiveAnswer
 }

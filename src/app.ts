@@ -23,7 +23,7 @@ if (config.env !== 'test') {
   app.use(morgan.errorHandler);     // 실패 로그 커스텀
 }
 
-//app.set('trust proxy', 1);
+app.set('trust proxy', 1);
 
 app.use(helmet());
 
@@ -66,9 +66,9 @@ app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 });
 
-app.use(errorConverter);
+// app.use(errorConverter);
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 
 export default app;

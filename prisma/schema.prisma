@@ -274,5 +274,34 @@ model Satisfaction {
   update_at         DateTime   @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
   challenges        Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
 
+  satisfaction_objective_results  SatisfactionObjectiveResult[]  
+  satisfaction_subjective_results SatisfactionSubjectiveResult[]
+
 }
 
+model SatisfactionObjectiveResult {
+  satisfaction_objective_id   Int         @id @default(autoincrement()) 
+  user_challenge_id      Int
+  satisfaction_id        Int
+  score                 Boolean
+  created_at        DateTime   @default(dbgenerated("NOW()")) @db.DateTime
+  update_at         DateTime   @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+
+  satisfactions    Satisfaction @relation(fields: [satisfaction_id], references: [satisfaction_id], onDelete: Cascade, onUpdate: Cascade)
+  user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id], onDelete: Cascade, onUpdate: Cascade) 
+
+}
+
+
+model SatisfactionSubjectiveResult {
+  satisfaction_subjective_id   Int         @id @default(autoincrement()) 
+  user_challenge_id      Int
+  satisfaction_id        Int
+  answer               String
+  created_at        DateTime   @default(dbgenerated("NOW()")) @db.DateTime
+  update_at         DateTime   @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+
+  satisfactions    Satisfaction @relation(fields: [satisfaction_id], references: [satisfaction_id], onDelete: Cascade, onUpdate: Cascade)
+  user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id], onDelete: Cascade, onUpdate: Cascade) 
+
+}

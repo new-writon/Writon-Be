@@ -15,7 +15,7 @@ const selectChallengeSatisFactionQuestion = async(
         s.type,
         s.question
     FROM 
-        SatisFaction AS s
+        Satisfaction AS s
     WHERE
         s.challenge_id = ${challengeId}
 

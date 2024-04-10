@@ -86,6 +86,7 @@ model Challenge {
   user_challenges      UserChallenge[]
   questions            Question[]
   agoras               Agora[]
+  satisfactions        Satisfaction[]
  
   affiliation         Affiliation @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
 
@@ -263,3 +264,15 @@ model AgoraComment{
  
   @@id([agora_comment_id, agora_id, affiliation_id])
 }
+
+
+model Satisfaction {
+  satisfaction_id   Int         @id @default(autoincrement()) 
+  challenge_id      Int
+  question          String 
+  created_at        DateTime   @default(dbgenerated("NOW()")) @db.DateTime
+  update_at         DateTime   @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+  challenges        Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
+
+}
+

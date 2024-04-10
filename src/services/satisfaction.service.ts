@@ -10,6 +10,7 @@ import userChallengeDao from '../dao/userChallenge.dao.js';
 const selectSatisfactionQuestion = async (
   challengeId: number
  ) => {
+  console.log(challengeId)
 
   return await satisFactionDao.selectChallengeSatisFactionQuestion(challengeId);
 

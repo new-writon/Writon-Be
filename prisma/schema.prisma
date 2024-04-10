@@ -155,6 +155,8 @@ model UserChallenge {
 
   user_templetes    UserTemplete[]
   agoras            Agora[]
+  satisfaction_objective_results  SatisfactionObjectiveResult[]  
+  satisfaction_subjective_results SatisfactionSubjectiveResult[]
 
   affiliation       Affiliation @relation(fields: [affiliation_id], references: [affiliation_id], onDelete: Cascade, onUpdate: Cascade)
   challenge         Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
@@ -266,19 +268,6 @@ model AgoraComment{
 }
 
 
-model Satisfaction {
-  satisfaction_id   Int         @id @default(autoincrement()) 
-  challenge_id      Int
-  question          String 
-  created_at        DateTime   @default(dbgenerated("NOW()")) @db.DateTime
-  update_at         DateTime   @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
-  challenges        Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
-
-  satisfaction_objective_results  SatisfactionObjectiveResult[]  
-  satisfaction_subjective_results SatisfactionSubjectiveResult[]
-
-}
-
 model SatisfactionObjectiveResult {
   satisfaction_objective_id   Int         @id @default(autoincrement()) 
   user_challenge_id      Int
@@ -303,5 +292,18 @@ model SatisfactionSubjectiveResult {
 
   satisfactions    Satisfaction @relation(fields: [satisfaction_id], references: [satisfaction_id], onDelete: Cascade, onUpdate: Cascade)
   user_challenges   UserChallenge @relation(fields: [user_challenge_id], references: [user_challenge_id], onDelete: Cascade, onUpdate: Cascade) 
+
+}
+
+model Satisfaction {
+  satisfaction_id   Int         @id @default(autoincrement()) 
+  challenge_id      Int
+  question          String 
+  created_at        DateTime   @default(dbgenerated("NOW()")) @db.DateTime
+  update_at         DateTime   @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
+  challenges        Challenge @relation(fields: [challenge_id], references: [challenge_id], onDelete: Cascade, onUpdate: Cascade)
+
+  satisfaction_objective_results  SatisfactionObjectiveResult[]  
+  satisfaction_subjective_results SatisfactionSubjectiveResult[]
 
 }

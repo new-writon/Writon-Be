@@ -148,6 +148,7 @@ model UserChallenge {
   cheering_phrase_date  DateTime?    @db.Date
   review            Boolean
   check_count       Int    
+  re_engagement     Boolean
   created_at        DateTime  @default(dbgenerated("NOW()")) @db.DateTime
   update_at         DateTime  @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.DateTime
 

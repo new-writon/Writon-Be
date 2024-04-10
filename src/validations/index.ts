@@ -6,3 +6,4 @@ export { default as writeValidation } from './write.validation.js';
 export { default as communityValidation } from './community.validation.js';
 export { default as adminValidation } from './admin.validation.js';
 export { default as endValidation } from './end.validation.js';
+export { default as satisfactionValidation } from './satisfaction.validation.js';

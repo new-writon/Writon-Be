@@ -7,3 +7,4 @@ export { default as communityController } from './community.controller.js';
 export { default as adminController } from './admin.controller.js';
 export { default as scheduleController } from './schedule.controller.js';
 export { default as endController } from './end.controller.js';
+export { default as satisfactionController } from './satisfaction.controller.js';

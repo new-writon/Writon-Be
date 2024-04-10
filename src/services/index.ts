@@ -7,3 +7,4 @@ export { default as communityService } from './community.service.js';
 export { default as adminService } from './admin.service.js';
 export { default as scheduleService } from './schedule.service.js';
 export { default as endService } from './end.service.js';
+export { default as satisfactionService } from './satisfaction.service.js';

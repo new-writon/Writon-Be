@@ -67,9 +67,9 @@ app.use((req, res, next) => {
 });
 
 
-// app.use(errorConverter);
+app.use(errorConverter);
 
-// app.use(errorHandler);
+app.use(errorHandler);
 
 
 export default app;

@@ -45,10 +45,28 @@ const insertManySubjectiveAnswer = async(
 }
 
 
+const updateReEngagement = async(
+    userChallengeId: number
+): Promise<void> => {
+    return await prisma.$queryRaw
+    `
+    UPDATE
+        UserChallenge as uc
+    SET
+        uc.re_engagement = 1
+    WHERE
+        user_challenge_id = ${userChallengeId}
+
+
+    `
+}
+
+
 export default {
 
     selectChallengeSatisFactionQuestion,
     insertManyObjectiveAnswer,
-    insertManySubjectiveAnswer
+    insertManySubjectiveAnswer,
+    updateReEngagement
     
 }

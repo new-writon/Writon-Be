@@ -2,14 +2,14 @@
 import httpStatus from 'http-status';
 import ApiError from '../utils/ApiError.js';
 import satisFactionDao from '../dao/satisFaction.dao.js';
-import { ObjectiveAnswerRequest,  SubjectiveAnswerRequest } from '../interfaces/satisfaction.interface.js';
+import { ObjectiveAnswerRequest, SubjectiveAnswerRequest } from '../interfaces/satisfaction.interface.js';
 import userChallengeDao from '../dao/userChallenge.dao.js';
 
 
 
 const selectSatisfactionQuestion = async (
   challengeId: number
- ) => {
+) => {
   console.log(challengeId)
 
   return await satisFactionDao.selectChallengeSatisFactionQuestion(challengeId);
@@ -22,7 +22,7 @@ const insertObjectiveAnswer = async (
   challengeId: number,
   organization: string,
   satisfationAnswer: Array<ObjectiveAnswerRequest>
- ) => {
+) => {
 
   const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
 
@@ -37,7 +37,7 @@ const insertSubjectiveAnswer = async (
   challengeId: number,
   organization: string,
   satisfationAnswer: Array<SubjectiveAnswerRequest>
- ) => {
+) => {
 
   const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
 
@@ -49,46 +49,45 @@ const insertSubjectiveAnswer = async (
 
 
 
-const changeObjectiveAnswerType = 
-(
-  satisfationAnswer: Array<ObjectiveAnswerRequest>,
-  userChallengeId: number
-) => {
+const changeObjectiveAnswerType =
+  (
+    satisfationAnswer: Array<ObjectiveAnswerRequest>,
+    userChallengeId: number
+  ) => {
 
-  return  satisfationAnswer.map( satisfationAnswer => ({
-    satisfaction_id: satisfationAnswer.satisfactionId,
-    score: satisfationAnswer.score,
-    user_challenge_id: userChallengeId
-}));
-}
-
-
-
-const changeSubjectiveAnswerType = 
-(
-  satisfationAnswer: Array<SubjectiveAnswerRequest>,
-  userChallengeId: number
-) => {
-
-  return  satisfationAnswer.map( satisfationAnswer => ({
-    satisfaction_id: satisfationAnswer.satisfactionId,
-    answer: satisfationAnswer.answer,
-    user_challenge_id: userChallengeId
-}));
-}
+    return satisfationAnswer.map(satisfationAnswer => ({
+      satisfaction_id: satisfationAnswer.satisfactionId,
+      score: satisfationAnswer.score,
+      user_challenge_id: userChallengeId
+    }));
+  }
 
 
 
+const changeSubjectiveAnswerType =
+  (
+    satisfationAnswer: Array<SubjectiveAnswerRequest>,
+    userChallengeId: number
+  ) => {
+
+    return satisfationAnswer.map(satisfationAnswer => ({
+      satisfaction_id: satisfationAnswer.satisfactionId,
+      answer: satisfationAnswer.answer,
+      user_challenge_id: userChallengeId
+    }));
+  }
 
 
-const updateReEngagement = async(
+
+
+
+const updateReEngagement = async (
   userId: number,
   challengeId: number,
   organization: string,
 ) => {
   const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
-  
-
+  await satisFactionDao.updateReEngagement(userChallengeData.user_challenge_id)
 }
 
 
@@ -107,5 +106,5 @@ export default {
   insertObjectiveAnswer,
   updateReEngagement,
   selectChallengeReEngagement
-  
-  }
+
+}

@@ -79,6 +79,7 @@ model Challenge {
   deposit              Int
   refund_conditions    String?               @db.Text
   review_url           String?               @db.Text
+  restart              Boolean?     
 
 
   challenge_days       ChallengeDay[]

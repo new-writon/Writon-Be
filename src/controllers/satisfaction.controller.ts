@@ -57,10 +57,10 @@ const updateReEngagement  = catchAsync(async (req, res) => {
 
 const selectChallengeReEngagement  = catchAsync(async (req, res) => {
 
-    const { challengeId, organization} = req.body;
+  
 
     res.status(httpStatus.OK).send(await satisfactionService.selectChallengeReEngagement(
-        challengeId,
+        req.params.challengeId,
     ));
 
 });

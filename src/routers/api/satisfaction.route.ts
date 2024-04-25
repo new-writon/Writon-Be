@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/:challengeId', satisfactionController.selectSatisfactionQuestion);
 router.post('/objective-question', auth, validate(satisfactionValidation.checkObjectiveAnswer), satisfactionController.insertObjectiveAnswer);
 router.post('/subjective-question', auth, validate(satisfactionValidation.checkObjectiveAnswer), satisfactionController.insertSubjectiveAnswer);
-router.get(':challengeId/re_engagement', auth, validate(satisfactionValidation.checkChallengeReEngagement), satisfactionController.selectChallengeReEngagement);
+router.get(':challengeId/re_engagement', auth, satisfactionController.selectChallengeReEngagement);
 router.patch('/re_engagement', auth, validate(satisfactionValidation.checkReEngagement), satisfactionController.updateReEngagement);
 
 

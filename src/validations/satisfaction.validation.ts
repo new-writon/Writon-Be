@@ -20,15 +20,9 @@ const checkReEngagement = {
     })
 };
 
-const checkChallengeReEngagement = {
-    body: Joi.object().keys({
-        challengeId: Joi.number().required(),
-    })
-};
 
 export default {
 
     checkObjectiveAnswer,
-    checkReEngagement,
-    checkChallengeReEngagement
+    checkReEngagement
 };

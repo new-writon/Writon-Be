@@ -46,14 +46,15 @@ const insertManySubjectiveAnswer = async(
 
 
 const updateReEngagement = async(
-    userChallengeId: number
+    userChallengeId: number,
+    check: boolean
 ): Promise<void> => {
     return await prisma.$queryRaw
     `
     UPDATE
         UserChallenge as uc
     SET
-        uc.re_engagement = 1
+        uc.re_engagement = ${check}
     WHERE
         user_challenge_id = ${userChallengeId}
 

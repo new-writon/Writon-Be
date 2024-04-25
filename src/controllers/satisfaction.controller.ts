@@ -42,12 +42,13 @@ const insertSubjectiveAnswer  = catchAsync(async (req, res) => {
 
 const updateReEngagement  = catchAsync(async (req, res) => {
 
-    const { challengeId, organization} = req.body;
+    const { challengeId, organization, check} = req.body;
 
     res.status(httpStatus.OK).send(await satisfactionService.updateReEngagement(
         req.decoded?.id,
         challengeId,
         organization,
+        check
     ));
 
 });

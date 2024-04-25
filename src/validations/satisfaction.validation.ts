@@ -15,6 +15,7 @@ const checkReEngagement = {
     body: Joi.object().keys({
         challengeId: Joi.number().required(),
         organization: Joi.string().required(),
+        check: Joi.boolean().required()
    
     })
 };

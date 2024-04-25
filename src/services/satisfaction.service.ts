@@ -86,9 +86,10 @@ const updateReEngagement = async (
   userId: number,
   challengeId: number,
   organization: string,
+  check: boolean
 ) => {
   const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
-  await satisFactionDao.updateReEngagement(userChallengeData.user_challenge_id)
+  await satisFactionDao.updateReEngagement(userChallengeData.user_challenge_id, check)
 }
 
 

@@ -4,6 +4,7 @@ import ApiError from '../utils/ApiError.js';
 import satisFactionDao from '../dao/satisFaction.dao.js';
 import { ObjectiveAnswerRequest, SubjectiveAnswerRequest } from '../interfaces/satisfaction.interface.js';
 import userChallengeDao from '../dao/userChallenge.dao.js';
+import challengeDao from '../dao/challenge.dao.js';
 
 
 
@@ -95,6 +96,10 @@ const selectChallengeReEngagement = async (
   challengeId: number,
 ) => {
 
+  const challengeData = await challengeDao.selectChallenge(challengeId);
+  return {
+    restart: challengeData.restart
+  }
 
 }
 

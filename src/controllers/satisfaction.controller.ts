@@ -39,8 +39,36 @@ const insertSubjectiveAnswer  = catchAsync(async (req, res) => {
 });
 
 
+
+const updateReEngagement  = catchAsync(async (req, res) => {
+
+    const { challengeId, organization} = req.body;
+
+    res.status(httpStatus.OK).send(await satisfactionService.updateReEngagement(
+        req.decoded?.id,
+        challengeId,
+        organization,
+    ));
+
+});
+
+
+
+const selectChallengeReEngagement  = catchAsync(async (req, res) => {
+
+    const { challengeId, organization} = req.body;
+
+    res.status(httpStatus.OK).send(await satisfactionService.selectChallengeReEngagement(
+        challengeId,
+    ));
+
+});
+
+
 export default {
     selectSatisfactionQuestion,
     insertSubjectiveAnswer,
-    insertObjectiveAnswer
+    insertObjectiveAnswer,
+    updateReEngagement,
+    selectChallengeReEngagement
 }

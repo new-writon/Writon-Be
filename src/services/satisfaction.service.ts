@@ -77,10 +77,35 @@ const changeSubjectiveAnswerType =
 }));
 }
 
+
+
+
+
+const updateReEngagement = async(
+  userId: number,
+  challengeId: number,
+  organization: string,
+) => {
+  const userChallengeData = await userChallengeDao.selectUserChallenge(userId, organization, challengeId);
+  
+
+}
+
+
+const selectChallengeReEngagement = async (
+  challengeId: number,
+) => {
+
+
+}
+
+
 export default {
 
   selectSatisfactionQuestion,
   insertSubjectiveAnswer,
-  insertObjectiveAnswer
+  insertObjectiveAnswer,
+  updateReEngagement,
+  selectChallengeReEngagement
   
   }

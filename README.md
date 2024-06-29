@@ -1,4 +1,6 @@
-### 💻 기술 스택
+# ✏ WRITON
+
+## 💻 기술 스택
 
 ---
 
@@ -9,8 +11,28 @@
 | 프레임워크 | Node.js 18.6 |
 | 데이터베이스 | Mysql) |
 | 버전 관리 | Github, Git |
+| 협업 툴 | Slack, Notion |
 | 배포 및 운영 | AWS, Docker, Github Actions |
 
+
+## 🛠 세부 기술 스택(Tech Stack)
+
+### 백엔드(Back-end)
+
+- **Node.js 18.6**
+
+### 데이터베이스(Database)
+
+- **Mysql (8.0.35)**
+- **Redis (7.1.0)**
+
+### 클라우드 서비스(Amazon Web Service)
+  - AWS EC2
+  - AWS RDS
+  - AWS Elastic Load Balancing
+  - AWS Cloud Watch
+  - AWS Cloud Watch Event
+  - AWS Lambda
 
 
 ## 📌 Commit Convention
@@ -80,10 +102,18 @@ To Reviewers
 | feature\_/#  | 이슈 별 기능 구현 브랜치 |
 |   fix\_/#    |  이슈 별 픽스 브랜치   |
 
-
-
-## ⚙️ Software Architecture
+## ♻ CI/CD
 
 ---
-![Architecture](https://github.com/KUALSNS/BE/assets/37439067/cd0733d3-629c-40d2-b115-1f0835adb8f7)
+![hangmancicd drawio](https://github.com/new-writon/Writon-Be/assets/106163272/341ed4ee-8d58-4be4-9c9a-6e229977a4a0)
 
+
+## ⚙️ System Architecture
+
+---
+
+![writon system architecture drawio (7)](https://github.com/new-writon/Writon-Be/assets/106163272/4b585cf9-885b-44b5-9df7-fbf5a84d40ab)
+
+## 📐 트러블 슈팅(Trouble Shooting)
+
+- 추가 예정

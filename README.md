@@ -12,7 +12,7 @@
 | 데이터베이스 | Mysql) |
 | 버전 관리 | Github, Git |
 | 협업 툴 | Slack, Notion |
-| 배포 및 운영 | AWS, Docker, Github Actions |
+| 배포 및 운영 | AWS, Docker, Github Actions, Nginx, CloudWatch, Clarity |
 
 
 ## 🛠 세부 기술 스택(Tech Stack)
@@ -53,47 +53,6 @@
 ## 💻 Branch Strategy
 
 ---
-<details>
-<summary>Git Workflow</summary>
-<div markdown="1">
-
-```
-main → develop → feature_# / fix_#
-feature, fix 이하 번호는 issue 번호에 맞게 생성
-
-Issue 예시
-/-------------------------
-Feature/Fix Request
-기능 설명 : 초대장을 보내줍니다.
-To-Do List
-* 난수 생성해서 초대코드 보내주기
--------------------------/
-
-PR 예시
-/-------------------------
-Solved Issue
-close/해결한 이슈의 링크
-
-Motivation
-* 초대장 생성 api 구현
-
-Key Changes
-* 난수 생성해서 초대코드 생성
-
-To Reviewers
-* 머지해주세요~~
--------------------------/
-
-1. issue 생성
-2. local - feature_# / fix_# 에서 각자 기능 작업
-3. remote - feature_# / fix_# 에 Push
-4. remote - develop 으로 PR
-5. 코드 리뷰 후 Confirm 받고 remote - develop Merge
-6. remote - develop 에 Merge 될 때 마다 모든 팀원 local - develop pull 받아 최신 상태 유지
-```
-
-</div>
-</details>
 
 | Branch Name |       설명       |
 | :---------: |:--------------:|
@@ -101,6 +60,12 @@ To Reviewers
 |   dev   |   구현 완료 브랜치    |
 | feature\_/#  | 이슈 별 기능 구현 브랜치 |
 |   fix\_/#    |  이슈 별 픽스 브랜치   |
+
+## 🔗 ERD(주기적으로 변동)
+
+---
+![Writon (2)](https://github.com/new-writon/Writon-Be/assets/106163272/4ee03183-9018-45cf-83dd-a6f41d57ad7d)
+
 
 ## ♻ CI/CD
 
@@ -114,6 +79,24 @@ To Reviewers
 
 ![writon system architecture drawio (7)](https://github.com/new-writon/Writon-Be/assets/106163272/4b585cf9-885b-44b5-9df7-fbf5a84d40ab)
 
+
+
+
 ## 📐 트러블 슈팅(Trouble Shooting)
 
-- 추가 예정
+---
+
+ 1. Node.js 동시성 문제</br>
+ 참고 : https://www.notion.so/Node-js-16b0eb8d61614dfb9bafcbb5eb52317a
+
+## 💾 응용 프로그램
+
+---
+
+<img width="502" alt="KakaoTalk_20240630_020448483" src="https://github.com/new-writon/Writon-Be/assets/106163272/4bff4e61-5506-4c2b-b8dc-acf403c3efb1">
+
+- 초대장 발급을 위한 프로그램
+- 조직의 챌린지에 따라 초대장을 발급할 수 있음.
+- 텍스트, 엑셀 파일을 통해 한 번에 초대장 발급 가능
+
+Code : [Repository](https://github.com/new-writon/program)

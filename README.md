@@ -1,5 +1,16 @@
 ### 💻 기술 스택
 
+---
+
+| 분류 | 개발환경 | 
+|---|---|
+| 운영체제 | Mac OS |
+| 개발도구 | VSCode, Postman |
+| 프레임워크 | Node.js 18.6 |
+| 데이터베이스 | Mysql) |
+| 버전 관리 | Github, Git |
+| 배포 및 운영 | AWS, Docker, Github Actions |
+
 
 
 ## 📌 Commit Convention
@@ -65,7 +76,7 @@ To Reviewers
 | Branch Name |       설명       |
 | :---------: |:--------------:|
 |    main     |    배포용 브랜치     |
-|   develop   |   구현 완료 브랜치    |
+|   dev   |   구현 완료 브랜치    |
 | feature\_/#  | 이슈 별 기능 구현 브랜치 |
 |   fix\_/#    |  이슈 별 픽스 브랜치   |
 
